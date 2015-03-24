@@ -1,0 +1,1294 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Edmx Version="3.0" xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <Runtime>
+    <ConceptualModels>
+      <Schema Namespace="UWT.Models" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Advert" customannotation:ClrType="UWT.Models.Advert, UWT.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Categories" Relationship="Self.Category_Adverts" FromRole="Category_Adverts_Target" ToRole="Category_Adverts_Source" />
+          <NavigationProperty Name="Image" Relationship="Self.Advert_Image" FromRole="Advert_Image_Source" ToRole="Advert_Image_Target" />
+          <NavigationProperty Name="Orders" Relationship="Self.Order_Advert" FromRole="Order_Advert_Target" ToRole="Order_Advert_Source" />
+          <NavigationProperty Name="Shop" Relationship="Self.Advert_Shop" FromRole="Advert_Shop_Source" ToRole="Advert_Shop_Target" />
+        </EntityType>
+        <EntityType Name="Category" customannotation:ClrType="UWT.Models.Category, UWT.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Adverts" Relationship="Self.Category_Adverts" FromRole="Category_Adverts_Source" ToRole="Category_Adverts_Target" />
+          <NavigationProperty Name="Image" Relationship="Self.Category_Image" FromRole="Category_Image_Source" ToRole="Category_Image_Target" />
+        </EntityType>
+        <EntityType Name="Image" customannotation:ClrType="UWT.Models.Image, UWT.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Path" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Advert" Relationship="Self.Advert_Image" FromRole="Advert_Image_Target" ToRole="Advert_Image_Source" />
+          <NavigationProperty Name="Category" Relationship="Self.Category_Image" FromRole="Category_Image_Target" ToRole="Category_Image_Source" />
+          <NavigationProperty Name="PageStyleBackground" Relationship="Self.Image_PageStyleBackground" FromRole="Image_PageStyleBackground_Source" ToRole="Image_PageStyleBackground_Target" />
+          <NavigationProperty Name="PageStyleLogo" Relationship="Self.Image_PageStyleLogo" FromRole="Image_PageStyleLogo_Source" ToRole="Image_PageStyleLogo_Target" />
+          <NavigationProperty Name="UserProfile" Relationship="Self.User_ProfileImage" FromRole="User_ProfileImage_Target" ToRole="User_ProfileImage_Source" />
+        </EntityType>
+        <EntityType Name="PageStyle" customannotation:ClrType="UWT.Models.PageStyle, UWT.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="ForegroundColor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="BackgroundColor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NavColor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SheetColor" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="BackgroundImage" Relationship="Self.Image_PageStyleBackground" FromRole="Image_PageStyleBackground_Target" ToRole="Image_PageStyleBackground_Source" />
+          <NavigationProperty Name="Logo" Relationship="Self.Image_PageStyleLogo" FromRole="Image_PageStyleLogo_Target" ToRole="Image_PageStyleLogo_Source" />
+          <NavigationProperty Name="Shop" Relationship="Self.PageStyle_Shop" FromRole="PageStyle_Shop_Source" ToRole="PageStyle_Shop_Target" />
+        </EntityType>
+        <EntityType Name="Shop" customannotation:ClrType="UWT.Models.Shop, UWT.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DateOpened" Type="DateTime" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Adverts" Relationship="Self.Advert_Shop" FromRole="Advert_Shop_Target" ToRole="Advert_Shop_Source" />
+          <NavigationProperty Name="Categories" Relationship="Self.Shop_Categories" FromRole="Shop_Categories_Source" ToRole="Shop_Categories_Target" />
+          <NavigationProperty Name="PageStyle" Relationship="Self.PageStyle_Shop" FromRole="PageStyle_Shop_Target" ToRole="PageStyle_Shop_Source" />
+          <NavigationProperty Name="User" Relationship="Self.Shop_User" FromRole="Shop_User_Source" ToRole="Shop_User_Target" />
+        </EntityType>
+        <EntityType Name="User" customannotation:ClrType="UWT.Models.User, UWT.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Surname" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="DateTime" />
+          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Baskets" Relationship="Self.Basket_User" FromRole="Basket_User_Target" ToRole="Basket_User_Source" />
+          <NavigationProperty Name="Claims" Relationship="Self.User_Claims" FromRole="User_Claims_Source" ToRole="User_Claims_Target" />
+          <NavigationProperty Name="Logins" Relationship="Self.User_Logins" FromRole="User_Logins_Source" ToRole="User_Logins_Target" />
+          <NavigationProperty Name="MessagesRecieved" Relationship="Self.Message_Reciever" FromRole="Message_Reciever_Target" ToRole="Message_Reciever_Source" />
+          <NavigationProperty Name="MessagesSent" Relationship="Self.Message_Sender" FromRole="Message_Sender_Target" ToRole="Message_Sender_Source" />
+          <NavigationProperty Name="ProfileImage" Relationship="Self.User_ProfileImage" FromRole="User_ProfileImage_Source" ToRole="User_ProfileImage_Target" />
+          <NavigationProperty Name="Roles" Relationship="Self.User_Roles" FromRole="User_Roles_Source" ToRole="User_Roles_Target" />
+          <NavigationProperty Name="Shop" Relationship="Self.Shop_User" FromRole="Shop_User_Target" ToRole="Shop_User_Source" />
+        </EntityType>
+        <EntityType Name="Basket" customannotation:ClrType="UWT.Models.Basket, UWT.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateCreated" Type="DateTime" Nullable="false" />
+          <Property Name="DateClosed" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Invoice" Relationship="Self.Invoice_Basket" FromRole="Invoice_Basket_Target" ToRole="Invoice_Basket_Source" />
+          <NavigationProperty Name="Orders" Relationship="Self.Order_Basket" FromRole="Order_Basket_Target" ToRole="Order_Basket_Source" />
+          <NavigationProperty Name="User" Relationship="Self.Basket_User" FromRole="Basket_User_Source" ToRole="Basket_User_Target" />
+        </EntityType>
+        <EntityType Name="Invoice" customannotation:ClrType="UWT.Models.Invoice, UWT.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Created" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="Basket" Relationship="Self.Invoice_Basket" FromRole="Invoice_Basket_Source" ToRole="Invoice_Basket_Target" />
+        </EntityType>
+        <EntityType Name="Order" customannotation:ClrType="UWT.Models.Order, UWT.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Advert" Relationship="Self.Order_Advert" FromRole="Order_Advert_Source" ToRole="Order_Advert_Target" />
+          <NavigationProperty Name="Basket" Relationship="Self.Order_Basket" FromRole="Order_Basket_Source" ToRole="Order_Basket_Target" />
+        </EntityType>
+        <EntityType Name="IdentityUserClaim" customannotation:ClrType="Microsoft.AspNet.Identity.EntityFramework.IdentityUserClaim, Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="IdentityUserLogin" customannotation:ClrType="Microsoft.AspNet.Identity.EntityFramework.IdentityUserLogin, Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ProviderKey" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message" customannotation:ClrType="UWT.Models.Message, UWT.Models, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateSent" Type="DateTime" Nullable="false" />
+          <Property Name="DateRecieved" Type="DateTime" Nullable="false" />
+          <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Advert" Relationship="Self.Message_Advert" FromRole="Message_Advert_Source" ToRole="Message_Advert_Target" />
+          <NavigationProperty Name="Reciever" Relationship="Self.Message_Reciever" FromRole="Message_Reciever_Source" ToRole="Message_Reciever_Target" />
+          <NavigationProperty Name="Sender" Relationship="Self.Message_Sender" FromRole="Message_Sender_Source" ToRole="Message_Sender_Target" />
+        </EntityType>
+        <EntityType Name="IdentityUserRole" customannotation:ClrType="Microsoft.AspNet.Identity.EntityFramework.IdentityUserRole, Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="RoleId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IdentityRole" customannotation:ClrType="Microsoft.AspNet.Identity.EntityFramework.IdentityRole, Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.IdentityRole_Users" FromRole="IdentityRole_Users_Source" ToRole="IdentityRole_Users_Target" />
+        </EntityType>
+        <Association Name="Category_Adverts">
+          <End Role="Category_Adverts_Source" Type="Self.Category" Multiplicity="*" />
+          <End Role="Category_Adverts_Target" Type="Self.Advert" Multiplicity="*" />
+        </Association>
+        <Association Name="Shop_Categories">
+          <End Role="Shop_Categories_Source" Type="Self.Shop" Multiplicity="0..1" />
+          <End Role="Shop_Categories_Target" Type="Self.Category" Multiplicity="*" />
+        </Association>
+        <Association Name="Invoice_Basket">
+          <End Role="Invoice_Basket_Source" Type="Self.Invoice" Multiplicity="0..1" />
+          <End Role="Invoice_Basket_Target" Type="Self.Basket" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice_Basket_Target">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Invoice_Basket_Source">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Order_Advert">
+          <End Role="Order_Advert_Source" Type="Self.Order" Multiplicity="*" />
+          <End Role="Order_Advert_Target" Type="Self.Advert" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+        </Association>
+        <Association Name="Order_Basket">
+          <End Role="Order_Basket_Source" Type="Self.Order" Multiplicity="*" />
+          <End Role="Order_Basket_Target" Type="Self.Basket" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+        </Association>
+        <Association Name="Basket_User">
+          <End Role="Basket_User_Source" Type="Self.Basket" Multiplicity="*" />
+          <End Role="Basket_User_Target" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+        </Association>
+        <Association Name="User_Claims">
+          <End Role="User_Claims_Source" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_Claims_Target" Type="Self.IdentityUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Claims_Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Claims_Target">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Logins">
+          <End Role="User_Logins_Source" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_Logins_Target" Type="Self.IdentityUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Logins_Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Logins_Target">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Message_Advert">
+          <End Role="Message_Advert_Source" Type="Self.Message" Multiplicity="*" />
+          <End Role="Message_Advert_Target" Type="Self.Advert" Multiplicity="0..1" />
+        </Association>
+        <Association Name="Message_Reciever">
+          <End Role="Message_Reciever_Source" Type="Self.Message" Multiplicity="*" />
+          <End Role="Message_Reciever_Target" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+        </Association>
+        <Association Name="Message_Sender">
+          <End Role="Message_Sender_Source" Type="Self.Message" Multiplicity="*" />
+          <End Role="Message_Sender_Target" Type="Self.User" Multiplicity="0..1" />
+        </Association>
+        <Association Name="User_ProfileImage">
+          <End Role="User_ProfileImage_Source" Type="Self.User" Multiplicity="0..1" />
+          <End Role="User_ProfileImage_Target" Type="Self.Image" Multiplicity="1" />
+        </Association>
+        <Association Name="User_Roles">
+          <End Role="User_Roles_Source" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="User_Roles_Target" Type="Self.IdentityUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User_Roles_Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User_Roles_Target">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Shop_User">
+          <End Role="Shop_User_Source" Type="Self.Shop" Multiplicity="0..1" />
+          <End Role="Shop_User_Target" Type="Self.User" Multiplicity="1" />
+        </Association>
+        <Association Name="PageStyle_Shop">
+          <End Role="PageStyle_Shop_Source" Type="Self.PageStyle" Multiplicity="0..1" />
+          <End Role="PageStyle_Shop_Target" Type="Self.Shop" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="PageStyle_Shop_Target">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PageStyle_Shop_Source">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Image_PageStyleBackground">
+          <End Role="Image_PageStyleBackground_Source" Type="Self.Image" Multiplicity="1" />
+          <End Role="Image_PageStyleBackground_Target" Type="Self.PageStyle" Multiplicity="0..1" />
+        </Association>
+        <Association Name="Image_PageStyleLogo">
+          <End Role="Image_PageStyleLogo_Source" Type="Self.Image" Multiplicity="1" />
+          <End Role="Image_PageStyleLogo_Target" Type="Self.PageStyle" Multiplicity="0..1" />
+        </Association>
+        <Association Name="Category_Image">
+          <End Role="Category_Image_Source" Type="Self.Category" Multiplicity="0..1" />
+          <End Role="Category_Image_Target" Type="Self.Image" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Category_Image_Target">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category_Image_Source">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Advert_Image">
+          <End Role="Advert_Image_Source" Type="Self.Advert" Multiplicity="0..1" />
+          <End Role="Advert_Image_Target" Type="Self.Image" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="Advert_Image_Target">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Advert_Image_Source">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Advert_Shop">
+          <End Role="Advert_Shop_Source" Type="Self.Advert" Multiplicity="*" />
+          <End Role="Advert_Shop_Target" Type="Self.Shop" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+        </Association>
+        <Association Name="IdentityRole_Users">
+          <End Role="IdentityRole_Users_Source" Type="Self.IdentityRole" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IdentityRole_Users_Target" Type="Self.IdentityUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityRole_Users_Source">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityRole_Users_Target">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="UWTContext" customannotation:UseClrTypes="true">
+          <EntitySet Name="Adverts" EntityType="Self.Advert" />
+          <EntitySet Name="Categories" EntityType="Self.Category" />
+          <EntitySet Name="Images" EntityType="Self.Image" />
+          <EntitySet Name="PageStyles" EntityType="Self.PageStyle" />
+          <EntitySet Name="Shops" EntityType="Self.Shop" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <EntitySet Name="Baskets" EntityType="Self.Basket" />
+          <EntitySet Name="Invoices" EntityType="Self.Invoice" />
+          <EntitySet Name="Orders" EntityType="Self.Order" />
+          <EntitySet Name="IdentityUserClaims" EntityType="Self.IdentityUserClaim" />
+          <EntitySet Name="IdentityUserLogins" EntityType="Self.IdentityUserLogin" />
+          <EntitySet Name="Messages" EntityType="Self.Message" />
+          <EntitySet Name="IdentityUserRoles" EntityType="Self.IdentityUserRole" />
+          <EntitySet Name="Roles" EntityType="Self.IdentityRole" />
+          <AssociationSet Name="Category_Adverts" Association="Self.Category_Adverts">
+            <End Role="Category_Adverts_Source" EntitySet="Categories" />
+            <End Role="Category_Adverts_Target" EntitySet="Adverts" />
+          </AssociationSet>
+          <AssociationSet Name="Shop_Categories" Association="Self.Shop_Categories">
+            <End Role="Shop_Categories_Source" EntitySet="Shops" />
+            <End Role="Shop_Categories_Target" EntitySet="Categories" />
+          </AssociationSet>
+          <AssociationSet Name="Invoice_Basket" Association="Self.Invoice_Basket">
+            <End Role="Invoice_Basket_Source" EntitySet="Invoices" />
+            <End Role="Invoice_Basket_Target" EntitySet="Baskets" />
+          </AssociationSet>
+          <AssociationSet Name="Order_Advert" Association="Self.Order_Advert">
+            <End Role="Order_Advert_Source" EntitySet="Orders" />
+            <End Role="Order_Advert_Target" EntitySet="Adverts" />
+          </AssociationSet>
+          <AssociationSet Name="Order_Basket" Association="Self.Order_Basket">
+            <End Role="Order_Basket_Source" EntitySet="Orders" />
+            <End Role="Order_Basket_Target" EntitySet="Baskets" />
+          </AssociationSet>
+          <AssociationSet Name="Basket_User" Association="Self.Basket_User">
+            <End Role="Basket_User_Source" EntitySet="Baskets" />
+            <End Role="Basket_User_Target" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="User_Claims" Association="Self.User_Claims">
+            <End Role="User_Claims_Source" EntitySet="Users" />
+            <End Role="User_Claims_Target" EntitySet="IdentityUserClaims" />
+          </AssociationSet>
+          <AssociationSet Name="User_Logins" Association="Self.User_Logins">
+            <End Role="User_Logins_Source" EntitySet="Users" />
+            <End Role="User_Logins_Target" EntitySet="IdentityUserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="Message_Advert" Association="Self.Message_Advert">
+            <End Role="Message_Advert_Source" EntitySet="Messages" />
+            <End Role="Message_Advert_Target" EntitySet="Adverts" />
+          </AssociationSet>
+          <AssociationSet Name="Message_Reciever" Association="Self.Message_Reciever">
+            <End Role="Message_Reciever_Source" EntitySet="Messages" />
+            <End Role="Message_Reciever_Target" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="Message_Sender" Association="Self.Message_Sender">
+            <End Role="Message_Sender_Source" EntitySet="Messages" />
+            <End Role="Message_Sender_Target" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="User_ProfileImage" Association="Self.User_ProfileImage">
+            <End Role="User_ProfileImage_Source" EntitySet="Users" />
+            <End Role="User_ProfileImage_Target" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="User_Roles" Association="Self.User_Roles">
+            <End Role="User_Roles_Source" EntitySet="Users" />
+            <End Role="User_Roles_Target" EntitySet="IdentityUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="Shop_User" Association="Self.Shop_User">
+            <End Role="Shop_User_Source" EntitySet="Shops" />
+            <End Role="Shop_User_Target" EntitySet="Users" />
+          </AssociationSet>
+          <AssociationSet Name="PageStyle_Shop" Association="Self.PageStyle_Shop">
+            <End Role="PageStyle_Shop_Source" EntitySet="PageStyles" />
+            <End Role="PageStyle_Shop_Target" EntitySet="Shops" />
+          </AssociationSet>
+          <AssociationSet Name="Image_PageStyleBackground" Association="Self.Image_PageStyleBackground">
+            <End Role="Image_PageStyleBackground_Source" EntitySet="Images" />
+            <End Role="Image_PageStyleBackground_Target" EntitySet="PageStyles" />
+          </AssociationSet>
+          <AssociationSet Name="Image_PageStyleLogo" Association="Self.Image_PageStyleLogo">
+            <End Role="Image_PageStyleLogo_Source" EntitySet="Images" />
+            <End Role="Image_PageStyleLogo_Target" EntitySet="PageStyles" />
+          </AssociationSet>
+          <AssociationSet Name="Category_Image" Association="Self.Category_Image">
+            <End Role="Category_Image_Source" EntitySet="Categories" />
+            <End Role="Category_Image_Target" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="Advert_Image" Association="Self.Advert_Image">
+            <End Role="Advert_Image_Source" EntitySet="Adverts" />
+            <End Role="Advert_Image_Target" EntitySet="Images" />
+          </AssociationSet>
+          <AssociationSet Name="Advert_Shop" Association="Self.Advert_Shop">
+            <End Role="Advert_Shop_Source" EntitySet="Adverts" />
+            <End Role="Advert_Shop_Target" EntitySet="Shops" />
+          </AssociationSet>
+          <AssociationSet Name="IdentityRole_Users" Association="Self.IdentityRole_Users">
+            <End Role="IdentityRole_Users_Source" EntitySet="Roles" />
+            <End Role="IdentityRole_Users_Target" EntitySet="IdentityUserRoles" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </ConceptualModels>
+    <Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CodeFirstDatabase" CdmEntityContainer="UWTContext">
+          <EntitySetMapping Name="Adverts">
+            <EntityTypeMapping TypeName="UWT.Models.Advert">
+              <MappingFragment StoreEntitySet="Advert">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="UWT.Models.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Images">
+            <EntityTypeMapping TypeName="UWT.Models.Image">
+              <MappingFragment StoreEntitySet="Image">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Path" ColumnName="Path" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PageStyles">
+            <EntityTypeMapping TypeName="UWT.Models.PageStyle">
+              <MappingFragment StoreEntitySet="PageStyle">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="ForegroundColor" ColumnName="ForegroundColor" />
+                <ScalarProperty Name="BackgroundColor" ColumnName="BackgroundColor" />
+                <ScalarProperty Name="NavColor" ColumnName="NavColor" />
+                <ScalarProperty Name="SheetColor" ColumnName="SheetColor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Shops">
+            <EntityTypeMapping TypeName="UWT.Models.Shop">
+              <MappingFragment StoreEntitySet="Shop">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DateOpened" ColumnName="DateOpened" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="UWT.Models.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Surname" ColumnName="Surname" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
+                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
+                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
+                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
+                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Baskets">
+            <EntityTypeMapping TypeName="UWT.Models.Basket">
+              <MappingFragment StoreEntitySet="Basket">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DateCreated" ColumnName="DateCreated" />
+                <ScalarProperty Name="DateClosed" ColumnName="DateClosed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoices">
+            <EntityTypeMapping TypeName="UWT.Models.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Created" ColumnName="Created" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="UWT.Models.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityUserClaims">
+            <EntityTypeMapping TypeName="UWT.Models.IdentityUserClaim">
+              <MappingFragment StoreEntitySet="IdentityUserClaim">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityUserLogins">
+            <EntityTypeMapping TypeName="UWT.Models.IdentityUserLogin">
+              <MappingFragment StoreEntitySet="IdentityUserLogin">
+                <ScalarProperty Name="LoginProvider" ColumnName="LoginProvider" />
+                <ScalarProperty Name="ProviderKey" ColumnName="ProviderKey" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Messages">
+            <EntityTypeMapping TypeName="UWT.Models.Message">
+              <MappingFragment StoreEntitySet="Message">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="DateSent" ColumnName="DateSent" />
+                <ScalarProperty Name="DateRecieved" ColumnName="DateRecieved" />
+                <ScalarProperty Name="Text" ColumnName="Text" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityUserRoles">
+            <EntityTypeMapping TypeName="UWT.Models.IdentityUserRole">
+              <MappingFragment StoreEntitySet="IdentityUserRole">
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="RoleId" ColumnName="RoleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="UWT.Models.IdentityRole">
+              <MappingFragment StoreEntitySet="IdentityRole">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="Category_Adverts" TypeName="UWT.Models.Category_Adverts" StoreEntitySet="CategoryAdvert">
+            <EndProperty Name="Category_Adverts_Source">
+              <ScalarProperty Name="Id" ColumnName="Category_Id" />
+            </EndProperty>
+            <EndProperty Name="Category_Adverts_Target">
+              <ScalarProperty Name="Id" ColumnName="Advert_Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Shop_Categories" TypeName="UWT.Models.Shop_Categories" StoreEntitySet="Category">
+            <EndProperty Name="Shop_Categories_Source">
+              <ScalarProperty Name="Id" ColumnName="Shop_Id" />
+            </EndProperty>
+            <EndProperty Name="Shop_Categories_Target">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="Shop_Id" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Order_Advert" TypeName="UWT.Models.Order_Advert" StoreEntitySet="Order">
+            <EndProperty Name="Order_Advert_Target">
+              <ScalarProperty Name="Id" ColumnName="Advert_Id" />
+            </EndProperty>
+            <EndProperty Name="Order_Advert_Source">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Order_Basket" TypeName="UWT.Models.Order_Basket" StoreEntitySet="Order">
+            <EndProperty Name="Order_Basket_Target">
+              <ScalarProperty Name="Id" ColumnName="Basket_Id" />
+            </EndProperty>
+            <EndProperty Name="Order_Basket_Source">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Basket_User" TypeName="UWT.Models.Basket_User" StoreEntitySet="Basket">
+            <EndProperty Name="Basket_User_Target">
+              <ScalarProperty Name="Id" ColumnName="User_Id" />
+            </EndProperty>
+            <EndProperty Name="Basket_User_Source">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Message_Advert" TypeName="UWT.Models.Message_Advert" StoreEntitySet="Message">
+            <EndProperty Name="Message_Advert_Target">
+              <ScalarProperty Name="Id" ColumnName="Advert_Id" />
+            </EndProperty>
+            <EndProperty Name="Message_Advert_Source">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="Advert_Id" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Message_Reciever" TypeName="UWT.Models.Message_Reciever" StoreEntitySet="Message">
+            <EndProperty Name="Message_Reciever_Target">
+              <ScalarProperty Name="Id" ColumnName="Reciever_Id" />
+            </EndProperty>
+            <EndProperty Name="Message_Reciever_Source">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Message_Sender" TypeName="UWT.Models.Message_Sender" StoreEntitySet="Message">
+            <EndProperty Name="Message_Sender_Target">
+              <ScalarProperty Name="Id" ColumnName="Sender_Id" />
+            </EndProperty>
+            <EndProperty Name="Message_Sender_Source">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+            <Condition IsNull="false" ColumnName="Sender_Id" />
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="User_ProfileImage" TypeName="UWT.Models.User_ProfileImage" StoreEntitySet="User">
+            <EndProperty Name="User_ProfileImage_Target">
+              <ScalarProperty Name="Id" ColumnName="ProfileImage_Id" />
+            </EndProperty>
+            <EndProperty Name="User_ProfileImage_Source">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Shop_User" TypeName="UWT.Models.Shop_User" StoreEntitySet="Shop">
+            <EndProperty Name="Shop_User_Target">
+              <ScalarProperty Name="Id" ColumnName="User_Id" />
+            </EndProperty>
+            <EndProperty Name="Shop_User_Source">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Image_PageStyleBackground" TypeName="UWT.Models.Image_PageStyleBackground" StoreEntitySet="PageStyle">
+            <EndProperty Name="Image_PageStyleBackground_Source">
+              <ScalarProperty Name="Id" ColumnName="BackgroundImage_Id" />
+            </EndProperty>
+            <EndProperty Name="Image_PageStyleBackground_Target">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Image_PageStyleLogo" TypeName="UWT.Models.Image_PageStyleLogo" StoreEntitySet="PageStyle">
+            <EndProperty Name="Image_PageStyleLogo_Source">
+              <ScalarProperty Name="Id" ColumnName="Logo_Id" />
+            </EndProperty>
+            <EndProperty Name="Image_PageStyleLogo_Target">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="Advert_Shop" TypeName="UWT.Models.Advert_Shop" StoreEntitySet="Advert">
+            <EndProperty Name="Advert_Shop_Target">
+              <ScalarProperty Name="Id" ColumnName="Shop_Id" />
+            </EndProperty>
+            <EndProperty Name="Advert_Shop_Source">
+              <ScalarProperty Name="Id" ColumnName="Id" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </Mappings>
+    <StorageModels>
+      <Schema Namespace="CodeFirstDatabaseSchema" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Advert">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" customannotation:Index="{ Name: IX_Id, Order: 0 }" Nullable="false" />
+          <Property Name="Title" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="Shop_Id" Type="int" customannotation:Index="{ Name: IX_Shop_Id, Order: 0 }" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" customannotation:Index="{ Name: IX_Id, Order: 0 }" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Shop_Id" Type="int" customannotation:Index="{ Name: IX_Shop_Id, Order: 0 }" Nullable="true" />
+        </EntityType>
+        <EntityType Name="Image">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Path" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="PageStyle">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" customannotation:Index="{ Name: IX_Id, Order: 0 }" Nullable="false" />
+          <Property Name="ForegroundColor" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BackgroundColor" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NavColor" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SheetColor" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="BackgroundImage_Id" Type="bigint" customannotation:Index="{ Name: IX_BackgroundImage_Id, Order: 0 }" Nullable="false" />
+          <Property Name="Logo_Id" Type="bigint" customannotation:Index="{ Name: IX_Logo_Id, Order: 0 }" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Shop">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateOpened" Type="datetime" Nullable="false" />
+          <Property Name="Email" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="Phone" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="Address" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="User_Id" Type="nvarchar" customannotation:Index="{ Name: IX_User_Id, Order: 0 }" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Surname" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="256" Nullable="false" />
+          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="PhoneNumber" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
+          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
+          <Property Name="LockoutEndDateUtc" Type="datetime" Nullable="true" />
+          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
+          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" customannotation:Index="{ Name: UserNameIndex, IsUnique: True }" MaxLength="256" Nullable="false" />
+          <Property Name="ProfileImage_Id" Type="bigint" customannotation:Index="{ Name: IX_ProfileImage_Id, Order: 0 }" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Basket">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateCreated" Type="datetime" Nullable="false" />
+          <Property Name="DateClosed" Type="datetime" Nullable="false" />
+          <Property Name="User_Id" Type="nvarchar" customannotation:Index="{ Name: IX_User_Id, Order: 0 }" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" customannotation:Index="{ Name: IX_Id, Order: 0 }" Nullable="false" />
+          <Property Name="Created" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" Nullable="false" />
+          <Property Name="Advert_Id" Type="bigint" customannotation:Index="{ Name: IX_Advert_Id, Order: 0 }" Nullable="false" />
+          <Property Name="Basket_Id" Type="bigint" customannotation:Index="{ Name: IX_Basket_Id, Order: 0 }" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IdentityUserClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" customannotation:Index="{ Name: IX_UserId, Order: 0 }" MaxLength="128" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" Nullable="true" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" Nullable="true" />
+        </EntityType>
+        <EntityType Name="IdentityUserLogin">
+          <Key>
+            <PropertyRef Name="LoginProvider" />
+            <PropertyRef Name="ProviderKey" />
+            <PropertyRef Name="UserId" />
+          </Key>
+          <Property Name="LoginProvider" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="ProviderKey" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" customannotation:Index="{ Name: IX_UserId, Order: 0 }" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Message">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateSent" Type="datetime" Nullable="false" />
+          <Property Name="DateRecieved" Type="datetime" Nullable="false" />
+          <Property Name="Text" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Advert_Id" Type="bigint" customannotation:Index="{ Name: IX_Advert_Id, Order: 0 }" Nullable="true" />
+          <Property Name="Reciever_Id" Type="nvarchar" customannotation:Index="{ Name: IX_Reciever_Id, Order: 0 }" MaxLength="128" Nullable="false" />
+          <Property Name="Sender_Id" Type="nvarchar" customannotation:Index="{ Name: IX_Sender_Id, Order: 0 }" MaxLength="128" Nullable="true" />
+        </EntityType>
+        <EntityType Name="IdentityUserRole">
+          <Key>
+            <PropertyRef Name="UserId" />
+            <PropertyRef Name="RoleId" />
+          </Key>
+          <Property Name="UserId" Type="nvarchar" customannotation:Index="{ Name: IX_UserId, Order: 0 }" MaxLength="128" Nullable="false" />
+          <Property Name="RoleId" Type="nvarchar" customannotation:Index="{ Name: IX_RoleId, Order: 0 }" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IdentityRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" customannotation:Index="{ Name: RoleNameIndex, IsUnique: True }" MaxLength="256" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CategoryAdvert">
+          <Key>
+            <PropertyRef Name="Category_Id" />
+            <PropertyRef Name="Advert_Id" />
+          </Key>
+          <Property Name="Category_Id" Type="bigint" customannotation:Index="{ Name: IX_Category_Id, Order: 0 }" Nullable="false" />
+          <Property Name="Advert_Id" Type="bigint" customannotation:Index="{ Name: IX_Advert_Id, Order: 0 }" Nullable="false" />
+        </EntityType>
+        <Association Name="Category_Adverts_Source">
+          <End Role="Category" Type="Self.Category" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CategoryAdvert" Type="Self.CategoryAdvert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryAdvert">
+              <PropertyRef Name="Category_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Category_Adverts_Target">
+          <End Role="Advert" Type="Self.Advert" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="CategoryAdvert" Type="Self.CategoryAdvert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Advert">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CategoryAdvert">
+              <PropertyRef Name="Advert_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Shop_Categories">
+          <End Role="Shop" Type="Self.Shop" Multiplicity="0..1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="Shop_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Invoice_Basket">
+          <End Role="Basket" Type="Self.Basket" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Basket">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Order_Advert">
+          <End Role="Advert" Type="Self.Advert" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Advert">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Advert_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Order_Basket">
+          <End Role="Basket" Type="Self.Basket" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Basket">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Basket_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Basket_User">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Basket" Type="Self.Basket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Basket">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Claims">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IdentityUserClaim" Type="Self.IdentityUserClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Logins">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IdentityUserLogin" Type="Self.IdentityUserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserLogin">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Message_Advert">
+          <End Role="Advert" Type="Self.Advert" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Advert">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="Advert_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Message_Reciever">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="Reciever_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Message_Sender">
+          <End Role="User" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Message" Type="Self.Message" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Message">
+              <PropertyRef Name="Sender_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_ProfileImage">
+          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="ProfileImage_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="User_Roles">
+          <End Role="User" Type="Self.User" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IdentityUserRole" Type="Self.IdentityUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserRole">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Shop_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Shop" Type="Self.Shop" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Shop">
+              <PropertyRef Name="User_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PageStyle_Shop">
+          <End Role="Shop" Type="Self.Shop" Multiplicity="1" />
+          <End Role="PageStyle" Type="Self.PageStyle" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PageStyle">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Image_PageStyleBackground">
+          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="PageStyle" Type="Self.PageStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PageStyle">
+              <PropertyRef Name="BackgroundImage_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Image_PageStyleLogo">
+          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="PageStyle" Type="Self.PageStyle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PageStyle">
+              <PropertyRef Name="Logo_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Category_Image">
+          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="Category" Type="Self.Category" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Category">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Advert_Image">
+          <End Role="Image" Type="Self.Image" Multiplicity="1" />
+          <End Role="Advert" Type="Self.Advert" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Image">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Advert">
+              <PropertyRef Name="Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="Advert_Shop">
+          <End Role="Shop" Type="Self.Shop" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Advert" Type="Self.Advert" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Shop">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Advert">
+              <PropertyRef Name="Shop_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="IdentityRole_Users">
+          <End Role="IdentityRole" Type="Self.IdentityRole" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="IdentityUserRole" Type="Self.IdentityUserRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityUserRole">
+              <PropertyRef Name="RoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CodeFirstDatabase">
+          <EntitySet Name="Advert" EntityType="Self.Advert" Schema="UWT" Table="Adverts" />
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="UWT" Table="Categories" />
+          <EntitySet Name="Image" EntityType="Self.Image" Schema="UWT" Table="Images" />
+          <EntitySet Name="PageStyle" EntityType="Self.PageStyle" Schema="UWT" Table="PageStyles" />
+          <EntitySet Name="Shop" EntityType="Self.Shop" Schema="UWT" Table="Shops" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="UWT" Table="AspNetUsers" />
+          <EntitySet Name="Basket" EntityType="Self.Basket" Schema="UWT" Table="Baskets" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="UWT" Table="Invoices" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="UWT" Table="Orders" />
+          <EntitySet Name="IdentityUserClaim" EntityType="Self.IdentityUserClaim" Schema="UWT" Table="AspNetUserClaims" />
+          <EntitySet Name="IdentityUserLogin" EntityType="Self.IdentityUserLogin" Schema="UWT" Table="AspNetUserLogins" />
+          <EntitySet Name="Message" EntityType="Self.Message" Schema="UWT" Table="Messages" />
+          <EntitySet Name="IdentityUserRole" EntityType="Self.IdentityUserRole" Schema="UWT" Table="AspNetUserRoles" />
+          <EntitySet Name="IdentityRole" EntityType="Self.IdentityRole" Schema="UWT" Table="AspNetRoles" />
+          <EntitySet Name="CategoryAdvert" EntityType="Self.CategoryAdvert" Schema="UWT" Table="CategoryAdverts" />
+          <AssociationSet Name="Category_Adverts_Source" Association="Self.Category_Adverts_Source">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="CategoryAdvert" EntitySet="CategoryAdvert" />
+          </AssociationSet>
+          <AssociationSet Name="Category_Adverts_Target" Association="Self.Category_Adverts_Target">
+            <End Role="Advert" EntitySet="Advert" />
+            <End Role="CategoryAdvert" EntitySet="CategoryAdvert" />
+          </AssociationSet>
+          <AssociationSet Name="Shop_Categories" Association="Self.Shop_Categories">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="Invoice_Basket" Association="Self.Invoice_Basket">
+            <End Role="Basket" EntitySet="Basket" />
+            <End Role="Invoice" EntitySet="Invoice" />
+          </AssociationSet>
+          <AssociationSet Name="Order_Advert" Association="Self.Order_Advert">
+            <End Role="Advert" EntitySet="Advert" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="Order_Basket" Association="Self.Order_Basket">
+            <End Role="Basket" EntitySet="Basket" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="Basket_User" Association="Self.Basket_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Basket" EntitySet="Basket" />
+          </AssociationSet>
+          <AssociationSet Name="User_Claims" Association="Self.User_Claims">
+            <End Role="User" EntitySet="User" />
+            <End Role="IdentityUserClaim" EntitySet="IdentityUserClaim" />
+          </AssociationSet>
+          <AssociationSet Name="User_Logins" Association="Self.User_Logins">
+            <End Role="User" EntitySet="User" />
+            <End Role="IdentityUserLogin" EntitySet="IdentityUserLogin" />
+          </AssociationSet>
+          <AssociationSet Name="Message_Advert" Association="Self.Message_Advert">
+            <End Role="Advert" EntitySet="Advert" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="Message_Reciever" Association="Self.Message_Reciever">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="Message_Sender" Association="Self.Message_Sender">
+            <End Role="User" EntitySet="User" />
+            <End Role="Message" EntitySet="Message" />
+          </AssociationSet>
+          <AssociationSet Name="User_ProfileImage" Association="Self.User_ProfileImage">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+          <AssociationSet Name="User_Roles" Association="Self.User_Roles">
+            <End Role="User" EntitySet="User" />
+            <End Role="IdentityUserRole" EntitySet="IdentityUserRole" />
+          </AssociationSet>
+          <AssociationSet Name="Shop_User" Association="Self.Shop_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Shop" EntitySet="Shop" />
+          </AssociationSet>
+          <AssociationSet Name="PageStyle_Shop" Association="Self.PageStyle_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="PageStyle" EntitySet="PageStyle" />
+          </AssociationSet>
+          <AssociationSet Name="Image_PageStyleBackground" Association="Self.Image_PageStyleBackground">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="PageStyle" EntitySet="PageStyle" />
+          </AssociationSet>
+          <AssociationSet Name="Image_PageStyleLogo" Association="Self.Image_PageStyleLogo">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="PageStyle" EntitySet="PageStyle" />
+          </AssociationSet>
+          <AssociationSet Name="Category_Image" Association="Self.Category_Image">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Category" EntitySet="Category" />
+          </AssociationSet>
+          <AssociationSet Name="Advert_Image" Association="Self.Advert_Image">
+            <End Role="Image" EntitySet="Image" />
+            <End Role="Advert" EntitySet="Advert" />
+          </AssociationSet>
+          <AssociationSet Name="Advert_Shop" Association="Self.Advert_Shop">
+            <End Role="Shop" EntitySet="Shop" />
+            <End Role="Advert" EntitySet="Advert" />
+          </AssociationSet>
+          <AssociationSet Name="IdentityRole_Users" Association="Self.IdentityRole_Users">
+            <End Role="IdentityRole" EntitySet="IdentityRole" />
+            <End Role="IdentityUserRole" EntitySet="IdentityUserRole" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </StorageModels>
+  </Runtime>
+  <Designer>
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="ProcessDependentTemplatesOnSave" Value="False" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <Diagrams >
+      <Diagram DiagramId="72effecf33a14ad985b569e20ca93ec2" Name="Diagram1" ZoomLevel="83">
+        <EntityTypeShape EntityType="UWT.Models.Advert" Width="1.5" PointX="1.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.Category" Width="1.75" PointX="4" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.Image" Width="1.75" PointX="4" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.PageStyle" Width="1.5" PointX="6.5" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.Shop" Width="1.5" PointX="8.75" PointY="4.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.User" Width="1.75" PointX="11.75" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.Basket" Width="1.75" PointX="11.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.Invoice" Width="1.5" PointX="14.125" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.Order" Width="1.5" PointX="8.75" PointY="9.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.IdentityUserClaim" Width="1.75" PointX="14.125" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.IdentityUserLogin" Width="1.75" PointX="14.125" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.Message" Width="1.5" PointX="6.5" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.IdentityUserRole" Width="1.75" PointX="11.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="UWT.Models.IdentityRole" Width="1.75" PointX="14.125" PointY="1.375" IsExpanded="true" />
+        <AssociationConnector Association="UWT.Models.Category_Adverts" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Shop_Categories" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Invoice_Basket" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Order_Advert" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Order_Basket" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Basket_User" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.User_Claims" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.User_Logins" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Message_Advert" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Message_Reciever" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Message_Sender" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.User_ProfileImage" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.User_Roles" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Shop_User" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.PageStyle_Shop" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Image_PageStyleBackground" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Image_PageStyleLogo" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Category_Image" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Advert_Image" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.Advert_Shop" ManuallyRouted="false" />
+        <AssociationConnector Association="UWT.Models.IdentityRole_Users" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</Edmx>
