@@ -27,7 +27,7 @@ namespace UWT.Models {
         [InverseProperty("MessagesSent")]
         public virtual User Sender { get; set; }
 
-        public virtual Advert Advert { get; set; }
+        public virtual Product Product { get; set; }
 
     }
 

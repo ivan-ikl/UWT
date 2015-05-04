@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
+using UWT.Models.Interfaces;
 
 namespace UWT.Models {
     
-    public class PageStyle {
+    public class PageStyle : IUserOwned {
 
         [Key]
         public int Id { get; set; }
@@ -24,14 +23,23 @@ namespace UWT.Models {
         [Required]
         public string SheetColor { get; set; }
 
+        public virtual List<Shop> Shops { get; set; }
+
         [Required]
-        public virtual Shop Shop { get; set; }
+        public virtual User Owner { get; set; }
+
+        [Required]
+        public virtual DateTime DateCreated { get; set; }
 
         [Required, InverseProperty("PageStyleLogo")]
         public virtual Image Logo { get; set; }
 
         [Required, InverseProperty("PageStyleBackground")]
         public virtual Image BackgroundImage { get; set; }
+
+        [Required]
+        public virtual PageLayout PageLayout { get; set; }
+
 
     }
 

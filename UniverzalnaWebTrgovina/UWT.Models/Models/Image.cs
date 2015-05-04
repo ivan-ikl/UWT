@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
+using UWT.Models.Interfaces;
 
 namespace UWT.Models {
 
-    public class Image {
+    public class Image : IUserOwned {
 
         [Key]
         public long Id { get; set; }
@@ -16,7 +14,7 @@ namespace UWT.Models {
         public string Path { get; set; }
 
         [Required]
-        public DateTime Created { get; set; }
+        public DateTime DateCreated { get; set; }
 
         [InverseProperty("Logo")]
         public virtual PageStyle PageStyleLogo { get; set; }
@@ -26,9 +24,14 @@ namespace UWT.Models {
 
         public virtual Category Category { get; set; }
 
-        public virtual Advert Advert { get; set; }
+        public virtual Product Advert { get; set; }
 
+        [InverseProperty("ProfileImage")]
         public virtual User UserProfile { get; set; }
+
+        [Required]
+        [InverseProperty("OwnedImages")]
+        public virtual User Owner { get; set; }
 
     }
 

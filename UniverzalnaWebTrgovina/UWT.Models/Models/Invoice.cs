@@ -12,7 +12,7 @@ namespace UWT.Models {
         public long Id { get; set; }
 
         [Required]
-        public DateTime Created { get; set; }
+        public DateTime DateCreated { get; set; }
 
         [Required]
         public virtual Basket Basket { get; set; }

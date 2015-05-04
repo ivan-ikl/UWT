@@ -12,14 +12,15 @@ using System.Threading.Tasks;
 namespace UWT.Models {
     public class User : IdentityUser {
         
-        [Required]
-        public string Name { get; set; }
+        // TODO: Goes to claims
+        //[Required]
+        //public string Name { get; set; }
 
-        [Required]
-        public string Surname { get; set; }
+        //[Required]
+        //public string Surname { get; set; }
 
-        [Required]
-        public string Email { get; set; }
+        //[Required]
+        //public string Email { get; set; }
 
         [InverseProperty("Sender")]
         public virtual List<Message> MessagesSent { get; set; }
@@ -27,10 +28,14 @@ namespace UWT.Models {
         [InverseProperty("Reciever")]
         public virtual List<Message> MessagesRecieved { get; set; }
 
-        public virtual Shop Shop { get; set; }
+        public virtual List<Shop> Shops { get; set; }
 
         [Required]
+        [InverseProperty("UserProfile")]
         public virtual Image ProfileImage { get; set; }
+
+        [InverseProperty("Owner")]
+        public virtual List<Image> OwnedImages { get; set; } 
 
         public virtual List<Basket> Baskets { get; set; }
 
@@ -38,5 +43,7 @@ namespace UWT.Models {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
             return userIdentity;
         }
+
     }
+
 }

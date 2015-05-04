@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+using UWT.Models.Interfaces;
 
 namespace UWT.Models {
 
-    public class Category {
+    public class Category : IShopMember {
         
         [Key]
         public long Id { get; set; }
@@ -17,7 +15,10 @@ namespace UWT.Models {
         [Required]
         public virtual Image Image { get; set; }
 
-        public virtual List<Advert> Adverts { get; set; }
+        [Required]
+        public virtual Shop Shop { get; set; }
+
+        public virtual List<Product> Products { get; set; }
 
     }
 

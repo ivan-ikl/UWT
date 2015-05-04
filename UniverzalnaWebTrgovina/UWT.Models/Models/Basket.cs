@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+using UWT.Models.Interfaces;
 
 namespace UWT.Models {
     
-    public class Basket {
+    public class Basket : IUserOwned {
 
         [Key]
         public long Id { get; set; }
@@ -22,9 +21,9 @@ namespace UWT.Models {
         public DateTime DateClosed { get; set; }
 
         [Required]
-        public virtual User User { get; set; }
+        public virtual User Owner { get; set; }
 
-        public virtual List<Order> Orders { get; set; }
+        public virtual List<BasketItem> BasketItems { get; set; }
 
         /// <summary>
         /// An invoice gets generated when the user confirms his order

@@ -77,14 +77,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Advert.cs" />
+    <Compile Include="Interfaces\IPricing.cs" />
+    <Compile Include="Interfaces\IUserOwned.cs" />
+    <Compile Include="Interfaces\IShopMember.cs" />
+    <Compile Include="Models\PageLayout.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\Image.cs" />
     <Compile Include="Models\Invoice.cs" />
     <Compile Include="Models\Message.cs" />
     <Compile Include="Models\Basket.cs" />
-    <Compile Include="Models\Order.cs" />
+    <Compile Include="Models\BasketItem.cs" />
     <Compile Include="Models\PageStyle.cs" />
+    <Compile Include="Models\Search.cs" />
     <Compile Include="Models\Shop.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UWTContext.cs" />
