@@ -10,17 +10,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace UWT.Models {
-    public class User : IdentityUser {
+    public partial class User : IdentityUser {
         
-        // TODO: Goes to claims
-        //[Required]
-        //public string Name { get; set; }
+        [Required]
+        public string Name { get; set; }
 
-        //[Required]
-        //public string Surname { get; set; }
-
-        //[Required]
-        //public string Email { get; set; }
+        [Required]
+        public string Surname { get; set; }
 
         [InverseProperty("Sender")]
         public virtual List<Message> MessagesSent { get; set; }

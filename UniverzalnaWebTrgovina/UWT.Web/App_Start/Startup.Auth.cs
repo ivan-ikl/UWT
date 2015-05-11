@@ -13,7 +13,7 @@ namespace UWT.Web {
 
         public void ConfigureAuth(IAppBuilder app)
         {
-            app.CreatePerOwinContext(UWTContext.Create);
+            app.CreatePerOwinContext(UwtContext.Create);
             app.CreatePerOwinContext<UwtUserManager>(UwtUserManager.Create);
             app.CreatePerOwinContext<UwtSignInManager>(UwtSignInManager.Create);
 
@@ -22,7 +22,7 @@ namespace UWT.Web {
             // Configure the sign in cookie
             app.UseCookieAuthentication(new CookieAuthenticationOptions {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login"),
+                LoginPath = new PathString("/Membership/Login"),
                 Provider = new CookieAuthenticationProvider {
                     // Enables the application to validate the security stamp when the user logs in.
                     // This is a security feature which is used when you change a password or add an external login to your account.  

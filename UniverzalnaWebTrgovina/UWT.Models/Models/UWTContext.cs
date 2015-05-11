@@ -3,13 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
+using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using UWT.Models.Models;
 
 namespace UWT.Models {
-    public class UWTContext : IdentityDbContext<User> {
+
+    public class UwtContext : IdentityDbContext<User>
+    {
 
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Basket> Baskets { get; set; }
@@ -22,13 +26,16 @@ namespace UWT.Models {
         public virtual DbSet<Shop> Shops { get; set; }
         public virtual DbSet<PageLayout> PageLayouts { get; set; }
         public virtual DbSet<Search> Searches { get; set; }
+        public virtual DbSet<IdentityUserClaim> Claims { get; set; }
+        public virtual DbSet<IdentityUserLogin> Logins { get; set; }
 
-        public UWTContext() : base("UWTContext", throwIfV1Schema: false) { }
+        public UwtContext() : base("UWTContext", throwIfV1Schema: false) { }
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             modelBuilder.HasDefaultSchema("UWT");
+            modelBuilder.Conventions.Remove<OneToManyCascadeDeleteConvention>();
             base.OnModelCreating(modelBuilder);
         }
-        public static UWTContext Create() { return new UWTContext(); }
+        public static UwtContext Create() { return new UwtContext(); }
 
     }
 }

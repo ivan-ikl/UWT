@@ -29,7 +29,6 @@ namespace UWT.Models {
         [InverseProperty("ProfileImage")]
         public virtual User UserProfile { get; set; }
 
-        [Required]
         [InverseProperty("OwnedImages")]
         public virtual User Owner { get; set; }
 

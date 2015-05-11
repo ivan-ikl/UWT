@@ -64,6 +64,9 @@ namespace UWT.Web.Models
 
     public class RegisterViewModel
     {
+        public const string NameClaim = "http://uwt/claims/name";
+        public const string SurnameClaim = "http://uwt/claims/surname";
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -79,6 +82,23 @@ namespace UWT.Web.Models
         [Display(Name = "Potvrda lozinke")]
         [Compare("Password", ErrorMessage = "Lozinke nisu jednake.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [Display(Name = "Ime")]
+        public string Name {get; set;}
+
+        [Required]
+        [Display(Name = "Prezime")]
+        public string Surname {get; set;}
+
+        [Required]
+        [Display(Name = "Telefonski broj")]
+        public string PhoneNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Željeno korisničko ime")]
+        public string UserName { get; set; }
+
     }
 
     public class ResetPasswordViewModel

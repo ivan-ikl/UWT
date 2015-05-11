@@ -40,14 +40,16 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Core">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.0\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework">
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.0\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.AspNet.Identity.Owin">
-      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.0\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.1\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Owin">
       <HintPath>..\packages\Microsoft.Owin.2.1.0\lib\net45\Microsoft.Owin.dll</HintPath>
@@ -61,8 +63,9 @@
     <Reference Include="Microsoft.Owin.Security.OAuth">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.2.1.0\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
@@ -80,6 +83,19 @@
     <Compile Include="Interfaces\IPricing.cs" />
     <Compile Include="Interfaces\IUserOwned.cs" />
     <Compile Include="Interfaces\IShopMember.cs" />
+    <Compile Include="Migrations\201505102338319_InitialCreate.cs" />
+    <Compile Include="Migrations\201505102338319_InitialCreate.Designer.cs">
+      <DependentUpon>201505102338319_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505110852193_unclaimbasicinfo.cs" />
+    <Compile Include="Migrations\201505110852193_unclaimbasicinfo.Designer.cs">
+      <DependentUpon>201505110852193_unclaimbasicinfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505110938441_imageoptionalowner.cs" />
+    <Compile Include="Migrations\201505110938441_imageoptionalowner.Designer.cs">
+      <DependentUpon>201505110938441_imageoptionalowner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PageLayout.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Category.cs" />
@@ -89,6 +105,7 @@
     <Compile Include="Models\Basket.cs" />
     <Compile Include="Models\BasketItem.cs" />
     <Compile Include="Models\PageStyle.cs" />
+    <Compile Include="Models\Roles.cs" />
     <Compile Include="Models\Search.cs" />
     <Compile Include="Models\Shop.cs" />
     <Compile Include="Models\User.cs" />
@@ -98,6 +115,20 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201505102338319_InitialCreate.resx">
+      <DependentUpon>201505102338319_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505110852193_unclaimbasicinfo.resx">
+      <DependentUpon>201505110852193_unclaimbasicinfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505110938441_imageoptionalowner.resx">
+      <DependentUpon>201505110938441_imageoptionalowner.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

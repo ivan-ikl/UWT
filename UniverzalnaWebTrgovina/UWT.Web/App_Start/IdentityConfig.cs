@@ -38,7 +38,7 @@ namespace UWT.Web
 
         public static UwtUserManager Create(IdentityFactoryOptions<UwtUserManager> options, IOwinContext context) 
         {
-            var manager = new UwtUserManager(new UserStore<User>(context.Get<UWTContext>()));
+            var manager = new UwtUserManager(new UserStore<User>(context.Get<UwtContext>()));
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<User>(manager)
             {
