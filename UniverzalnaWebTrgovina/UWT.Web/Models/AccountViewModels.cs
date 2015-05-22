@@ -91,7 +91,6 @@ namespace UWT.Web.Models
         [Display(Name = "Prezime")]
         public string Surname {get; set;}
 
-        [Required]
         [Display(Name = "Telefonski broj")]
         public string PhoneNumber { get; set; }
 

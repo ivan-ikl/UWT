@@ -10,6 +10,7 @@ using UWT.Web.Models;
 
 namespace UWT.Web.Controllers
 {
+    [Authorize]
     public class ManageController : MembershipControllerBase
     {
         public ManageController() { }

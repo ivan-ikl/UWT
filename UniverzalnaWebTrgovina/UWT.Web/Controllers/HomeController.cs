@@ -1,6 +1,8 @@
 ﻿using System.Web.Mvc;
 
 namespace UWT.Web.Controllers {
+
+    [Authorize]
     public class HomeController : Controller {
         public ActionResult Index() {
             return View();
@@ -18,4 +20,5 @@ namespace UWT.Web.Controllers {
             return View();
         }
     }
+
 }
