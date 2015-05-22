@@ -10,8 +10,8 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using UWT.Models;
+using UWT.Web.Helpers;
 using UWT.Web.Models;
-using System.Data.Entity;
 
 namespace UWT.Web.Controllers
 {
@@ -45,7 +45,7 @@ namespace UWT.Web.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Prijava nije uspjela.");
                     return View(model);
             }
         }
@@ -79,7 +79,7 @@ namespace UWT.Web.Controllers
                     return View("Lockout");
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid code.");
+                    ModelState.AddModelError("", "Pogrešni kod.");
                     return View(model);
             }
         }
@@ -92,25 +92,45 @@ namespace UWT.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model) {
-            if (ModelState.IsValid) {
-                var user = new User { UserName = model.Email, Email = model.Email };
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase image)
+        {
+            Image Image = null;
+            using (var db = new UwtContext())
+            {
+                if (image == null || image.ContentLength == 0)
+                {
+                    // Use default image
+                    if (!db.Images.Any())
+                    {
+                        db.Images.Add(new Image { DateCreated = DateTime.UtcNow, Owner = null, Path = FilesHelper.DefaultProfileImage });
+                    }
+                    Image = db.Images.FirstOrDefault(i => i.Path == FilesHelper.DefaultProfileImage);
+                }
+                else
+                {
+                    Image = new Image { DateCreated = DateTime.UtcNow, Path = image.SaveUploadedImage(Server) };
+                }
+            }
+
+            if (ModelState.IsValid)
+            {
+                var user = new User
+                {
+                    UserName = model.Email,
+                    Email = model.Email,
+                    Name = model.Name,
+                    Surname = model.Surname,
+                    ProfileImage = Image,
+                    OwnedImages = (Image != null && Image.Path != FilesHelper.DefaultProfileImage ? new List<Image> { Image } : null)
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded) {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-
-                    // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
-                    // Send an email with this link
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
 
-            // If we got this far, something failed, redisplay form
             return View(model);
         }
 
