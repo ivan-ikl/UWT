@@ -83,17 +83,9 @@
     <Compile Include="Interfaces\IPricing.cs" />
     <Compile Include="Interfaces\IUserOwned.cs" />
     <Compile Include="Interfaces\IShopMember.cs" />
-    <Compile Include="Migrations\201505102338319_InitialCreate.cs" />
-    <Compile Include="Migrations\201505102338319_InitialCreate.Designer.cs">
-      <DependentUpon>201505102338319_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505110852193_unclaimbasicinfo.cs" />
-    <Compile Include="Migrations\201505110852193_unclaimbasicinfo.Designer.cs">
-      <DependentUpon>201505110852193_unclaimbasicinfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505110938441_imageoptionalowner.cs" />
-    <Compile Include="Migrations\201505110938441_imageoptionalowner.Designer.cs">
-      <DependentUpon>201505110938441_imageoptionalowner.cs</DependentUpon>
+    <Compile Include="Migrations\201505232123225_initial.cs" />
+    <Compile Include="Migrations\201505232123225_initial.Designer.cs">
+      <DependentUpon>201505232123225_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PageLayout.cs" />
@@ -117,18 +109,12 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201505102338319_InitialCreate.resx">
-      <DependentUpon>201505102338319_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505110852193_unclaimbasicinfo.resx">
-      <DependentUpon>201505110852193_unclaimbasicinfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505110938441_imageoptionalowner.resx">
-      <DependentUpon>201505110938441_imageoptionalowner.cs</DependentUpon>
-    </EmbeddedResource>
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Extensions\" />
+    <EmbeddedResource Include="Migrations\201505232123225_initial.resx">
+      <DependentUpon>201505232123225_initial.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

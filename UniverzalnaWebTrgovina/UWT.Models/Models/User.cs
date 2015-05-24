@@ -26,9 +26,8 @@ namespace UWT.Models {
 
         public virtual List<Shop> Shops { get; set; }
 
-        [Required]
         [InverseProperty("UserProfile")]
-        public virtual Image ProfileImage { get; set; }
+        public virtual List<Image> ProfileImages { get; set; }
 
         [InverseProperty("Owner")]
         public virtual List<Image> OwnedImages { get; set; } 

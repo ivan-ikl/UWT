@@ -26,7 +26,7 @@ namespace UWT.Models {
 
         public virtual Product Advert { get; set; }
 
-        [InverseProperty("ProfileImage")]
+        [InverseProperty("ProfileImages")]
         public virtual User UserProfile { get; set; }
 
         [InverseProperty("OwnedImages")]

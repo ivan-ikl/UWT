@@ -1,11 +1,8 @@
+using System.Data.Entity.Migrations;
+
 namespace UWT.Models.Migrations
 {
-    using System;
-    using System.Data.Entity;
-    using System.Data.Entity.Migrations;
-    using System.Linq;
-
-    internal sealed class Configuration : DbMigrationsConfiguration<UWT.Models.UwtContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<UwtContext>
     {
         public Configuration()
         {
@@ -13,7 +10,7 @@ namespace UWT.Models.Migrations
             ContextKey = "UWT.Models.UWTContext";
         }
 
-        protected override void Seed(UWT.Models.UwtContext context)
+        protected override void Seed(UwtContext context)
         {
             //  This method will be called after migrating to the latest version.
 
