@@ -94,10 +94,6 @@ namespace UWT.Web.Models
         [Display(Name = "Telefonski broj")]
         public string PhoneNumber { get; set; }
 
-        [Required]
-        [Display(Name = "Željeno korisničko ime")]
-        public string UserName { get; set; }
-
     }
 
     public class ResetPasswordViewModel

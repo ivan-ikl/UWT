@@ -10,6 +10,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using UWT.Models;
+using UWT.Web.Extensions;
 using UWT.Web.Helpers;
 using UWT.Web.Models;
 
@@ -35,15 +36,15 @@ namespace UWT.Web.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
             switch (result) {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, model.RememberMe });
+                //case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Prijava nije uspjela.");
                     return View(model);
@@ -77,7 +78,7 @@ namespace UWT.Web.Controllers
                     return RedirectToLocal(model.ReturnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
-                case SignInStatus.Failure:
+                //case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Pogrešni kod.");
                     return View(model);
@@ -94,43 +95,32 @@ namespace UWT.Web.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase image)
         {
-            Image Image = null;
-            using (var db = new UwtContext())
-            {
-                if (image == null || image.ContentLength == 0)
-                {
-                    // Use default image
-                    if (!db.Images.Any())
-                    {
-                        db.Images.Add(new Image { DateCreated = DateTime.UtcNow, Owner = null, Path = FilesHelper.DefaultProfileImage });
-                    }
-                    Image = db.Images.FirstOrDefault(i => i.Path == FilesHelper.DefaultProfileImage);
-                }
-                else
-                {
-                    Image = new Image { DateCreated = DateTime.UtcNow, Path = image.SaveUploadedImage(Server) };
-                }
-            }
-
             if (ModelState.IsValid)
             {
-                var user = new User
+                Image profileImage;
+                using (var db = new UwtContext())
                 {
-                    UserName = model.Email,
-                    Email = model.Email,
-                    Name = model.Name,
-                    Surname = model.Surname,
-                    ProfileImage = Image,
-                    OwnedImages = (Image != null && Image.Path != FilesHelper.DefaultProfileImage ? new List<Image> { Image } : null)
-                };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded) {
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
-                    return RedirectToAction("Index", "Home");
+                    profileImage = db.AddUserImage(image, Server);
+                    db.SaveChanges();
                 }
-                AddErrors(result);
-            }
+                var user = model.ToUser(profileImage);
 
+                try
+                {
+                    var result = await UserManager.CreateAsync(user, model.Password);
+                    if (result.Succeeded)
+                    {
+                        await UserManager.AddToRoleAsync(user.Id, Roles.Merchant);
+                        await SignInManager.SignInAsync(user, false, false);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    AddErrors(result);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+            }
             return View(model);
         }
 
@@ -237,7 +227,7 @@ namespace UWT.Web.Controllers
             if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider)) {
                 return View("Error");
             }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl, RememberMe = model.RememberMe });
+            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, model.ReturnUrl, model.RememberMe });
         }
 
         [AllowAnonymous]
@@ -256,7 +246,7 @@ namespace UWT.Web.Controllers
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = false });
-                case SignInStatus.Failure:
+                //case SignInStatus.Failure:
                 default:
                     // If the user does not have an account, then prompt the user to create an account
                     ViewBag.ReturnUrl = returnUrl;
@@ -317,25 +307,27 @@ namespace UWT.Web.Controllers
 
                 if (!db.Roles.Any())
                 {
-                    roleManager.Create(new IdentityRole() { Name = Roles.Admin });
-                    roleManager.Create(new IdentityRole() { Name = Roles.Merchant });
+                    roleManager.Create(new IdentityRole { Name = Roles.Admin });
+                    roleManager.Create(new IdentityRole { Name = Roles.Merchant });
+                    db.SaveChanges();
+                }
+                if (!db.Images.Any()) {
+                    db.Images.Add(new Image {
+                        DateCreated = DateTime.UtcNow,
+                        Path = FilesHelper.DefaultProfileImage
+                    });
                     db.SaveChanges();
                 }
                 if (!db.Users.Any())
-                {                    
-                    var profileImage = db.Images.FirstOrDefault(i => i.Path == "~/Content/default-user-icon.png");
-                    if (profileImage == null)
-                    {
-                        profileImage = new Image() { DateCreated = DateTime.UtcNow, Owner = null, Path = "~/Content/default-user-icon.png" };
-                        db.Images.Add(profileImage);
-                        db.SaveChanges();
-                    }
-                    var user = new User() {
+                {
+                    var defaultProfileImage = db.Images.FirstOrDefault(i => i.Path == FilesHelper.DefaultProfileImage);
+                    var user = new User {
                         UserName = "admin",
                         Email = "admin@uwt.com",
-                        ProfileImage = profileImage,
+                        ProfileImages = new List<Image> { defaultProfileImage },
                         Name = "AdminsName",
                         Surname = "AdminsSurname",
+                        OwnedImages = new List<Image> { defaultProfileImage }
                     };
                     try
                     {
@@ -357,70 +349,6 @@ namespace UWT.Web.Controllers
             }
             return HttpNotFound();
         }
-
-        protected override void Dispose(bool disposing) {
-            if (disposing) {
-                if (_userManager != null) {
-                    _userManager.Dispose();
-                    _userManager = null;
-                }
-
-                if (_signInManager != null) {
-                    _signInManager.Dispose();
-                    _signInManager = null;
-                }
-            }
-
-            base.Dispose(disposing);
-        }
-
-        #region Helpers
-        // Used for XSRF protection when adding external logins
-        private const string XsrfKey = "XsrfId";
-
-        private IAuthenticationManager AuthenticationManager {
-            get {
-                return HttpContext.GetOwinContext().Authentication;
-            }
-        }
-
-        private void AddErrors(IdentityResult result) {
-            foreach (var error in result.Errors) {
-                ModelState.AddModelError("", error);
-            }
-        }
-
-        private ActionResult RedirectToLocal(string returnUrl) {
-            if (Url.IsLocalUrl(returnUrl)) {
-                return Redirect(returnUrl);
-            }
-            return RedirectToAction("Index", "Home");
-        }
-
-        internal class ChallengeResult : HttpUnauthorizedResult {
-            public ChallengeResult(string provider, string redirectUri)
-                : this(provider, redirectUri, null) {
-            }
-
-            public ChallengeResult(string provider, string redirectUri, string userId) {
-                LoginProvider = provider;
-                RedirectUri = redirectUri;
-                UserId = userId;
-            }
-
-            public string LoginProvider { get; set; }
-            public string RedirectUri { get; set; }
-            public string UserId { get; set; }
-
-            public override void ExecuteResult(ControllerContext context) {
-                var properties = new AuthenticationProperties { RedirectUri = RedirectUri };
-                if (UserId != null) {
-                    properties.Dictionary[XsrfKey] = UserId;
-                }
-                context.HttpContext.GetOwinContext().Authentication.Challenge(properties, LoginProvider);
-            }
-        }
-        #endregion
 
     }
 }
