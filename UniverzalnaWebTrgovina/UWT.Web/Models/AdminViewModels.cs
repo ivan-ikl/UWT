@@ -12,6 +12,8 @@ namespace UWT.Web.Models {
 
         public string Surname { get; set; }
 
+        public string Phone { get; set; }
+
         public bool Blocked { get; set; }
 
         public string ProfileImage { get; set; }

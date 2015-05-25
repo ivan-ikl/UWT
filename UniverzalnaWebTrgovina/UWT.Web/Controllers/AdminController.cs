@@ -22,12 +22,12 @@ namespace UWT.Web.Controllers
         }
 
         [HttpPost]
-        public bool BlockUser(string username)
+        public bool BlockUser(string email)
         {
             using (var db = new UwtContext())
             {
-                var user = db.Users.FirstOrDefault(u => u.UserName == username && !u.IsBlocked());
-                if (user != null && username != "admin")
+                var user = db.Users.FirstOrDefault(u => u.Email == email);
+                if (user != null && user.UserName != "admin" && !user.IsBlocked())
                 {
                     user.Block();
                     db.SaveChanges();
@@ -38,11 +38,11 @@ namespace UWT.Web.Controllers
         }
 
         [HttpPost]
-        public bool UnblockUser(string username)
+        public bool UnblockUser(string email)
         {
             using (var db = new UwtContext()) {
-                var user = db.Users.FirstOrDefault(u => u.UserName == username && u.IsBlocked());
-                if (user != null) {
+                var user = db.Users.FirstOrDefault(u => u.Email == email);
+                if (user != null && user.IsBlocked()) {
                     user.Unblock();
                     db.SaveChanges();
                     return true;
