@@ -20,6 +20,21 @@ namespace UWT.Web.Extensions {
             return user;
         }
 
+        public static IndexViewModel ToIndexViewModel(this User model)
+        {
+            return Mapper.Map<IndexViewModel>(model);
+        }
+
+        public static User ToUser(this IndexViewModel model, Image newProfileImage)
+        {
+            var user = Mapper.Map<User>(model);
+            if (newProfileImage != null) {
+                user.ProfileImages.Add(newProfileImage);
+                user.OwnedImages.Add(newProfileImage);
+            }
+            return user;            
+        }
+
     }
 
 }

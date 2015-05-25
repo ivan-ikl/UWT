@@ -7,11 +7,21 @@ namespace UWT.Web.Models
 {
     public class IndexViewModel
     {
-        public bool HasPassword { get; set; }
-        public IList<UserLoginInfo> Logins { get; set; }
+        public string UserName { get; set; }
+
+        [Required]
+        public string Name { get; set; }
+
+        [Required]
+        public string Surname { get; set; }
+        //public IList<UserLoginInfo> Logins { get; set; }
+        
+        public string ProfileImage { get; set; }
+
+        [Required]
+        [Phone]
+        [Display(Name = "Telefonski broj")]
         public string PhoneNumber { get; set; }
-        public bool TwoFactor { get; set; }
-        public bool BrowserRemembered { get; set; }
     }
 
     public class ManageLoginsViewModel
@@ -25,20 +35,6 @@ namespace UWT.Web.Models
         public string Purpose { get; set; }
     }
 
-    public class SetPasswordViewModel
-    {
-        [Required]
-        [StringLength(100, ErrorMessage = "{0} mora imati najmanje {2} znaka.", MinimumLength = 6)]
-        [DataType(DataType.Password)]
-        [Display(Name = "Nova lozinka")]
-        public string NewPassword { get; set; }
-
-        [DataType(DataType.Password)]
-        [Display(Name = "Potvrda nove lozinke")]
-        [Compare("NewPassword", ErrorMessage = "Lozinke nisu jednake.")]
-        public string ConfirmPassword { get; set; }
-    }
-
     public class ChangePasswordViewModel
     {
         [Required]
@@ -47,7 +43,7 @@ namespace UWT.Web.Models
         public string OldPassword { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "{0} mora imati najmanje {2} znaka.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "{0} mora imati najmanje {2} znakova.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Nova lozinka")]
         public string NewPassword { get; set; }
@@ -56,26 +52,6 @@ namespace UWT.Web.Models
         [Display(Name = "Potvrda nove lozinke")]
         [Compare("NewPassword", ErrorMessage = "Lozinke nisu jednake.")]
         public string ConfirmPassword { get; set; }
-    }
-
-    public class AddPhoneNumberViewModel
-    {
-        [Required]
-        [Phone]
-        [Display(Name = "Telefonski broj")]
-        public string Number { get; set; }
-    }
-
-    public class VerifyPhoneNumberViewModel
-    {
-        [Required]
-        [Display(Name = "Kod")]
-        public string Code { get; set; }
-
-        [Required]
-        [Phone]
-        [Display(Name = "Telefonski broj")]
-        public string PhoneNumber { get; set; }
     }
 
     public class ConfigureTwoFactorViewModel

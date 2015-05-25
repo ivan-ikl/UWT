@@ -165,6 +165,8 @@
     <Compile Include="App_Start\MapperConfig.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Extensions\Converters.cs" />
+    <Compile Include="Extensions\Enums.cs" />
+    <Compile Include="Extensions\User.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Models\MembershipControllerBase.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

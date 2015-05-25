@@ -36,6 +36,7 @@ namespace UWT.Web.Helpers {
         /// <param name="image">Posted file</param>
         /// <param name="server"></param>
         /// <param name="imageId">If the file was uploaded earlyer, the uploaded file's filename</param>
+        /// <param name="uploadedFilename"></param>
         /// <returns>New image filename</returns>
         public static string SaveUploadedImage(this HttpPostedFileBase image, HttpServerUtilityBase server, string uploadedFilename = null)
         {
@@ -51,14 +52,26 @@ namespace UWT.Web.Helpers {
             return filename;
         }
 
-        public static Image AddUserImage(this UwtContext db, HttpPostedFileBase image, HttpServerUtilityBase server)
+        public static Image CreateUserImage(this UwtContext db, HttpPostedFileBase image, HttpServerUtilityBase server)
         {
             if (image == null || image.ContentLength == 0)
             {
                 // Use default image
-                return db.Images.FirstOrDefault(i => i.Path == FilesHelper.DefaultProfileImage);
+                return db.Images.FirstOrDefault(i => i.Path == DefaultProfileImage);
             }
             return new Image {DateCreated = DateTime.UtcNow, Path = image.SaveUploadedImage(server)};
+        }
+
+        public static Image CreateUserImage(this UwtContext db, HttpPostedFileBase newImage, HttpServerUtilityBase server, User user)
+        {
+            if (newImage != null)
+            {
+                var image = db.CreateUserImage(newImage, server);
+                image.Owner = user;
+                image.UserProfile = user;
+                return image;
+            }
+            return db.Images.FirstOrDefault(i => i.Path == DefaultProfileImage);
         }
 
     }

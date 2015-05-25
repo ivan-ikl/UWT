@@ -50,7 +50,6 @@ namespace UWT.Web.Models
     {
         [Required]
         [Display(Name = "Email")]
-        [EmailAddress]
         public string Email { get; set; }
 
         [Required]
@@ -86,6 +85,8 @@ namespace UWT.Web.Models
         [Required]
         [Display(Name = "Ime")]
         public string Name {get; set;}
+
+        public string Address { get; set; }
 
         [Required]
         [Display(Name = "Prezime")]

@@ -100,7 +100,7 @@ namespace UWT.Web.Controllers
                 Image profileImage;
                 using (var db = new UwtContext())
                 {
-                    profileImage = db.AddUserImage(image, Server);
+                    profileImage = db.CreateUserImage(image, Server);
                     db.SaveChanges();
                 }
                 var user = model.ToUser(profileImage);
