@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UWT.Models;
 
 namespace UWT.Web.Extensions {
@@ -12,6 +13,21 @@ namespace UWT.Web.Extensions {
                 return image != null ? image.Path : null;
             }
             return null;
+        }
+
+        public static bool IsBlocked(this User user)
+        {
+            return user.Blocked <= DateTime.UtcNow;
+        }
+
+        public static void Block(this User user)
+        {
+            if (!user.IsBlocked()) user.Blocked = DateTime.UtcNow;
+        }
+
+        public static void Unblock(this User user)
+        {
+            if (user.IsBlocked()) user.Blocked = DateTime.MaxValue;
         }
 
     }

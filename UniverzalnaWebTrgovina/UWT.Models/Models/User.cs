@@ -18,6 +18,8 @@ namespace UWT.Models {
         [Required]
         public string Surname { get; set; }
 
+        public DateTime Blocked { get; set; }
+
         [InverseProperty("Sender")]
         public virtual List<Message> MessagesSent { get; set; }
 

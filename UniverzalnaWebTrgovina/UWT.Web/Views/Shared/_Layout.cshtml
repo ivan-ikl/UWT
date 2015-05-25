@@ -1,13 +1,17 @@
 ﻿<!DOCTYPE html>
-<html>
+<html @(ViewBag.AngularController != null ? Html.Raw("ng-app = \"uwtApp\"") : null)>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/Controllers/UwtControllers.js"></script>
+    @RenderSection("controllers", false)
 </head>
-<body>
+<body @(ViewBag.AngularController != null ? Html.Raw("ng-controller=\""+ ViewBag.AngularController +"\"") : null)>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
@@ -45,8 +49,8 @@
         </footer>
     </div>
 
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
 </html>
+

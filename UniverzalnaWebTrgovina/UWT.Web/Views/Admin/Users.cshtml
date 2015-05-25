@@ -1,0 +1,62 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<UWT.Web.Models.UserViewModel>
+
+@{
+    ViewBag.Title = "Users";
+    ViewBag.AngularController = "UsersController";
+}
+
+<h2>Korisnici</h2>
+
+<table class="table">
+    <tr>
+        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Surname)
+        </th>
+        <th></th>
+    </tr>
+
+    <tr ng-repeat="user in users" style="vertical-align:central">
+        <td>
+            <img class="img-thumbnail" style="height: 32px" src="~/Content/Images/{{user.ProfileImage}}" alt="Profilna slika" />
+        </td>
+        <td>{{user.Email}}</td>
+        <td>{{user.Name}}</td>
+        <td>{{user.Surname}}</td>
+        <td>
+            <button class="btn btn-default" ng-click="Blocked = true" ng-hide="{{Blocked}}" data-tag="{{UserName}}" onclick="Block()">Blokiraj</button>
+            <button class="btn btn-danger" ng-click="Blocked = false" ng-show="{{Blocked}}" data-tag="{{UserName}}" onclick="Unblock()">Odblokiraj</button>
+        </td>
+    </tr>
+
+</table>
+
+@section controllers {
+    <script>
+        var usersController = new UsersController(@Html.Raw(JsonConvert.SerializeObject(Model.ToList())));
+    </script>
+}
+
+@section scripts {
+    <script>
+        function Block(username) {
+            console.log("Blocking user " + username);
+            $.post("@Url.Action("BlockUser")", { "username": username }, function(response) {
+                console.log(response);
+            });
+        }
+        function Unblock(username) {
+            console.log("Unblocking user " + username);
+            $.post("@Url.Action("UnblockUser")", { "username": username }, function (response) {
+                console.log(response);
+            });
+        }
+    </script>
+}

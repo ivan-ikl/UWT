@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using UWT.Models;
 using UWT.Web.Extensions;
 using UWT.Web.Models;
@@ -17,6 +18,10 @@ namespace UWT.Web {
 
             Mapper.CreateMap<IndexViewModel, User>()
                 .ForMember(dest => dest.UserName, opt => opt.Ignore());
+
+            Mapper.CreateMap<User, UserViewModel>()
+                .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.ProfileImage()))
+                .ForMember(dest => dest.Blocked, opt => opt.MapFrom(src => src.IsBlocked()));
         }
     }
 

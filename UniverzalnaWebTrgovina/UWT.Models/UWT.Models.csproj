@@ -87,6 +87,10 @@
     <Compile Include="Migrations\201505232123225_initial.Designer.cs">
       <DependentUpon>201505232123225_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505251126172_UserBlocked.cs" />
+    <Compile Include="Migrations\201505251126172_UserBlocked.Designer.cs">
+      <DependentUpon>201505251126172_UserBlocked.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PageLayout.cs" />
     <Compile Include="Models\Product.cs" />
@@ -114,6 +118,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201505232123225_initial.resx">
       <DependentUpon>201505232123225_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505251126172_UserBlocked.resx">
+      <DependentUpon>201505251126172_UserBlocked.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
