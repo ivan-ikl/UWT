@@ -3,10 +3,9 @@
 
 @{
     ViewBag.Title = "Users";
+    ViewBag.MainTitle = "Korisnici";
     ViewBag.AngularController = "UsersController";
 }
-
-<h2>Korisnici</h2>
 
 <table class="table table-hover table-condensed table-responsive">
     <thead>
@@ -16,7 +15,7 @@
             <th>Ime</th>
             <th>Prezime</th>
             <th>Kontakt broj</th>
-            <th></th>
+            <th class="col-md-2"></th>
         </tr>
     </thead>
     <tbody>
@@ -27,10 +26,12 @@
             <td>{{user.Email}}</td>
             <td>{{user.Name}}</td>
             <td>{{user.Surname}}</td>
-            <td>{{user.Phone}}</td>
+            <td>{{user.PhoneNumber}}</td>
             <td>
-                <button class="btn btn-default" ng-click="user.block('@Url.Action("BlockUser")')" ng-hide="user.Blocked" data-tag="{{UserName}}">Blokiraj</button>
-                <button class="btn btn-danger" ng-click="user.unblock('@Url.Action("UnblockUser")')" ng-show="user.Blocked" data-tag="{{UserName}}">Odblokiraj</button>
+                <div class="pull-right">
+                    <button class="btn btn-sm btn-default" ng-click="user.block('@Url.Action("BlockUser")')" ng-hide="user.Blocked" data-tag="{{UserName}}">Blokiraj</button>
+                    <button class="btn btn-sm btn-danger" ng-click="user.unblock('@Url.Action("UnblockUser")')" ng-show="user.Blocked" data-tag="{{UserName}}">Odblokiraj</button>
+                </div>
             </td>
         </tr>
     </tbody>

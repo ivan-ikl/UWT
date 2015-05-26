@@ -74,6 +74,18 @@ namespace UWT.Web.Helpers {
             return db.Images.FirstOrDefault(i => i.Path == DefaultProfileImage);
         }
 
+        public static string SaveUploadedLayout(this HttpPostedFileBase layout, HttpServerUtilityBase server, string uploadedFilename = null) {
+            if (layout == null) {
+                // The image was probably uploaded earlier
+                return uploadedFilename;
+            }
+            string filename;
+            var basePath = server.MapPath("~/Views/Shared/PageLayouts");
+            var path = GenerateFilename(basePath, "cshtml", out filename);
+            layout.SaveAs(path);                                                
+            return filename;
+        }
+
     }
 
 }

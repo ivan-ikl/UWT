@@ -22,6 +22,12 @@ namespace UWT.Web {
             Mapper.CreateMap<User, UserViewModel>()
                 .ForMember(dest => dest.ProfileImage, opt => opt.MapFrom(src => src.ProfileImage()))
                 .ForMember(dest => dest.Blocked, opt => opt.MapFrom(src => src.IsBlocked()));
+
+            Mapper.CreateMap<PageLayout, PageLayoutViewModel>()
+                .ForMember(dest => dest.PageStyles, opt => opt.MapFrom(src => src.PageStyles.Count));
+
+            Mapper.CreateMap<PageLayoutViewModel, PageLayout>()
+                .ForMember(dest => dest.PageStyles, opt => opt.Ignore());
         }
     }
 

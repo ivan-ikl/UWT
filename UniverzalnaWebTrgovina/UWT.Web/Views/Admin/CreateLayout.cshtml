@@ -1,0 +1,32 @@
+﻿@model UWT.Web.Models.PageLayoutViewModel
+@{
+    ViewBag.Title = "CreateLayout";
+    ViewBag.MainTitle = "Dodaj predložak stranice";
+}
+
+<div>
+    @using (Html.BeginForm("CreateLayout", "Admin", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) {
+        @Html.AntiForgeryToken()
+        <div class="container">
+            @Html.ValidationSummary("", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, new { @class = "col-md-3 control-label" })
+                <div class="col-md-9">
+                    @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Učitaj predložak", new { @class = "col-md-3 control-label" })
+                <div class="col-md-9">
+                    <input type="file" required name="layout" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-3 col-md-9 btn-group">
+                    <input type="submit" class="btn btn-primary" value="Dodaj predložak"/>
+                    <a href="@Url.Action("PageLayouts")" class="btn btn-default">Odustani</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>

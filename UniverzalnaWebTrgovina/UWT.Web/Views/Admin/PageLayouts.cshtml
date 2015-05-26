@@ -1,0 +1,52 @@
+﻿@using Antlr.Runtime.Tree
+@model IEnumerable<UWT.Web.Models.PageLayoutViewModel>
+
+@{
+    ViewBag.Title = "PageLayouts";
+    ViewBag.MainTitle = "Predlošci stranica";
+}
+
+@section buttons {
+    @Html.ActionLink("Dodaj predložak", "CreateLayout", new {}, new {@class = "btn btn-primary"})
+}
+
+<table class="table table-hover table-condensed table-responsive">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Layout)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PageStyles)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateCreated)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Layout)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PageStyles)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateCreated)
+                </td>
+                <td>
+                    @Html.ActionLink("Uredi", "Edit", new { id = item.Id }, new { @class = "btn btn-sm btn-default pull-right" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

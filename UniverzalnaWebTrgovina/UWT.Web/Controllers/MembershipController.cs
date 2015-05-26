@@ -109,6 +109,7 @@ namespace UWT.Web.Controllers
 
                 try
                 {
+                    user.Blocked = DateTime.MaxValue;
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
@@ -343,10 +344,23 @@ namespace UWT.Web.Controllers
                     catch (DbEntityValidationException ex)
                     {
                         Console.WriteLine(ex.Message);
-                    } catch (Exception ex)
+                    }
+                    catch (Exception ex)
                     {
                         Console.WriteLine(ex.Message);                        
                     }
+                }
+                if (!db.PageLayouts.Any())
+                {
+                    var defaultLayout = new PageLayout
+                    {
+                        Name = "Osnovni predložak", 
+                        DateCreated =  DateTime.UtcNow, 
+                        Layout = "DefaultLayout.cshtml", 
+                        Owner = db.Users.FirstOrDefault(u => u.UserName == "admin")
+                    };
+                    db.PageLayouts.Add(defaultLayout);
+                    db.SaveChanges();
                 }
             }
             return HttpNotFound();

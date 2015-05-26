@@ -1,20 +1,11 @@
 ﻿@model UWT.Web.Models.IndexViewModel
 @{
     ViewBag.Title = "Postavke računa";
+    ViewBag.MainTitle = ViewBag.Title;
+    ViewBag.Subtitle = "Vaš račun:" + Model.UserName;
 }
 
-<h2>@ViewBag.Title</h2>
-
 <p class="text-success">@ViewBag.StatusMessage</p>
-<div class="row">
-    <div class="col-sm-6">
-        <h4>Vaš račun: @Model.UserName</h4>
-    </div>
-    <div class="col-sm-6">
-        @Html.ActionLink("Promijeni lozinku", "ChangePassword", new { }, new { @class = "btn btn-default pull-right" })
-    </div>
-</div>
-<hr />
 <div>
     @using (Html.BeginForm("Index", "Manage", FormMethod.Post, new {@class = "form-horizontal", role = "form", enctype = "multipart/form-data"}))
     {

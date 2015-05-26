@@ -5,50 +5,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Univerzalna trgovina</title>
     @Styles.Render("~/Content/css")
+    <link href="~/Content/animations.min.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/jquery-2.1.4.min.js"></script>
     <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Scripts/Controllers/UwtControllers.js"></script>
     @RenderSection("controllers", false)
+    <style>
+        body {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .navbar {
+            margin-bottom: 20px;
+        }
+
+        .sudomatNaslov b {
+            color: orange;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+    </style>
 </head>
 <body @(ViewBag.AngularController != null ? Html.Raw("ng-controller=\""+ ViewBag.AngularController +"\"") : null)>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Moja prodaja", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+    <div class="container">
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+                        <span class="glyphicon glyphicon-shopping-cart" style="font-size: large"></span>
+                        <span>Moja prodaja</span>
+                        <span class="glyphicon glyphicon-shopping-cart" style="font-size:large"></span>                        
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        @if (User.IsInRole(UWT.Models.Roles.Admin)) {
+                            <li>@Html.ActionLink("Korisnici", "Index", "Admin")</li>
+                            <li>@Html.ActionLink("Trgovine", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Predlošci trgovina", "PageLayouts", "Admin")</li>
+                        }
+                        @if (User.IsInRole(UWT.Models.Roles.Merchant)) {
+                            <li>@Html.ActionLink("Moje trgovine", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Moji stilovi", "Index", "Home")</li>
+                        }
+                    </ul>
+                    <ul class="navbar-collapse collapse">
+                        <ul class="nav navbar-nav"></ul>
+                        @Html.Partial("_LoginPartial")
+                    </ul>
+                </div>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    @if (User.IsInRole(UWT.Models.Roles.Admin))
-                    {
-                        <li>@Html.ActionLink("Korisnici", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Trgovine", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Stilovi", "Index", "Home")</li>
-                    }
-                    @if (User.IsInRole(UWT.Models.Roles.Merchant))
-                    {
-                        <li>@Html.ActionLink("Moje trgovine", "Index", "Home")</li>
-                        <li>@Html.ActionLink("Moji stilovi", "Index", "Home")</li>
-                    }
-                    <li>@Html.ActionLink("Postavke", "Index", "Home")</li>
-                </ul>
-                @Html.Partial("_LoginPartial")
+        </div>
+        <div class="panel panel-default">
+            @if (ViewBag.MainTitle != null) {
+                @:
+                <div class="panel-heading col-md-12" style="height: 128px">
+                    <div class="row">
+                        <div class="col-md-12" style="padding: 0px">
+                            <h1 class="col-md-6" style="text-align: left; text-shadow: 0px 0px 2px gray">
+                                <span>@ViewBag.MainTitle</span>
+                            </h1>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h4 class="title col-md-6" style="padding-top: 12px">@ViewBag.Subtitle</h4>
+                        <div class="col-md-6">
+                            <div class="btn-group pull-right">
+                                @RenderSection("buttons", false)
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                </div>
+            }
+            <div class="panel-body">
+                <div class="pullDown">
+                    @RenderBody()
+                </div>
+            </div>
+            <div class="panel-footer">
+                <p>&copy; @DateTime.Now.Year - Univerzalna trgovina</p>
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Univerzalna trgovina</p>
-        </footer>
-    </div>
-
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 </body>
