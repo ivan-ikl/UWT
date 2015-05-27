@@ -5,7 +5,7 @@ using UWT.Models.Models;
 
 namespace UWT.Models {
 
-    public class Product : IShopMember, IPricing {
+    public class Product : IShopMember, IPricing, IImageContainer {
 
         [Key]
         public long Id { get; set; }

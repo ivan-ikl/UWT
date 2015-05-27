@@ -4,7 +4,7 @@ using UWT.Models.Interfaces;
 
 namespace UWT.Models {
 
-    public class Category : IShopMember {
+    public class Category : IShopMember, IImageContainer {
         
         [Key]
         public long Id { get; set; }

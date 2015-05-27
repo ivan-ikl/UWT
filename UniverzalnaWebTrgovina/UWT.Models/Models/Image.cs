@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using UWT.Models.Interfaces;
@@ -17,12 +18,18 @@ namespace UWT.Models {
         public DateTime DateCreated { get; set; }
 
         [InverseProperty("Logo")]
-        public virtual PageStyle PageStyleLogo { get; set; }
+        public virtual List<PageStyle> PageStyleLogos { get; set; }
 
         [InverseProperty("BackgroundImage")]
-        public virtual PageStyle PageStyleBackground { get; set; }
+        public virtual List<PageStyle> PageStyleBackgrounds { get; set; }
 
-        public virtual Category Category { get; set; }
+        [InverseProperty("NavImage")]
+        public virtual List<PageStyle> PageStyleNavImages { get; set; }
+
+        [InverseProperty("FooterImage")]
+        public virtual List<PageStyle> PageStyleFooterImages { get; set; }
+
+        public virtual List<Category> Categories { get; set; }
 
         public virtual Product Advert { get; set; }
 

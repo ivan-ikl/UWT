@@ -12,6 +12,9 @@ namespace UWT.Models {
         public int Id { get; set; }
 
         [Required]
+        public string Name { get; set; }
+
+        [Required]
         public string ForegroundColor { get; set; }
 
         [Required]
@@ -31,15 +34,17 @@ namespace UWT.Models {
         [Required]
         public virtual DateTime DateCreated { get; set; }
 
-        [Required, InverseProperty("PageStyleLogo")]
+        [Required, InverseProperty("PageStyleLogos")]
         public virtual Image Logo { get; set; }
 
-        [Required, InverseProperty("PageStyleBackground")]
+        [Required, InverseProperty("PageStyleBackgrounds")]
         public virtual Image BackgroundImage { get; set; }
 
-        [Required]
-        public virtual PageLayout PageLayout { get; set; }
+        [InverseProperty("PageStyleNavImages")]
+        public virtual Image NavImage { get; set; }
 
+        [InverseProperty("PageStyleFooterImages")]
+        public virtual Image FooterImage { get; set; }
 
     }
 

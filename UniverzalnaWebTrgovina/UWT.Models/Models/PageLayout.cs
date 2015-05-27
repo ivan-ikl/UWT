@@ -16,11 +16,11 @@ namespace UWT.Models {
         [Required]
         public string Layout { get; set; }
 
-        public virtual List<PageStyle> PageStyles { get; set; }
-
         [Required]
         public virtual User Owner { get; set; }
 
+        public virtual List<Shop> Shops { get; set; }
+        
         [Required]
         public DateTime DateCreated { get; set; }
 

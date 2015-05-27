@@ -29,6 +29,9 @@ namespace UWT.Models {
         [Required]
         public virtual PageStyle PageStyle { get; set; }
 
+        [Required]
+        public virtual PageLayout PageLayout { get; set; }
+
         public virtual List<Product> Products { get; set; }
 
         public virtual List<Category> Categories { get; set; }
