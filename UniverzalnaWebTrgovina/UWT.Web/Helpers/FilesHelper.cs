@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using UWT.Models;
 
 namespace UWT.Web.Helpers {
@@ -24,7 +25,7 @@ namespace UWT.Web.Helpers {
                 var path = Path.Combine(basePath, filename);
                 if (!File.Exists(path))
                 {
-                    return path;                    
+                    return path;
                 }
             }
         }
@@ -50,6 +51,18 @@ namespace UWT.Web.Helpers {
             var path = GenerateFilename(basePath, "jpg", out filename);
             image.SaveAs(path);
             return filename;
+        }
+
+        public static Image AddUploadedImage(this UwtContext db, HttpPostedFileBase image, HttpServerUtilityBase server, string userId)
+        {
+            var img = new Image
+            {
+                DateCreated = DateTime.UtcNow, 
+                Path = SaveUploadedImage(image, server) , 
+                Owner = db.Users.FirstOrDefault(u => u.Id == userId)            
+            };
+            db.Images.Add(img);
+            return img;
         }
 
         public static Image CreateUserImage(this UwtContext db, HttpPostedFileBase image, HttpServerUtilityBase server)

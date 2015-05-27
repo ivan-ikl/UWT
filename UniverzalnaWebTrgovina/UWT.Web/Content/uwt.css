@@ -1,0 +1,18 @@
+﻿body {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.sudomatNaslov b {
+    color: orange;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+.table-image {
+    height: 32px;
+}

@@ -165,12 +165,16 @@
     <Compile Include="App_Start\MapperConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Extensions\Converters.cs" />
     <Compile Include="Extensions\Enums.cs" />
+    <Compile Include="Extensions\Filtering.cs" />
     <Compile Include="Extensions\User.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
-    <Compile Include="Models\MembershipControllerBase.cs" />
+    <Compile Include="Interfaces\IThumbnail.cs" />
+    <Compile Include="Models\CategoryViewModel.cs" />
+    <Compile Include="Helpers\MembershipControllerBase.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
@@ -183,6 +187,10 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PageLayoutViewModel.cs" />
+    <Compile Include="Models\PageStyleViewModel.cs" />
+    <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\ShopViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -191,7 +199,9 @@
     <Content Include="Content\default-user-icon.png" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\GalleryItem.css" />
     <Content Include="Content\Images\User.png" />
+    <Content Include="Content\uwt.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1029,6 +1039,11 @@
     <Content Include="Views\Admin\PageLayouts.cshtml" />
     <Content Include="Views\Admin\CreateLayout.cshtml" />
     <Content Include="Views\Shared\PageLayouts\DefaultLayout.cshtml" />
+    <Content Include="Views\Shared\Thumbnail.cshtml" />
+    <Content Include="Views\Merchant\Categories.cshtml" />
+    <Content Include="Views\Merchant\PageStyles.cshtml" />
+    <Content Include="Views\Merchant\CreatePageStyle.cshtml" />
+    <Content Include="Views\Merchant\EditPageStyle.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

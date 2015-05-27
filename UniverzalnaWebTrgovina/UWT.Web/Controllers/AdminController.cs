@@ -61,7 +61,7 @@ namespace UWT.Web.Controllers
         {
             using (var db = new UwtContext())
             {
-                return View(db.PageLayouts.Include(p => p.PageStyles).ToList().Select(Mapper.Map<PageLayoutViewModel>).ToList());
+                return View(db.PageLayouts.ToList().Select(Mapper.Map<PageLayoutViewModel>).ToList());
             }
         }
 

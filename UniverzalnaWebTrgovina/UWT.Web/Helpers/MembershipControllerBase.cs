@@ -4,7 +4,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 
-namespace UWT.Web {
+namespace UWT.Web.Helpers {
 
     public abstract class MembershipControllerBase : Controller {
         protected UwtUserManager _userManager = null;

@@ -9,17 +9,17 @@ namespace UWT.Web.Models
     {
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Polje je obavezno")]
         public string Name { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Polje je obavezno")]
         public string Surname { get; set; }
         //public IList<UserLoginInfo> Logins { get; set; }
         
         public string ProfileImage { get; set; }
 
-        [Required]
-        [Phone]
+        [Required(ErrorMessage = "Polje je obavezno")]
+        [Phone(ErrorMessage = "Unesite valjani telefonski broj!")]
         [Display(Name = "Telefonski broj")]
         public string PhoneNumber { get; set; }
     }
@@ -37,12 +37,12 @@ namespace UWT.Web.Models
 
     public class ChangePasswordViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Polje je obavezno")]
         [DataType(DataType.Password)]
         [Display(Name = "Stara lozinka")]
         public string OldPassword { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Polje je obavezno")]
         [StringLength(100, ErrorMessage = "{0} mora imati najmanje {2} znakova.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Nova lozinka")]

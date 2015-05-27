@@ -6,27 +6,12 @@
     <title>@ViewBag.Title - Univerzalna trgovina</title>
     @Styles.Render("~/Content/css")
     <link href="~/Content/animations.min.css" rel="stylesheet" />
+    <link href="~/Content/uwt.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/jquery-2.1.4.min.js"></script>
     <script src="~/Scripts/angular.min.js"></script>
     <script src="~/Scripts/Controllers/UwtControllers.js"></script>
     @RenderSection("controllers", false)
-    <style>
-        body {
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
-
-        .navbar {
-            margin-bottom: 20px;
-        }
-
-        .sudomatNaslov b {
-            color: orange;
-            padding-left: 8px;
-            padding-right: 8px;
-        }
-    </style>
 </head>
 <body @(ViewBag.AngularController != null ? Html.Raw("ng-controller=\""+ ViewBag.AngularController +"\"") : null)>
     <div class="container">

@@ -35,6 +35,15 @@ namespace UWT.Web.Extensions {
             return user;            
         }
 
+        public static string Source(this Image image)
+        {
+            if (image != null)
+            {
+                return "~/Content/Images/" + image.Path;
+            }
+            return null;
+        }
+
     }
 
 }

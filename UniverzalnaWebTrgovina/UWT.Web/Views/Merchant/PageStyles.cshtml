@@ -1,0 +1,41 @@
+﻿@model List<UWT.Web.Models.PageStyleViewModel>
+@{
+    ViewBag.Title = "PageStyles";
+    ViewBag.MainTitle = "Stilovi trgovina";
+    ViewBag.Subtitle = "Moji stilovi";
+}
+@section buttons{
+    <a href="@Url.Action("CreatePageStyle")" class="btn btn-default">Izrada novog stila</a>
+}
+
+<table class="table table-hover table-condensed table-responsive">
+    <thead>
+        <tr>
+            <td>Naziv</td>
+            <td colspan="2">Pozadina</td>
+            <td>Tekst</td>
+            <td colspan="2">Izbornik</td>
+            <td>Listovi</td>
+            <td>Logotip</td>
+            <td>Podnožje</td>
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model) {
+            <tr>
+                <td>@item.Name</td>
+                <td><span class="glyphicon glyphicon-star" style="background-color: @item.BackgroundColor; font-size: large"></span></td>
+                <td><img src="@item.BackgroundImage" alt="Background" class="thumbnail table-image" /></td>
+                <td><span class="glyphicon glyphicon-star" style="background-color: @item.ForegroundColor; font-size: large"></span></td>
+                <td><span class="glyphicon glyphicon-star" style="background-color: @item.NavColor; font-size: large"></span></td>
+                <td><img src="@item.NavImage" alt="Background" class="thumbnail table-image" /></td>
+                <td><span class="glyphicon glyphicon-star" style="background-color: @item.SheetColor; font-size: large"></span></td>
+                <td><img src="@item.Logo" alt="Logo" class="thumbnail table-image" /></td>
+                <td><img src="@item.FooterImage" alt="Background" class="thumbnail table-image" /></td>
+                <td><a href="@Url.Action("EditPageStyle", "Merchant", new { Id = item.Id })" class="pull-right btn btn-sm btn-default">Uredi</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
+
