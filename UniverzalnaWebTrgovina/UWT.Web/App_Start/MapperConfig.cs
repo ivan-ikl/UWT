@@ -37,6 +37,8 @@ namespace UWT.Web
 
             Mapper.CreateMap<PageLayoutViewModel, PageLayout>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
+
+            Mapper.CreateMap<PageStyleViewModel, PageStyle>();
         }
 
         static void MapModelsToViewModels()
@@ -58,6 +60,7 @@ namespace UWT.Web
 
             Mapper.CreateMap<PageLayout, PageLayoutViewModel>();
             Mapper.CreateMap<Category, CategoryViewModel>();
+            Mapper.CreateMap<PageStyle, PageStyleViewModel>();
         }
     }
 }

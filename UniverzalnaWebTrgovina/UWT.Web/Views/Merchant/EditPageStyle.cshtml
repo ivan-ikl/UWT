@@ -1,101 +1,86 @@
-﻿@model UWT.Web.Models.PageStyleViewModel
+﻿@using UWT.Web.Models
+@model PageStyleViewModel
 
 @{
     ViewBag.Title = "EditPageStyle";
+    ViewBag.MainTitle = "Uredi stil trgovine";
+    ViewBag.Subtitle = Model.Name;
 }
-
-<h2>EditPageStyle</h2>
-
-@using (Html.BeginForm())
-{
+@section buttons {
+    <a href="@Url.Action("PageStyles")" class="btn btn-default">Natrag</a>
+}
+@using (Html.BeginForm("EditPageStyle", "Merchant", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>PageStyleViewModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(m => Model.Id)
+    <div class="container">
+        <div class="col-md-3">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ForegroundColor, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-6">
+                        <input name="ForegroundColor" type="color" class="form-control" value="@Html.DisplayFor( m => Model.ForegroundColor)" />
+                        @Html.ValidationMessageFor(model => model.ForegroundColor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BackgroundColor, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-6">
+                        <input name="BackgroundColor" type="color" class="form-control" value="@Html.DisplayFor( m => Model.BackgroundColor)" />
+                        @Html.ValidationMessageFor(model => model.BackgroundColor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NavColor, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-6">
+                        <input name="NavColor" type="color" class="form-control" value="@Html.DisplayFor( m => Model.NavColor)" />
+                        @Html.ValidationMessageFor(model => model.NavColor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SheetColor, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-6">
+                        <input name="SheetColor" type="color" class="form-control" value="@Html.DisplayFor( m => Model.SheetColor)" />
+                        @Html.ValidationMessageFor(model => model.SheetColor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-6 col-md-6">
+                        <input type="submit" class="btn btn-primary" style="width: 100%" value="Spremi" />
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ForegroundColor, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ForegroundColor, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ForegroundColor, "", new { @class = "text-danger" })
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.Logo.Replace("~", ""), FieldName = "imglogo", Label = "Logotip trgovine" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BackgroundColor, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BackgroundColor, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BackgroundColor, "", new { @class = "text-danger" })
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.BackgroundImage.Replace("~", ""), FieldName = "imgbackground", Label = "Pozadinska slika" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NavColor, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NavColor, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NavColor, "", new { @class = "text-danger" })
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.NavImage.Replace("~", ""), FieldName = "imgnav", Label = "Slika izbornika" })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SheetColor, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SheetColor, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SheetColor, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Logo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Logo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Logo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BackgroundImage, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BackgroundImage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BackgroundImage, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NavImage, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NavImage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NavImage, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FooterImage, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FooterImage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FooterImage, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.FooterImage.Replace("~", ""), FieldName = "imgfooter", Label = "Slika podnožja" })
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

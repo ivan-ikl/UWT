@@ -6,17 +6,22 @@ namespace UWT.Web.Models {
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno!")]
+        [Display(Name = "Naziv")]
         public string Name { get; set; }
 
+        [Display(Name = "Boja teksta")]
         [Required(ErrorMessage = "Polje je obavezno!")]
         public string ForegroundColor { get; set; }
 
+        [Display(Name = "Boja pozadine")]
         [Required(ErrorMessage = "Polje je obavezno!")]
         public string BackgroundColor { get; set; }
 
+        [Display(Name = "Boja izbornika")]
         [Required(ErrorMessage = "Polje je obavezno!")]
         public string NavColor { get; set; }
 
+        [Display(Name = "Boja listova")]
         [Required(ErrorMessage = "Polje je obavezno!")]
         public string SheetColor { get; set; }
 

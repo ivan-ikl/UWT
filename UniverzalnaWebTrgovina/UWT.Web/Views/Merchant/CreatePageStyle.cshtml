@@ -1,99 +1,84 @@
-﻿@model UWT.Web.Models.PageStyleViewModel
-
+﻿@using UWT.Web.Models
+@model PageStyleViewModel
 @{
     ViewBag.Title = "CreatePageStyle";
+    ViewBag.MainTitle = "Novi stil trgovine";
 }
-
-<h2>CreatePageStyle</h2>
-
-@using (Html.BeginForm()) 
+@section buttons {
+    <a href="@Url.Action("PageStyles")" class="btn btn-default">Natrag</a>
+}
+@using (Html.BeginForm("CreatePageStyle", "Merchant", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) 
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>PageStyleViewModel</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    <div class="container">
+        <div class="col-md-3">
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Name, htmlAttributes: new {@class = "control-label col-md-6"})
+                    <div class="col-md-6">
+                        @Html.EditorFor(model => model.Name, new {htmlAttributes = new {@class = "form-control"}})
+                        @Html.ValidationMessageFor(model => model.Name, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.ForegroundColor, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-6">
+                        <input name="ForegroundColor" type="color" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.ForegroundColor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.BackgroundColor, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-6">
+                        <input name="BackgroundColor" type="color" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.BackgroundColor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.NavColor, htmlAttributes: new { @class = "control-label col-md-6" })
+                    <div class="col-md-6">
+                        <input name="NavColor" type="color" class="form-control" />
+                        @Html.ValidationMessageFor(model => model.NavColor, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.SheetColor, htmlAttributes: new {@class = "control-label col-md-6"})
+                    <div class="col-md-6">
+                        <input name="SheetColor" type="color" class="form-control"/>
+                        @Html.ValidationMessageFor(model => model.SheetColor, "", new {@class = "text-danger"})
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-6 col-md-6">
+                        <input type="submit" class="btn btn-primary" style="width: 100%" value="Dodaj" />
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ForegroundColor, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ForegroundColor, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ForegroundColor, "", new { @class = "text-danger" })
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = "", FieldName = "imglogo", Label = "Logotip trgovine", Required = true })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BackgroundColor, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BackgroundColor, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BackgroundColor, "", new { @class = "text-danger" })
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = "", FieldName = "imgbackground", Label = "Pozadinska slika", Required = true })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NavColor, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NavColor, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NavColor, "", new { @class = "text-danger" })
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = "", FieldName = "imgnav", Label = "Slika izbornika", Required = true })
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SheetColor, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SheetColor, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SheetColor, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Logo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Logo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Logo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.BackgroundImage, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.BackgroundImage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BackgroundImage, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.NavImage, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.NavImage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.NavImage, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.FooterImage, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.FooterImage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.FooterImage, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+        <div class="col-md-2">
+            <div class="form-group">
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = "", FieldName = "imgfooter", Label = "Slika podnožja", Required = true })
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

@@ -25,7 +25,7 @@ namespace UWT.Web.Controllers
 
         //
         // GET: /Manage/Index
-        public async Task<ActionResult> Index(ManageMessageId? message) {
+        public ActionResult Index(ManageMessageId? message) {
             ViewBag.StatusMessage = message.ToMessageString();
             var userId = User.Identity.GetUserId();
             using (var db = new UwtContext())
@@ -38,7 +38,7 @@ namespace UWT.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Index(IndexViewModel model, HttpPostedFileBase image)
+        public ActionResult Index(IndexViewModel model, HttpPostedFileBase image)
         {
             if (ModelState.IsValid)
             {

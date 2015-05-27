@@ -166,6 +166,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MerchantController.cs" />
+    <Compile Include="Extensions\ContextUpdaters.cs" />
     <Compile Include="Extensions\Converters.cs" />
     <Compile Include="Extensions\Enums.cs" />
     <Compile Include="Extensions\Filtering.cs" />
@@ -186,6 +187,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ImageEditorModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PageLayoutViewModel.cs" />
     <Compile Include="Models\PageStyleViewModel.cs" />
@@ -1044,6 +1046,10 @@
     <Content Include="Views\Merchant\PageStyles.cshtml" />
     <Content Include="Views\Merchant\CreatePageStyle.cshtml" />
     <Content Include="Views\Merchant\EditPageStyle.cshtml" />
+    <Content Include="Views\Shared\ImageEditor.cshtml" />
+    <Content Include="Views\Merchant\MyShops.cshtml" />
+    <None Include="Views\Merchant\CreateShop.cshtml" />
+    <None Include="Views\Merchant\EditShop.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

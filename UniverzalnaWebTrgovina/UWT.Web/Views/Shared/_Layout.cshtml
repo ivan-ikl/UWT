@@ -33,7 +33,7 @@
                         }
                         @if (User.IsInRole(UWT.Models.Roles.Merchant)) {
                             <li>@Html.ActionLink("Moje trgovine", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Moji stilovi", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Moji stilovi", "PageStyles", "Merchant")</li>
                         }
                     </ul>
                     <ul class="navbar-collapse collapse">

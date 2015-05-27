@@ -18,13 +18,15 @@ namespace UWT.Web.Models {
         public string Address { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
-        public virtual UserViewModel Owner { get; set; }
+        public UserViewModel Owner { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
-        public virtual DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
-        public virtual PageStyleViewModel PageStyle { get; set; }
+        public int PageStyle { get; set; }
 
+        [Required(ErrorMessage = "Polje je obavezno")]
+        public int PageLayout { get; set; }
     }
 }

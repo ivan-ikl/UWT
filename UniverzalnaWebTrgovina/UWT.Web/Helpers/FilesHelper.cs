@@ -65,6 +65,17 @@ namespace UWT.Web.Helpers {
             return img;
         }
 
+        public static Image AddUploadedImage(this HttpPostedFileBase image, HttpServerUtilityBase server, User user)
+        {
+            var img = new Image
+            {
+                DateCreated = DateTime.UtcNow,
+                Path = SaveUploadedImage(image, server),
+                Owner = user
+            };
+            return img;
+        }
+
         public static Image CreateUserImage(this UwtContext db, HttpPostedFileBase image, HttpServerUtilityBase server)
         {
             if (image == null || image.ContentLength == 0)
