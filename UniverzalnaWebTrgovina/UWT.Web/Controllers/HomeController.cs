@@ -1,32 +1,41 @@
-﻿using System.Web.Mvc;
-using System.Web.Security;
-using Roles = UWT.Models.Roles;
+﻿using System.Linq;
+using System.Web.Mvc;
+using AutoMapper;
+using UWT.Models;
+using UWT.Web.Models;
 
 namespace UWT.Web.Controllers {
 
-    [Authorize]
     public class HomeController : Controller {
-        public ActionResult Index() {
-            if (User.IsInRole(Roles.Admin))
+        public ActionResult Index(int? id) {
+            if (id == null)
             {
-                return RedirectToAction("Index", "Admin");
+                if (User.IsInRole(Roles.Admin))
+                {
+                    return RedirectToAction("Index", "Admin");
+                }
+                if (User.IsInRole(Roles.Merchant))
+                {
+                    return RedirectToAction("MyShops", "Merchant");
+                }
             }
-            if (User.IsInRole(Roles.Merchant))
+            using (var db = new UwtContext())
             {
-                return RedirectToAction("MyShops", "Merchant");
+                var shop = db.Shops.FirstOrDefault(s => s.Id == id);
+                if (shop == null) {
+                    var shops = db.Shops.ToList().Select(Mapper.Map<ShopViewModel>).ToList();
+                    return View(shops);
+                }
+                var model = Mapper.Map<ShopViewModel>(shop);
+                return View("Shop", model);
             }
-            return View();
         }
 
         public ActionResult About() {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 
         public ActionResult Contact() {
-            ViewBag.Message = "Your contact page.";
-
             return View();
         }
     }

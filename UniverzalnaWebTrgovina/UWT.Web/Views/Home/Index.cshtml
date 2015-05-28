@@ -1,7 +1,32 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@using UWT.Web.Extensions
+@model IEnumerable<UWT.Web.Models.ShopViewModel>
+@{
+    Layout = "~/Views/Shared/_ShopsLayout.cshtml";
+    ViewBag.Title = "All shops";
 }
 
-<div class="jumbotron">
-    <h1>Under construction</h1>
+<div class="demo-header">
+    <div class="demo-header-content">
+        <div class="container">
+            <h1>Dobro došli u naš trgovački centar!</h1>
+            <hr class="colored">
+            <p>Imate izbor između @Model.Count() trgovina i @Model.GetProducts().Count() proizvoda!</p>
+            <ul class="list-inline cta-list">
+                <li>
+                    <a href="#previews" class="btn btn-outline-light page-scroll-demo">View Demos</a>
+                </li>
+                <li>
+                    <a href="docs/index.html" class="btn btn-outline-light page-scroll-demo">Documentation</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    @foreach (var shop in Model)
+    {
+        @Html.Partial("ShopThumbnail", shop, ViewData)
+    }
 </div>

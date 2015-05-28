@@ -1,0 +1,24 @@
+﻿<!DOCTYPE html>
+<html @(ViewBag.AngularController != null ? Html.Raw("ng-app = \"uwtApp\"") : null)>
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Univerzalna trgovina</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/animations.min.css" rel="stylesheet"/>
+    <link href="~/Content/uwtShops.css" rel="stylesheet" />
+    <link href="~/Content/GalleryItem.css" rel="stylesheet"/>
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+    <script src="~/Scripts/angular.min.js"></script>
+    <link href="~/Content/Vitality.css" rel="stylesheet" />
+    <script src="~/Scripts/Controllers/UwtControllers.js"></script>
+    @RenderSection("controllers", false)
+</head>
+<body>
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

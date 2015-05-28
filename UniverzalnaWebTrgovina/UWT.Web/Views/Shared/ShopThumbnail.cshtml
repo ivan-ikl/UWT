@@ -1,0 +1,10 @@
+﻿@using UWT.Web.Extensions
+@model UWT.Web.Models.ShopViewModel
+<div class="shopThumbnail">
+    <a href="@Url.Action("Index", "Home", new {Model.Id})">
+        <div>
+            <img src="@Model.GetPageStyle().Logo.Replace("~", "")" alt="Logo" />
+        </div>
+        <h3>@Model.Name</h3>
+    </a>
+</div>

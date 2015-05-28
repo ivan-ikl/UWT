@@ -4,10 +4,10 @@
     string url = null;
     if (Model.GetType() == typeof (ProductViewModel))
     {
-        url = Url.Action("EditProduct", "Merchant", new {shop = ViewBag.ShopId, Id = Model.Id});
+        url = Url.Action("EditProduct", "Merchant", new {shop = ViewBag.ShopId, Model.Id});
     }
     else if (Model.GetType() == typeof(CategoryViewModel)) {
-        url = Url.Action("EditCategory", "Merchant", new { shop = ViewBag.ShopId, Id = Model.Id });
+        url = Url.Action("EditCategory", "Merchant", new { shop = ViewBag.ShopId, Model.Id });
     }
 }
 <div class="galleryItem @(ViewBag.ThumbnailSm == true ? "galleryItem-sm" : null)">

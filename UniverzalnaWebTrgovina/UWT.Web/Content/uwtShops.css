@@ -1,0 +1,58 @@
+﻿body {
+    background-color: #AA7939;
+}
+
+.shopThumbnail {
+    width: 31.33%;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    height: 280px;
+    padding: 10px;
+    background-color: #D4A66A;
+    float: left;        
+}
+
+.shopThumbnail:hover {
+    background-color: #FFDAAA;
+}
+
+.shopThumbnail div {
+    height: 70%;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+}
+
+.shopThumbnail h3 {
+    text-transform: uppercase;
+    text-align: center;
+}
+
+.shopThumbnail a {
+    text-decoration: none;
+    color: #553000;
+}
+
+.shopThumbnail img {
+    max-width: 100%;
+    max-height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media only screen and (max-width : 720px),
+only screen and (max-device-width : 720px) {
+    .shopThumbnail {
+        width: 44%;
+        margin-left: 3%;
+        margin-right: 3%;
+        margin-top: 5px;
+        margin-bottom: 5px;        
+    }
+}
+
+.demo-header {
+    background-color: #553000; 
+}

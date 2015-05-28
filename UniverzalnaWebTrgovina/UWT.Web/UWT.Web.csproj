@@ -169,6 +169,7 @@
     <Compile Include="Extensions\ContextUpdaters.cs" />
     <Compile Include="Extensions\Converters.cs" />
     <Compile Include="Extensions\Enums.cs" />
+    <Compile Include="Extensions\ShopViewModel.cs" />
     <Compile Include="Extensions\User.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
@@ -203,6 +204,8 @@
     <Content Include="Content\GalleryItem.css" />
     <Content Include="Content\Images\User.png" />
     <Content Include="Content\uwt.css" />
+    <Content Include="Content\uwtShops.css" />
+    <Content Include="Content\Vitality.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -1054,6 +1057,8 @@
     <None Include="Views\Merchant\EditProduct.cshtml" />
     <None Include="Views\Merchant\EditShop.cshtml" />
     <None Include="Views\Merchant\Products.cshtml" />
+    <Content Include="Views\Shared\ShopThumbnail.cshtml" />
+    <Content Include="Views\Shared\_ShopsLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -21,6 +21,12 @@ namespace UWT.Models.Extensions {
         public static IQueryable<Product> Filter(this IQueryable<Product> items, string userId, int shopId)
         {
             return items.Where(i => i.Shop != null && i.Shop.Owner != null && i.Shop.Owner.Id == userId && i.Shop.Id == shopId);
+        }
+
+        public static IQueryable<Product> Filter(this IQueryable<Product> items,  int shopId) 
+        {
+            return items.Where(i => i.Shop != null && i.Shop.Id == shopId);
         } 
+
     }
 }
