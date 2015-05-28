@@ -1,5 +1,16 @@
-﻿@model List<UWT.Web.Models.CategoryViewModel>
+﻿@model IEnumerable<UWT.Web.Models.CategoryViewModel>
 @{
-
-    
+    ViewBag.Title = "Categories";
+    ViewBag.MainTitle = "Kategorije proizvoda";
+    ViewBag.Subtitle = "Trgovina: " + ViewBag.ShopName;
 }
+@section buttons {
+    <a href="@Url.Action("EditShop", "Merchant", new {Id = ViewBag.ShopId})" class="btn btn-default">Natrag na trgovinu</a>
+    <a href="@Url.Action("CreateCategory", "Merchant", new { shop = ViewBag.ShopId })" class="btn btn-primary">Izradi novu kategoriju</a>
+}
+<div class="container">
+    @foreach (var item in Model)
+    {
+        @Html.Partial("Thumbnail", item, ViewData)
+    }
+</div>

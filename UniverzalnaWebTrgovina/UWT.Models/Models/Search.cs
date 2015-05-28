@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UWT.Models.Interfaces;
 
 namespace UWT.Models.Models {
@@ -11,7 +8,7 @@ namespace UWT.Models.Models {
     public class Search : IShopMember, IUserOwned {
 
         [Key]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public virtual User Owner { get; set; }
 

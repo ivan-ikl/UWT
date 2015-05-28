@@ -20,9 +20,6 @@
                 @Html.DisplayNameFor(model => model.Layout)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PageStyles)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.DateCreated)
             </th>
             <th></th>
@@ -38,13 +35,10 @@
                     @Html.DisplayFor(modelItem => item.Layout)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PageStyles)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.DateCreated)
                 </td>
                 <td>
-                    @Html.ActionLink("Uredi", "Edit", new { id = item.Id }, new { @class = "btn btn-sm btn-default pull-right" })
+                    @Html.ActionLink("Uredi", "EditLayout", new { id = item.Id }, new { @class = "btn btn-sm btn-default pull-right" })
                 </td>
             </tr>
         }

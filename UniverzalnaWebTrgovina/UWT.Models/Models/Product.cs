@@ -8,7 +8,7 @@ namespace UWT.Models {
     public class Product : IShopMember, IPricing, IImageContainer {
 
         [Key]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Title { get; set; }

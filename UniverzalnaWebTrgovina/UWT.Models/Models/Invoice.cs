@@ -9,7 +9,7 @@ namespace UWT.Models {
     public class Invoice {
 
         [Key]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public DateTime DateCreated { get; set; }

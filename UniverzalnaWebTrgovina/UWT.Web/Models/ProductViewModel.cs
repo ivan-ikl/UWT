@@ -5,7 +5,7 @@ using UWT.Web.Interfaces;
 namespace UWT.Web.Models {
     public class ProductViewModel : IThumbnail {
 
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Title { get; set; }
@@ -23,15 +23,9 @@ namespace UWT.Web.Models {
 
         public int Count { get; set; }
 
-        [Required]
         public virtual ShopViewModel Shop { get; set; }
 
-        [Required]
         public string Image { get; set; }
-
-        public string ImageUrl {
-            get { return Image; }
-        }
 
     }
 }

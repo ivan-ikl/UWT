@@ -330,7 +330,8 @@ namespace UWT.Web.Controllers
                         ProfileImages = new List<Image> { defaultProfileImage },
                         Name = "AdminsName",
                         Surname = "AdminsSurname",
-                        OwnedImages = new List<Image> { defaultProfileImage }
+                        OwnedImages = new List<Image> { defaultProfileImage },
+                        Blocked = DateTime.MaxValue
                     };
                     try
                     {

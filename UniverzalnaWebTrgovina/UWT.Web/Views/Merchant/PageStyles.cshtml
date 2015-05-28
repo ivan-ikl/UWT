@@ -11,25 +11,25 @@
 <table class="table table-hover table-condensed table-responsive">
     <thead>
         <tr>
-            <td>Naziv</td>
-            <td colspan="2">Pozadina</td>
-            <td>Tekst</td>
-            <td colspan="2">Izbornik</td>
-            <td>Listovi</td>
-            <td>Logotip</td>
-            <td>Podnožje</td>
-            <td></td>
+            <td class="col-md-2">Naziv</td>
+            <td class="col-md-2" colspan="2">Pozadina</td>
+            <td class="col-md-1">Tekst</td>
+            <td class="col-md-2" colspan="2">Izbornik</td>
+            <td class="col-md-1">Listovi</td>
+            <td class="col-md-1">Logotip</td>
+            <td class="col-md-1">Podnožje</td>
+            <td class="col-md-2"></td>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model) {
             <tr>
                 <td>@item.Name</td>
-                <td><span class="form-control" style="background-color: @item.BackgroundColor; font-size: large"></span></td>
-                <td><img src="@item.BackgroundImage.Replace("~", "")" alt="Background" class="thumbnail table-image" /></td>
+                <td class="col-md-1"><span class="form-control" style="background-color: @item.BackgroundColor; font-size: large"></span></td>
+                <td class="col-md-1"><img src="@item.BackgroundImage.Replace("~", "")" alt="Background" class="thumbnail table-image" /></td>
                 <td><span class="form-control" style="background-color: @item.ForegroundColor; font-size: large"></span></td>
-                <td><span class="form-control" style="background-color: @item.NavColor; font-size: large"></span></td>
-                <td><img src="@item.NavImage.Replace("~", "")" alt="Background" class="thumbnail table-image" /></td>
+                <td class="col-md-1"><span class="form-control" style="background-color: @item.NavColor; font-size: large"></span></td>
+                <td class="col-md-1"><img src="@item.NavImage.Replace("~", "")" alt="Background" class="thumbnail table-image" /></td>
                 <td><span class="form-control" style="background-color: @item.SheetColor; font-size: large"></span></td>
                 <td><img src="@item.Logo.Replace("~", "")" alt="Logo" class="thumbnail table-image" /></td>
                 <td><img src="@item.FooterImage.Replace("~", "")" alt="Background" class="thumbnail table-image" /></td>

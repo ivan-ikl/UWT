@@ -169,7 +169,6 @@
     <Compile Include="Extensions\ContextUpdaters.cs" />
     <Compile Include="Extensions\Converters.cs" />
     <Compile Include="Extensions\Enums.cs" />
-    <Compile Include="Extensions\Filtering.cs" />
     <Compile Include="Extensions\User.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
@@ -1048,8 +1047,12 @@
     <Content Include="Views\Merchant\EditPageStyle.cshtml" />
     <Content Include="Views\Shared\ImageEditor.cshtml" />
     <Content Include="Views\Merchant\MyShops.cshtml" />
+    <None Include="Views\Merchant\CreateCategory.cshtml" />
+    <None Include="Views\Merchant\CreateProduct.cshtml" />
     <None Include="Views\Merchant\CreateShop.cshtml" />
+    <None Include="Views\Merchant\EditCategory.cshtml" />
     <None Include="Views\Merchant\EditShop.cshtml" />
+    <None Include="Views\Merchant\Products.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

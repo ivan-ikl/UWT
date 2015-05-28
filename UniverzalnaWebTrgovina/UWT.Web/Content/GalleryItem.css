@@ -2,6 +2,7 @@
     color: #797478;
     font: 10px/1.5 Verdana, Helvetica, sans-serif;
     float: left;
+    min-height: 280px;
 }
  
 .galleryItem h3 {
@@ -21,7 +22,7 @@
     font: 10px/1.5 Verdana, Helvetica, sans-serif;
     float: left;        
     width: 16%;
-    margin:  2% 2% 50px 2%; 
+    margin:  2% 2% 20px 2%; 
 }
 
 /* Media queries */
@@ -46,5 +47,5 @@ only screen and (max-device-width : 320px){
     .galleryItem {width: 96%;}
     .galleryItem img {width: 96%;}
     .galleryItem h3 {font-size: 18px;}
-    .galleryItem p, {font-size: 18px;}
+    .galleryItem p {font-size: 18px;}
 }

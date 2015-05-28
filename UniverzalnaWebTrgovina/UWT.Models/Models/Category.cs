@@ -7,7 +7,7 @@ namespace UWT.Models {
     public class Category : IShopMember, IImageContainer {
         
         [Key]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Name { get; set; }

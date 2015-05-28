@@ -10,7 +10,7 @@ namespace UWT.Models {
     public class Message {
 
         [Key]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public DateTime DateSent { get; set; }

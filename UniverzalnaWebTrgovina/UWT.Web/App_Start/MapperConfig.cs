@@ -21,6 +21,8 @@ namespace UWT.Web
             Mapper.CreateMap<int, List<Product>>().ConvertUsing(list => null);
             Mapper.CreateMap<int, List<PageStyle>>().ConvertUsing(list => null);
             Mapper.CreateMap<int, List<Shop>>().ConvertUsing(list => null);
+            Mapper.CreateMap<int, PageStyle>().ConvertUsing(style => null);
+            Mapper.CreateMap<int, PageLayout>().ConvertUsing(layout => null);
             Mapper.CreateMap<string, Image>().ConvertUsing(img => null);
 
             // Models
@@ -33,12 +35,15 @@ namespace UWT.Web
                 .ForMember(dest => dest.UserName, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
 
-            Mapper.CreateMap<CategoryViewModel, Category>();
+            Mapper.CreateMap<CategoryViewModel, Category>().ForMember(dest => dest.Id, opt => opt.Ignore());
 
-            Mapper.CreateMap<PageLayoutViewModel, PageLayout>()
-                .ForMember(dest => dest.Id, opt => opt.Ignore());
-
+            Mapper.CreateMap<PageLayoutViewModel, PageLayout>().ForMember(dest => dest.Id, opt => opt.Ignore());
+            
             Mapper.CreateMap<PageStyleViewModel, PageStyle>();
+            
+            Mapper.CreateMap<ShopViewModel, Shop>().ForMember(dest => dest.Owner, opt => opt.Ignore());
+
+            Mapper.CreateMap<ProductViewModel, Product>().ForMember(dest => dest.Shop, opt => opt.Ignore());
         }
 
         static void MapModelsToViewModels()
@@ -48,6 +53,8 @@ namespace UWT.Web
             Mapper.CreateMap<List<PageStyle>, int>().ConvertUsing(list => list.Count);
             Mapper.CreateMap<List<Shop>, int>().ConvertUsing(list => list.Count);
             Mapper.CreateMap<Image, string>().ConvertUsing(img => img.Source());
+            Mapper.CreateMap<PageStyle, int>().ConvertUsing(s => s != null ? s.Id : 0);
+            Mapper.CreateMap<PageLayout, int>().ConvertUsing(l => l != null ? (int)l.Id : 0);
 
             // Models
 
@@ -59,8 +66,14 @@ namespace UWT.Web
                 .ForMember(dest => dest.Blocked, opt => opt.MapFrom(src => src.IsBlocked()));
 
             Mapper.CreateMap<PageLayout, PageLayoutViewModel>();
-            Mapper.CreateMap<Category, CategoryViewModel>();
+            
+            Mapper.CreateMap<Category, CategoryViewModel>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => (int)src.Id));
+
+            Mapper.CreateMap<Product, ProductViewModel>();
+
             Mapper.CreateMap<PageStyle, PageStyleViewModel>();
+            
+            Mapper.CreateMap<Shop, ShopViewModel>();
         }
     }
 }

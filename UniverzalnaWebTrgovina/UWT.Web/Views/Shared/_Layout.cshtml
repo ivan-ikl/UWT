@@ -7,6 +7,7 @@
     @Styles.Render("~/Content/css")
     <link href="~/Content/animations.min.css" rel="stylesheet" />
     <link href="~/Content/uwt.css" rel="stylesheet" />
+    <link href="~/Content/GalleryItem.css" rel="stylesheet" />
     @Scripts.Render("~/bundles/modernizr")
     <script src="~/Scripts/jquery-2.1.4.min.js"></script>
     <script src="~/Scripts/angular.min.js"></script>
@@ -32,7 +33,7 @@
                             <li>@Html.ActionLink("Predlošci trgovina", "PageLayouts", "Admin")</li>
                         }
                         @if (User.IsInRole(UWT.Models.Roles.Merchant)) {
-                            <li>@Html.ActionLink("Moje trgovine", "Index", "Home")</li>
+                            <li>@Html.ActionLink("Moje trgovine", "MyShops", "Merchant")</li>
                             <li>@Html.ActionLink("Moji stilovi", "PageStyles", "Merchant")</li>
                         }
                     </ul>

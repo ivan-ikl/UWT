@@ -5,7 +5,7 @@ namespace UWT.Web.Models
 {
     public class PageLayoutViewModel
     {
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
         [Display(Name = "Naziv")]

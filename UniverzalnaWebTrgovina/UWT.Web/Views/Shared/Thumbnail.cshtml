@@ -1,6 +1,21 @@
-﻿@model UWT.Web.Interfaces.IThumbnail
+﻿@using UWT.Web.Models
+@model UWT.Web.Interfaces.IThumbnail
+@{
+    string url = null;
+    if (Model.GetType() == typeof (ProductViewModel))
+    {
+        url = Url.Action("EditProduct", "Merchant", new {shop = ViewBag.ShopId, Id = Model.Id});
+    }
+    else if (Model.GetType() == typeof(CategoryViewModel)) {
+        url = Url.Action("EditCategory", "Merchant", new { shop = ViewBag.ShopId, Id = Model.Id });
+    }
+}
 <div class="galleryItem">
-    <a href="#"><img src="@Model.ImageUrl" alt=""></a>
+    <a href="@url">
+        <div style="width: 100%; height: 175px">
+            <img src="@Model.Image.Replace("~", "")" class="img-thumbnail" alt="@Model.Title">
+        </div>
+    </a>
     <h3>@Model.Title</h3>
     <p>@Model.Description</p>
 </div>

@@ -9,7 +9,7 @@ namespace UWT.Models {
     public class Image : IUserOwned {
 
         [Key]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string Path { get; set; }

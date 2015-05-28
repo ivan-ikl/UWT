@@ -22,7 +22,11 @@ namespace UWT.Models.Extensions {
         public static IQueryable<Shop> IncludeAll(this IQueryable<Shop> shops)
         {
             return shops.Include(s => s.PageLayout).Include(s => s.PageStyle).Include(s => s.Owner);
-        } 
+        }
 
+        public static IQueryable<Category> IncludeAll(this IQueryable<Category> categories)
+        {
+            return categories.Include(c => c.Shop).Include(c => c.Image).Include(c => c.Products);
+        }
     }
 }

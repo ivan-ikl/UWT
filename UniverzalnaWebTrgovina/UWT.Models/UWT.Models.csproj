@@ -81,21 +81,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Entities.cs" />
+    <Compile Include="Extensions\Filtering.cs" />
     <Compile Include="Interfaces\IImageContainer.cs" />
     <Compile Include="Interfaces\IPricing.cs" />
     <Compile Include="Interfaces\IUserOwned.cs" />
     <Compile Include="Interfaces\IShopMember.cs" />
-    <Compile Include="Migrations\201505232123225_initial.cs" />
-    <Compile Include="Migrations\201505232123225_initial.Designer.cs">
-      <DependentUpon>201505232123225_initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505251126172_UserBlocked.cs" />
-    <Compile Include="Migrations\201505251126172_UserBlocked.Designer.cs">
-      <DependentUpon>201505251126172_UserBlocked.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201505270900578_shopstyle.cs" />
-    <Compile Include="Migrations\201505270900578_shopstyle.Designer.cs">
-      <DependentUpon>201505270900578_shopstyle.cs</DependentUpon>
+    <Compile Include="Migrations\201505280211022_Initial.cs" />
+    <Compile Include="Migrations\201505280211022_Initial.Designer.cs">
+      <DependentUpon>201505280211022_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PageLayout.cs" />
@@ -118,16 +111,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201505232123225_initial.resx">
-      <DependentUpon>201505232123225_initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505251126172_UserBlocked.resx">
-      <DependentUpon>201505251126172_UserBlocked.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201505270900578_shopstyle.resx">
-      <DependentUpon>201505270900578_shopstyle.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201505280211022_Initial.resx">
+      <DependentUpon>201505280211022_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
