@@ -1,0 +1,34 @@
+﻿@using UWT.Web.Models
+@model CategoryViewModel
+@{
+    ViewBag.Title = "title";
+    ViewBag.MainTitle = "Nova kategorija proizvoda";
+}
+@section buttons
+{
+    <a href="@Url.Action("Categories", "Merchant", new {shop = ViewBag.ShopId})">Natrag</a>
+}
+@using (Html.BeginForm("CreateCategory", "Merchant", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) {
+    @Html.AntiForgeryToken()
+    @Html.Hidden("shop", (int)ViewBag.ShopId)
+    <div class="col-md-6">
+        @Html.ValidationSummary("", new {@class = "text-danger"})
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name, new {@class = "col-md-3 control-label"})
+            <div class="col-md-9">
+                @Html.EditorFor(m => m.Name, new {htmlAttributes = new {@class = "form-control"}})
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9 btn-group">
+                <input type="submit" class="btn btn-primary" value="Dodaj"/>
+                <a href="@Url.Action("Categories", "Merchant", new {shop = ViewBag.ShopId})" class="btn btn-default">Odustani</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = "", FieldName = "image", Label = "Slika:", Required = true }, ViewData)
+        </div>        
+    </div>
+}

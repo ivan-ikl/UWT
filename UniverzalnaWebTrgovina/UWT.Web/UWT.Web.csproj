@@ -1051,6 +1051,7 @@
     <None Include="Views\Merchant\CreateProduct.cshtml" />
     <None Include="Views\Merchant\CreateShop.cshtml" />
     <None Include="Views\Merchant\EditCategory.cshtml" />
+    <None Include="Views\Merchant\EditProduct.cshtml" />
     <None Include="Views\Merchant\EditShop.cshtml" />
     <None Include="Views\Merchant\Products.cshtml" />
   </ItemGroup>

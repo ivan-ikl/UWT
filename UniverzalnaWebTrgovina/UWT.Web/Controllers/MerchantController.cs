@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -54,11 +53,11 @@ namespace UWT.Web.Controllers
             return View(model);
         }
 
-        public ActionResult EditPageStyle(int Id) {
+        public ActionResult EditPageStyle(int id) {
             var userId = User.Identity.GetUserId();
             using (var db = new UwtContext())
             {
-                var pageStyle = db.PageStyles.IncludeAll().Filter(userId).FirstOrDefault(ps => ps.Id == Id);
+                var pageStyle = db.PageStyles.IncludeAll().Filter(userId).FirstOrDefault(ps => ps.Id == id);
                 if (pageStyle == null)
                 {
                     return HttpNotFound();
@@ -139,12 +138,12 @@ namespace UWT.Web.Controllers
             return View(model);
         }
 
-        public ActionResult EditShop(int Id)
+        public ActionResult EditShop(int id)
         {
             var userId = User.Identity.GetUserId();
             using (var db = new UwtContext())
             {
-                var shop = db.Shops.Filter(userId).FirstOrDefault(s => s.Id == Id);
+                var shop = db.Shops.Filter(userId).FirstOrDefault(s => s.Id == id);
                 if (shop == null)
                 {
                     return HttpNotFound();
@@ -201,7 +200,7 @@ namespace UWT.Web.Controllers
                 }
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
-                var categories = db.Categories.Filter(userId).ToList().Select(Mapper.Map<CategoryViewModel>).ToList();
+                var categories = db.Categories.Filter(userId, shop).ToList().Select(Mapper.Map<CategoryViewModel>).ToList();
                 return View(categories);
             }
         }
@@ -259,7 +258,7 @@ namespace UWT.Web.Controllers
             var userId = User.Identity.GetUserId();
             using (var db = new UwtContext()) {
                 var myShop = db.Shops.Filter(userId).FirstOrDefault(s => s.Id == shop);
-                var category = db.Categories.Filter(userId).FirstOrDefault(c => c.Id == id);
+                var category = db.Categories.Filter(userId, shop).FirstOrDefault(c => c.Id == id);
                 if (myShop == null || category == null) {
                     return HttpNotFound();
                 }
@@ -276,17 +275,18 @@ namespace UWT.Web.Controllers
             if (ModelState.IsValid) {
                 using (var db = new UwtContext()) {
                     var myShop = db.Shops.Filter(userId).FirstOrDefault(s => s.Id == shop);
-                    var category = db.Categories.IncludeAll().Filter(userId).FirstOrDefault(c => c.Id == model.Id);
-                    if (myShop == null || category == null) {
-                        return HttpNotFound();
-                    }
+                    if (myShop == null) return HttpNotFound();
+
+                    var category = db.Categories.IncludeAll().Filter(userId, myShop.Id).FirstOrDefault(c => c.Id == model.Id);
+                    if (category == null) return HttpNotFound();
+
                     category.Name = model.Name;
                     if (image != null && image.ContentLength > 0)
                     {
                         category.Image = image.AddUploadedImage(Server, db.Users.FirstOrDefault(u => u.Id == userId));
                     }
                     db.SaveChanges();
-                    return RedirectToAction("EditCategory", "Merchant", new { shop = myShop.Id, Id = model.Id });
+                    return RedirectToAction("EditCategory", "Merchant", new { shop = myShop.Id, model.Id });
                 }
             }
             using (var db = new UwtContext()) {
@@ -309,7 +309,7 @@ namespace UWT.Web.Controllers
                 }
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
-                var products = db.Products.Filter(userId).ToList().Select(Mapper.Map<ProductViewModel>).ToList();
+                var products = db.Products.Filter(userId, myShop.Id).ToList().Select(Mapper.Map<ProductViewModel>).ToList();
                 return View(products);
             }
         }
@@ -323,7 +323,7 @@ namespace UWT.Web.Controllers
                 }
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
-                ViewBag.Categories = db.Categories.Filter(userId).ToList().Select(c => new SelectListItem {Text = c.Name, Value = c.Id.ToString()});
+                ViewBag.Categories = db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem {Text = c.Name, Value = c.Id.ToString()});
                 return View();
             }
         }
@@ -341,7 +341,7 @@ namespace UWT.Web.Controllers
                     }
                     product.Shop = myShop;
                     product.Image = image.AddUploadedImage(Server, db.Users.FirstOrDefault(u => u.Id == userId));
-                    product.Categories = categories.Select(int.Parse).Select(cid => db.Categories.IncludeAll().Filter(userId).FirstOrDefault(c => c.Id == cid)).ToList();
+                    product.Categories = categories.Select(int.Parse).Select(cid => db.Categories.IncludeAll().Filter(userId, myShop.Id).FirstOrDefault(c => c.Id == cid)).ToList();
                     product.Views = 0;
                     db.Products.Add(product);
                     db.SaveChanges();
@@ -355,9 +355,65 @@ namespace UWT.Web.Controllers
                 }
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
-                ViewBag.Categories = db.Categories.Filter(userId).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() });
+                ViewBag.Categories = db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString(), Selected = categories.Contains(c.Id.ToString()) });
             }
             return View(model);
         }
+
+        public ActionResult EditProduct(int shop, int id) {
+            var userId = User.Identity.GetUserId();
+            using (var db = new UwtContext())
+            {              
+                var myShop = db.Shops.Filter(userId).FirstOrDefault(s => s.Id == shop);
+                var product = db.Products.IncludeAll().Filter(userId, shop).FirstOrDefault(c => c.Id == id);
+                if (myShop == null || product == null)
+                {
+                    return HttpNotFound();
+                }
+                var selectedCategories = product.Categories.Select(c => c.Id).ToList();
+                ViewBag.ShopName = myShop.Name;
+                ViewBag.ShopId = myShop.Id;
+                ViewBag.Categories = db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString(), Selected = selectedCategories.Contains(c.Id)});
+                return View(Mapper.Map<ProductViewModel>(product));
+            }
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditProduct([Bind(Exclude = "Shop,Categories")] ProductViewModel model, int shop, HttpPostedFileBase image, string[] categories) {
+            var userId = User.Identity.GetUserId();
+            if (ModelState.IsValid) {
+                using (var db = new UwtContext()) {
+                    var myShop = db.Shops.Filter(userId).FirstOrDefault(s => s.Id == shop);
+                    if (myShop == null) return HttpNotFound();
+
+                    var product = db.Products.IncludeAll().Filter(userId, myShop.Id).FirstOrDefault(c => c.Id == model.Id);
+                    if (product == null) return HttpNotFound();
+                    
+                    product.Title = model.Title;
+                    product.Count = model.Count;
+                    product.Description = model.Description;
+                    product.Tags = model.Tags;
+                    product.UnitPrice = model.UnitPrice;
+                    product.Categories = categories.Select(int.Parse).Select(cid => db.Categories.IncludeAll().Filter(userId, myShop.Id).FirstOrDefault(c => c.Id == cid)).ToList();
+                    if (image != null && image.ContentLength > 0) {
+                        product.Image = image.AddUploadedImage(Server, db.Users.FirstOrDefault(u => u.Id == userId));
+                    }
+                    db.SaveChanges();
+                    return RedirectToAction("EditProduct", "Merchant", new { shop = myShop.Id, model.Id });
+                }
+            }
+            using (var db = new UwtContext()) {
+                var myShop = db.Shops.Filter(userId).FirstOrDefault(s => s.Id == shop);
+                if (myShop == null) {
+                    return HttpNotFound();
+                }
+                ViewBag.ShopName = myShop.Name;
+                ViewBag.ShopId = myShop.Id;
+                ViewBag.Categories = db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString(), Selected = categories.Contains(c.Id.ToString())});
+            }
+            return View(model);
+        }
+
     }
 }

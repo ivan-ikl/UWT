@@ -1,0 +1,79 @@
+﻿@using UWT.Web.Models
+@model ProductViewModel
+@{
+    ViewBag.Title = "title";
+    ViewBag.MainTitle = "Uredi proizvod";
+    ViewBag.Subtitle = "Proizvod: " + Model.Title;
+}
+@section buttons
+{
+    <a href="@Url.Action("Products", "Merchant", new {shop = ViewBag.ShopId})">Natrag</a>
+}
+@using (Html.BeginForm("EditProduct", "Merchant", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) {
+    @Html.AntiForgeryToken()
+    @Html.Hidden("shop", (int)ViewBag.ShopId)
+    @Html.HiddenFor(m => Model.Id)
+    <div class="col-md-6">
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.Title, new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Description, new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Count, new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                @Html.EditorFor(m => m.Count, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.UnitPrice, new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                @Html.EditorFor(m => m.UnitPrice, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Tags, new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                @Html.EditorFor(m => m.Tags, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.Label("Kategorije:", new { @class = "col-md-3 control-label" })
+            <div class="col-md-9">
+                <input id="categoryDisplay" name="categoryDisplay" class="form-control" value="" readonly="readonly" />
+                @Html.ListBox("categories", (IEnumerable<SelectListItem>)ViewBag.Categories, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9 btn-group">
+                <input type="submit" class="btn btn-primary" value="Spremi promjene" />
+                <a href="@Url.Action("Products", "Merchant", new {shop = ViewBag.ShopId})" class="btn btn-default">Odustani</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.Image.Replace("~", ""), FieldName = "image", Label = "Slika:" }, ViewData)
+        </div>
+    </div>
+}
+@section scripts {
+    <script>
+        $(function () {
+            function showCategories() {
+                var selection = $('#categories :selected').map(function (i, c) { return $(c).html(); });
+                $("#categoryDisplay").val(Array.prototype.join.call(selection, ", "));
+            }
+            $("#categories").click(function () { showCategories(); });
+            showCategories();
+        });
+    </script>
+}

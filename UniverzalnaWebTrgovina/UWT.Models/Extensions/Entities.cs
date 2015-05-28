@@ -28,5 +28,10 @@ namespace UWT.Models.Extensions {
         {
             return categories.Include(c => c.Shop).Include(c => c.Image).Include(c => c.Products);
         }
+
+        public static IQueryable<Product> IncludeAll(this IQueryable<Product> products)
+        {
+            return products.Include(p => p.Shop).Include(p => p.Categories).Include(p => p.Image).Include(p => p.Orders);
+        }
     }
 }
