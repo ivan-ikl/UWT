@@ -10,9 +10,9 @@
         url = Url.Action("EditCategory", "Merchant", new { shop = ViewBag.ShopId, Id = Model.Id });
     }
 }
-<div class="galleryItem">
+<div class="galleryItem @(ViewBag.ThumbnailSm == true ? "galleryItem-sm" : null)">
     <a href="@url">
-        <div style="width: 100%; height: 175px">
+        <div style="width: 100%; height: @(ViewBag.ThumbnailSm == true ? "84px" : "175px")">
             <img src="@Model.Image.Replace("~", "")" class="img-thumbnail" alt="@Model.Title">
         </div>
     </a>

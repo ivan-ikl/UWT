@@ -7,7 +7,7 @@
 }
 @section buttons
 {
-    <a href="@Url.Action("Products", "Merchant", new {shop = ViewBag.ShopId})">Natrag</a>
+    <a href="@Url.Action("Products", "Merchant", new {shop = ViewBag.ShopId})" class="btn btn-default">Natrag</a>
 }
 @using (Html.BeginForm("EditProduct", "Merchant", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) {
     @Html.AntiForgeryToken()
@@ -40,16 +40,20 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Tags, new { @class = "col-md-3 control-label" })
+            @Html.LabelFor(m => m.Tags, new {@class = "col-md-3 control-label"})
             <div class="col-md-9">
-                @Html.EditorFor(m => m.Tags, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(m => m.Tags, new {htmlAttributes = new {@class = "form-control"}})
             </div>
         </div>
         <div class="form-group">
             @Html.Label("Kategorije:", new { @class = "col-md-3 control-label" })
             <div class="col-md-9">
                 <input id="categoryDisplay" name="categoryDisplay" class="form-control" value="" readonly="readonly" />
-                @Html.ListBox("categories", (IEnumerable<SelectListItem>)ViewBag.Categories, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                @Html.ListBoxFor(m => Model.Categories, (MultiSelectList)ViewBag.Categories, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
@@ -61,7 +65,7 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.Image.Replace("~", ""), FieldName = "image", Label = "Slika:" }, ViewData)
+            @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.Image.Replace("~", ""), FieldName = "image", Label = "Slika proizvoda:" }, ViewData)
         </div>
     </div>
 }
@@ -69,10 +73,10 @@
     <script>
         $(function () {
             function showCategories() {
-                var selection = $('#categories :selected').map(function (i, c) { return $(c).html(); });
+                var selection = $('#Categories :selected').map(function (i, c) { return $(c).html(); });
                 $("#categoryDisplay").val(Array.prototype.join.call(selection, ", "));
             }
-            $("#categories").click(function () { showCategories(); });
+            $("#Categories").click(function () { showCategories(); });
             showCategories();
         });
     </script>

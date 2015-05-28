@@ -1,11 +1,12 @@
 ﻿@model IEnumerable<UWT.Web.Models.ProductViewModel>
 @{
     ViewBag.Title = "Categories";
-    ViewBag.MainTitle = "Kategorije proizvoda";
+    ViewBag.MainTitle = "Proizvodi";
     ViewBag.Subtitle = "Trgovina: " + ViewBag.ShopName;
 }
 @section buttons {
     <a href="@Url.Action("EditShop", "Merchant", new {Id = ViewBag.ShopId})" class="btn btn-default">Natrag na trgovinu</a>
+    <a href="@Url.Action("Categories", "Merchant", new { shop = ViewBag.ShopId })" class="btn btn-default">Kategorije proizvoda</a>
     <a href="@Url.Action("CreateProduct", "Merchant", new { shop = ViewBag.ShopId })" class="btn btn-primary">Izradi novi proizvod</a>
 }
 <div class="container">

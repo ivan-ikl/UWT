@@ -33,5 +33,7 @@ namespace UWT.Web.Models {
 
         public string Image { get; set; }
 
+        public string[] Categories { get; set; }
+
     }
 }

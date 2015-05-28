@@ -6,7 +6,7 @@
 }
 @section buttons
 {
-    <a href="@Url.Action("Products", "Merchant", new {shop = ViewBag.ShopId})">Natrag</a>
+    <a href="@Url.Action("Products", "Merchant", new {shop = ViewBag.ShopId})" class="btn btn-default">Natrag</a>
 }
 @using (Html.BeginForm("CreateProduct", "Merchant", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) {
     @Html.AntiForgeryToken()
@@ -46,8 +46,12 @@
         <div class="form-group">
             @Html.Label("Kategorije:", new { @class = "col-md-3 control-label" })
             <div class="col-md-9">
-                <input id="categoryDisplay" name="categoryDisplay" class="form-control" value="" readonly="readonly"/>
-                @Html.ListBox("categories", (IEnumerable<SelectListItem>)ViewBag.Categories, new { @class = "form-control" })
+                <input id="categoryDisplay" name="categoryDisplay" class="form-control" value="" readonly="readonly" />
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-3 col-md-9">
+                @Html.ListBoxFor(m => Model.Categories, (MultiSelectList)ViewBag.Categories, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">
@@ -66,8 +70,8 @@
 @section scripts {
     <script>
         $(function() {
-            $("#categories").click(function () {
-                var selection = $('#categories :selected').map(function (i, c) { return $(c).html(); });
+            $("#Categories").click(function () {
+                var selection = $('#Categories :selected').map(function (i, c) { return $(c).html(); });
                 $("#categoryDisplay").val(Array.prototype.join.call(selection, ", "));
             });
         });

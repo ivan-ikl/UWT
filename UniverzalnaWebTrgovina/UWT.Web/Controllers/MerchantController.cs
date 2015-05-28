@@ -258,12 +258,13 @@ namespace UWT.Web.Controllers
             var userId = User.Identity.GetUserId();
             using (var db = new UwtContext()) {
                 var myShop = db.Shops.Filter(userId).FirstOrDefault(s => s.Id == shop);
-                var category = db.Categories.Filter(userId, shop).FirstOrDefault(c => c.Id == id);
+                var category = db.Categories.IncludeAll().Filter(userId, shop).FirstOrDefault(c => c.Id == id);
                 if (myShop == null || category == null) {
                     return HttpNotFound();
                 }
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
+                ViewBag.Products = category.Products.Select(Mapper.Map<ProductViewModel>).ToList();
                 return View(Mapper.Map<CategoryViewModel>(category));
             }
         }
@@ -275,11 +276,11 @@ namespace UWT.Web.Controllers
             if (ModelState.IsValid) {
                 using (var db = new UwtContext()) {
                     var myShop = db.Shops.Filter(userId).FirstOrDefault(s => s.Id == shop);
-                    if (myShop == null) return HttpNotFound();
-
-                    var category = db.Categories.IncludeAll().Filter(userId, myShop.Id).FirstOrDefault(c => c.Id == model.Id);
-                    if (category == null) return HttpNotFound();
-
+                    var category = db.Categories.IncludeAll().Filter(userId, shop).FirstOrDefault(c => c.Id == model.Id);
+                    if (myShop == null || category == null)
+                    {
+                        return HttpNotFound();
+                    }
                     category.Name = model.Name;
                     if (image != null && image.ContentLength > 0)
                     {
@@ -291,11 +292,14 @@ namespace UWT.Web.Controllers
             }
             using (var db = new UwtContext()) {
                 var myShop = db.Shops.Filter(userId).FirstOrDefault(s => s.Id == shop);
-                if (myShop == null) {
+                var category = db.Categories.IncludeAll().Filter(userId, shop).FirstOrDefault(c => c.Id == model.Id);
+                if (myShop == null || category == null)
+                {
                     return HttpNotFound();
                 }
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
+                ViewBag.Products = category.Products.Select(Mapper.Map<ProductViewModel>).ToList();
             }
             return View(model);
         }
@@ -323,14 +327,14 @@ namespace UWT.Web.Controllers
                 }
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
-                ViewBag.Categories = db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem {Text = c.Name, Value = c.Id.ToString()});
+                ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text");
                 return View();
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateProduct([Bind(Exclude = "Shop,Categories")] ProductViewModel model, int shop, HttpPostedFileBase image, string[] categories) {
+        public ActionResult CreateProduct([Bind(Exclude = "Shop")] ProductViewModel model, int shop, HttpPostedFileBase image) {
             var userId = User.Identity.GetUserId();
             if (ModelState.IsValid) {
                 var product = Mapper.Map<Product>(model);
@@ -341,7 +345,7 @@ namespace UWT.Web.Controllers
                     }
                     product.Shop = myShop;
                     product.Image = image.AddUploadedImage(Server, db.Users.FirstOrDefault(u => u.Id == userId));
-                    product.Categories = categories.Select(int.Parse).Select(cid => db.Categories.IncludeAll().Filter(userId, myShop.Id).FirstOrDefault(c => c.Id == cid)).ToList();
+                    product.Categories = model.Categories.Select(int.Parse).Select(cid => db.Categories.IncludeAll().Filter(userId, myShop.Id).FirstOrDefault(c => c.Id == cid)).ToList();
                     product.Views = 0;
                     db.Products.Add(product);
                     db.SaveChanges();
@@ -355,7 +359,7 @@ namespace UWT.Web.Controllers
                 }
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
-                ViewBag.Categories = db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString(), Selected = categories.Contains(c.Id.ToString()) });
+                ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
             }
             return View(model);
         }
@@ -370,17 +374,17 @@ namespace UWT.Web.Controllers
                 {
                     return HttpNotFound();
                 }
-                var selectedCategories = product.Categories.Select(c => c.Id).ToList();
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
-                ViewBag.Categories = db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString(), Selected = selectedCategories.Contains(c.Id)});
-                return View(Mapper.Map<ProductViewModel>(product));
+                var model = Mapper.Map<ProductViewModel>(product);
+                ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
+                return View(model);
             }
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProduct([Bind(Exclude = "Shop,Categories")] ProductViewModel model, int shop, HttpPostedFileBase image, string[] categories) {
+        public ActionResult EditProduct([Bind(Exclude = "Shop")] ProductViewModel model, int shop, HttpPostedFileBase image) {
             var userId = User.Identity.GetUserId();
             if (ModelState.IsValid) {
                 using (var db = new UwtContext()) {
@@ -395,12 +399,13 @@ namespace UWT.Web.Controllers
                     product.Description = model.Description;
                     product.Tags = model.Tags;
                     product.UnitPrice = model.UnitPrice;
-                    product.Categories = categories.Select(int.Parse).Select(cid => db.Categories.IncludeAll().Filter(userId, myShop.Id).FirstOrDefault(c => c.Id == cid)).ToList();
+                    product.Categories = model.Categories.Select(int.Parse).Select(cid => db.Categories.IncludeAll().Filter(userId, myShop.Id).FirstOrDefault(c => c.Id == cid)).ToList();
                     if (image != null && image.ContentLength > 0) {
                         product.Image = image.AddUploadedImage(Server, db.Users.FirstOrDefault(u => u.Id == userId));
                     }
+                    model.Image = product.Image.Source();
                     db.SaveChanges();
-                    return RedirectToAction("EditProduct", "Merchant", new { shop = myShop.Id, model.Id });
+                    ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
                 }
             }
             using (var db = new UwtContext()) {
@@ -410,7 +415,7 @@ namespace UWT.Web.Controllers
                 }
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
-                ViewBag.Categories = db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString(), Selected = categories.Contains(c.Id.ToString())});
+                ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
             }
             return View(model);
         }

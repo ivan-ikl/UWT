@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
 using AutoMapper;
 using UWT.Models;
 using UWT.Web.Extensions;
@@ -35,15 +37,20 @@ namespace UWT.Web
                 .ForMember(dest => dest.UserName, opt => opt.Ignore())
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
 
-            Mapper.CreateMap<CategoryViewModel, Category>().ForMember(dest => dest.Id, opt => opt.Ignore());
+            Mapper.CreateMap<CategoryViewModel, Category>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
 
-            Mapper.CreateMap<PageLayoutViewModel, PageLayout>().ForMember(dest => dest.Id, opt => opt.Ignore());
+            Mapper.CreateMap<PageLayoutViewModel, PageLayout>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore());
             
             Mapper.CreateMap<PageStyleViewModel, PageStyle>();
             
-            Mapper.CreateMap<ShopViewModel, Shop>().ForMember(dest => dest.Owner, opt => opt.Ignore());
+            Mapper.CreateMap<ShopViewModel, Shop>()
+                .ForMember(dest => dest.Owner, opt => opt.Ignore());
 
-            Mapper.CreateMap<ProductViewModel, Product>().ForMember(dest => dest.Shop, opt => opt.Ignore());
+            Mapper.CreateMap<ProductViewModel, Product>()
+                .ForMember(dest => dest.Shop, opt => opt.Ignore())
+                .ForMember(dest => dest.Categories, opt => opt.Ignore());
         }
 
         static void MapModelsToViewModels()
@@ -54,7 +61,7 @@ namespace UWT.Web
             Mapper.CreateMap<List<Shop>, int>().ConvertUsing(list => list.Count);
             Mapper.CreateMap<Image, string>().ConvertUsing(img => img.Source());
             Mapper.CreateMap<PageStyle, int>().ConvertUsing(s => s != null ? s.Id : 0);
-            Mapper.CreateMap<PageLayout, int>().ConvertUsing(l => l != null ? (int)l.Id : 0);
+            Mapper.CreateMap<PageLayout, int>().ConvertUsing(l => l != null ? l.Id : 0);
 
             // Models
 
@@ -67,9 +74,11 @@ namespace UWT.Web
 
             Mapper.CreateMap<PageLayout, PageLayoutViewModel>();
             
-            Mapper.CreateMap<Category, CategoryViewModel>().ForMember(dest => dest.Id, opt => opt.MapFrom(src => (int)src.Id));
+            Mapper.CreateMap<Category, CategoryViewModel>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (int)src.Id));
 
-            Mapper.CreateMap<Product, ProductViewModel>();
+            Mapper.CreateMap<Product, ProductViewModel>()
+                .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories.Select(c => c.Id.ToString()).ToArray()));
 
             Mapper.CreateMap<PageStyle, PageStyleViewModel>();
             
