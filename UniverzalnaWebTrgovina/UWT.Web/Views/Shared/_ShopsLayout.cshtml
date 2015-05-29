@@ -12,13 +12,26 @@
     <script src="~/Scripts/jquery-2.1.4.min.js"></script>
     <script src="~/Scripts/angular.min.js"></script>
     <link href="~/Content/Vitality.css" rel="stylesheet" />
+    <link href="~/Content/startbootstrap.css" rel="stylesheet" />
     <script src="~/Scripts/Controllers/UwtControllers.js"></script>
     @RenderSection("controllers", false)
 </head>
 <body>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        @Html.Partial("_Navbar")
+    </nav>
+
     @RenderBody()
 
     @Scripts.Render("~/bundles/bootstrap")
+
+    <div class="cta-mail">
+        <div class="container text-center">
+            <h2>Moja web trgovina!</h2>
+            <h4>Ukoliko već niste, registrirajte se i otvorite vlastitu web trgovinu!</h4>
+        </div>
+    </div>
+
     @RenderSection("scripts", required: false)
 </body>
 </html>

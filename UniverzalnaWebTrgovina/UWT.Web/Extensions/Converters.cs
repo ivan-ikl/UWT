@@ -41,7 +41,7 @@ namespace UWT.Web.Extensions {
             {
                 return "~/Content/Images/" + image.Path;
             }
-            return null;
+            return "~/Content/Images/None.png";
         }
 
     }

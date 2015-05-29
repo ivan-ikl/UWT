@@ -90,6 +90,10 @@
     <Compile Include="Migrations\201505280211022_Initial.Designer.cs">
       <DependentUpon>201505280211022_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505281700320_BackgroundMandatory.cs" />
+    <Compile Include="Migrations\201505281700320_BackgroundMandatory.Designer.cs">
+      <DependentUpon>201505281700320_BackgroundMandatory.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PageLayout.cs" />
     <Compile Include="Models\Product.cs" />
@@ -114,6 +118,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201505280211022_Initial.resx">
       <DependentUpon>201505280211022_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505281700320_BackgroundMandatory.resx">
+      <DependentUpon>201505281700320_BackgroundMandatory.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

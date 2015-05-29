@@ -1,0 +1,11 @@
+﻿@model UWT.Web.Models.ProductViewModel
+<div class="galleryItem galleryItem-sm productItem">
+    <a href="#">
+        <div style="width: 100%; height: 120px">
+            <img src="@Model.Image.Replace("~", "")" class="img-thumbnail" alt="@Model.Title">
+        </div>
+    </a>
+    <h3>@Model.Title</h3>
+    <p>@Model.Description</p>
+    <p>@Model.UnitPrice.ToString("#0.00") kn/kom</p>
+</div>

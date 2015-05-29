@@ -1,0 +1,151 @@
+﻿@using UWT.Web.Extensions
+@using UWT.Web.Models
+@model UWT.Web.Models.ShopViewModel
+@{
+    Layout = "~/Views/Shared/PageLayouts/" + Model.GetPageLayout().Layout;
+    var style = Model.GetPageStyle();
+    var categories = Model.GetCategories();
+    var products = (IEnumerable<ProductViewModel>) ViewBag.Products;
+    ViewBag.ShopId = Model.Id;
+}
+<style>
+    .navimage {
+        background-color: @style.NavColor;
+        background-image: url(@style.BackgroundImage.Replace("~", ""));
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 180px;
+        margin-top: -50px;
+    }
+    .footerimage {
+        background-color: @style.NavColor;
+        background-image: url(@style.FooterImage.Replace("~", ""));
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 180px;
+    }
+    .searchbar, .logo, nav {
+        background-color: @style.NavColor;
+    }
+    .categoryList-image {
+        max-height: 100%;
+        max-width: 100%;
+    }
+    .img-logo {
+        height: 100%;
+        padding: 5px;
+    }
+    .logo {
+        height: 57px;
+    }
+    body {
+        background-color: @style.BackgroundColor;
+    }
+    h2, h3, body {
+        color: @style.ForegroundColor;
+    }
+    .vertical-center {
+        position: relative;
+        transform: translateY(50%);
+    }
+    a {
+        text-decoration: none;
+    }
+    .products {
+        min-height: 500px;
+    }
+    .product-container {
+        background-color: @style.SheetColor;
+    }
+    .productItem div {
+        height: 120px;
+    }
+    .sheet {
+        background-color: @style.SheetColor;
+    }
+</style>
+
+@section pageBegin {
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - Univerzalna trgovina</title>
+        @Styles.Render("~/Content/css")
+        <link href="~/Content/animations.min.css" rel="stylesheet" />
+        <link href="~/Content/uwtShops.css" rel="stylesheet" />
+        <link href="~/Content/GalleryItem.css" rel="stylesheet" />
+        @Scripts.Render("~/bundles/modernizr")
+        <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+        <script src="~/Scripts/angular.min.js"></script>
+        <link href="~/Content/Vitality.css" rel="stylesheet" />
+        <link href="~/Content/startbootstrap.css" rel="stylesheet" />
+        <script src="~/Scripts/Controllers/UwtControllers.js"></script>
+    </head>
+}
+
+@section navImage {
+    <div class="navimage"></div>
+}
+@section logo {
+    <a href="@Url.Action("Index", "Home", new {Model.Id})">
+        <div class="pull-left logo">
+            <img class="img-logo" src="@style.Logo.Replace("~", "")" alt=""/>
+        </div>
+        <h3 class="pull-left" style="margin-left: 10px">@Model.Name</h3>
+    </a>
+    <a class="pull-right btn btn-default vertical-center" href="@Url.Action("Index", "Home", new {Id = 0})">
+        Sve trgovine
+    </a>
+}
+@section search {
+    <div class="searchbar">
+        <input type="search" class="form-control col-md-12 vertical-center" name="searchtext" placeholder="Pretraži proizvode"/>
+    </div>
+}
+@section categories {
+    <div>
+        @foreach (var c in categories) {
+            @Html.Partial("CategoryListItem", c)
+        }
+    </div>
+}
+@section products {
+    <div class="product-container">
+        @foreach (var p in products) {
+            @Html.Partial("ProductViewItem", p)
+        }
+    </div>
+}
+@section footer {
+    <div class="footerimage"></div>
+}
+@section contact {
+    <div class="form-horizontal">
+        <h3>Kontakt</h3>
+        <div class="form-group">
+            <label class="col-md-4">Adresa:</label>
+            <label class="col-md-8">@Model.Address</label>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4">Telefonski broj:</label>
+            <label class="col-md-8">@Model.Phone</label>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4">Email:</label>
+            <label class="col-md-8">@Model.Email</label>
+        </div>
+    </div>
+}
+@section basket {
+    <div>
+        <a href="#" class="btn btn-default vertical-center col-md-12">
+            Vaša košarica je prazna
+        </a>
+    </div>
+}
+
+@section pageEnd {
+    </html>
+}

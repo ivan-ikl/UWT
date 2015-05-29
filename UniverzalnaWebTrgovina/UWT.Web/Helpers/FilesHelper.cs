@@ -55,6 +55,10 @@ namespace UWT.Web.Helpers {
 
         public static Image AddUploadedImage(this UwtContext db, HttpPostedFileBase image, HttpServerUtilityBase server, string userId)
         {
+            if (image == null || image.ContentLength == 0)
+            {
+                return null;
+            }
             var img = new Image
             {
                 DateCreated = DateTime.UtcNow, 

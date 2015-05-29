@@ -37,7 +37,7 @@ namespace UWT.Models {
         [Required, InverseProperty("PageStyleLogos")]
         public virtual Image Logo { get; set; }
 
-        [Required, InverseProperty("PageStyleBackgrounds")]
+        [InverseProperty("PageStyleBackgrounds")]
         public virtual Image BackgroundImage { get; set; }
 
         [InverseProperty("PageStyleNavImages")]

@@ -88,14 +88,16 @@ namespace UWT.Web.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Register() {
+        public ActionResult Register(bool? merchant = false)
+        {
+            ViewBag.Merchant = merchant == true;
             return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase image)
+        public async Task<ActionResult> Register(RegisterViewModel model, HttpPostedFileBase image, bool merchant)
         {
             if (ModelState.IsValid)
             {
@@ -113,7 +115,10 @@ namespace UWT.Web.Controllers
                     var result = await UserManager.CreateAsync(user, model.Password);
                     if (result.Succeeded)
                     {
-                        await UserManager.AddToRoleAsync(user.Id, Roles.Merchant);
+                        if (merchant)
+                        {
+                            await UserManager.AddToRoleAsync(user.Id, Roles.Merchant);
+                        }
                         await SignInManager.SignInAsync(user, false, false);
                         return RedirectToAction("Index", "Home");
                     }
@@ -124,6 +129,7 @@ namespace UWT.Web.Controllers
                     Console.WriteLine(ex);
                 }
             }
+            ViewBag.Merchant = merchant;
             return View(model);
         }
 

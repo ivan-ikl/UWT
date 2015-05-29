@@ -7,14 +7,13 @@
 @section buttons{
     <a href="@Url.Action("CreatePageStyle")" class="btn btn-default">Izrada novog stila</a>
 }
-
 <table class="table table-hover table-condensed table-responsive">
     <thead>
         <tr>
             <td class="col-md-2">Naziv</td>
-            <td class="col-md-2" colspan="2">Pozadina</td>
+            <td class="col-md-2 text-center" colspan="2">Pozadina</td>
             <td class="col-md-1">Tekst</td>
-            <td class="col-md-2" colspan="2">Izbornik</td>
+            <td class="col-md-2 text-center" colspan="2">Izbornik</td>
             <td class="col-md-1">Listovi</td>
             <td class="col-md-1">Logotip</td>
             <td class="col-md-1">Podnožje</td>
@@ -22,20 +21,19 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model) {
+        @foreach (var item in Model.Where(i => i != null)) {
             <tr>
                 <td>@item.Name</td>
                 <td class="col-md-1"><span class="form-control" style="background-color: @item.BackgroundColor; font-size: large"></span></td>
-                <td class="col-md-1"><img src="@item.BackgroundImage.Replace("~", "")" alt="Background" class="thumbnail table-image" /></td>
+                <td class="col-md-1"><img src="@item.BackgroundImage.Replace("~", "" )" alt="" class="thumbnail table-image" /></td>
                 <td><span class="form-control" style="background-color: @item.ForegroundColor; font-size: large"></span></td>
                 <td class="col-md-1"><span class="form-control" style="background-color: @item.NavColor; font-size: large"></span></td>
-                <td class="col-md-1"><img src="@item.NavImage.Replace("~", "")" alt="Background" class="thumbnail table-image" /></td>
+                <td class="col-md-1"><img src="@item.NavImage.Replace("~", "" )" alt="" class="thumbnail table-image" /></td>
                 <td><span class="form-control" style="background-color: @item.SheetColor; font-size: large"></span></td>
-                <td><img src="@item.Logo.Replace("~", "")" alt="Logo" class="thumbnail table-image" /></td>
-                <td><img src="@item.FooterImage.Replace("~", "")" alt="Background" class="thumbnail table-image" /></td>
-                <td><a href="@Url.Action("EditPageStyle", "Merchant", new { item.Id })" class="pull-right btn btn-sm btn-default">Uredi</a></td>
+                <td><img src="@item.Logo.Replace("~", "")" alt="" class="thumbnail table-image"/></td>
+                <td><img src="@item.FooterImage.Replace("~", "" )" alt="" class="thumbnail table-image" /></td>
+                <td><a href="@Url.Action("EditPageStyle", "Merchant", new {item.Id})" class="pull-right btn btn-sm btn-default">Uredi</a></td>
             </tr>
         }
     </tbody>
 </table>
-

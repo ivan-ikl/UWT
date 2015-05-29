@@ -17,10 +17,10 @@ namespace UWT.Web.Extensions {
             }
         }
 
-        public static PageStyleViewModel GetPageLayout(this ShopViewModel model) {
+        public static PageLayoutViewModel GetPageLayout(this ShopViewModel model) {
             using (var db = new UwtContext()) {
                 var pageLayout = db.PageLayouts.IncludeAll().FirstOrDefault(o => o.Id == model.PageLayout);
-                return Mapper.Map<PageStyleViewModel>(pageLayout);
+                return Mapper.Map<PageLayoutViewModel>(pageLayout);
             }
         }
 
@@ -38,7 +38,14 @@ namespace UWT.Web.Extensions {
                 var products = models.SelectMany(model => db.Products.IncludeAll().Filter(model.Id).ToList()).ToList();
                 return products.Select(Mapper.Map<ProductViewModel>).ToList();
             }
-        } 
+        }
+
+        public static IEnumerable<CategoryViewModel> GetCategories(this ShopViewModel model) {
+            using (var db = new UwtContext()) {
+                var categories = db.Categories.IncludeAll().Filter(model.Id).ToList();
+                return categories.Select(Mapper.Map<CategoryViewModel>).ToList();
+            }
+        }
 
     }
 }

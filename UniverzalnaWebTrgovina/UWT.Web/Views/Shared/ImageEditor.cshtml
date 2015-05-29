@@ -2,7 +2,7 @@
 <div class="col-md-12">
     @Html.Label(Model.Label, new { @class = "col-md-12" })
     <input type="file" @(Model.Required ? Html.Raw("required") : null) name="@Model.FieldName" class="form-control" onchange="readURL_@(Model.FieldName)(this);" />
-    <img id="img@(Model.FieldName)" src="@Model.DefaultImage" alt="@Model.Label" class="img-thumbnail" style="max-height: 180px; margin-top: 10px" />
+    <img id="img@(Model.FieldName)" src="@Model.DefaultImage" alt="" class="img-thumbnail" style="max-height: 180px; margin-top: 10px" />
 </div>
 <script>
     function readURL_@(Model.FieldName)(input) {

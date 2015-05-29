@@ -2,23 +2,13 @@
 using System.Web.Mvc;
 using AutoMapper;
 using UWT.Models;
+using UWT.Models.Extensions;
 using UWT.Web.Models;
 
 namespace UWT.Web.Controllers {
 
     public class HomeController : Controller {
-        public ActionResult Index(int? id) {
-            if (id == null)
-            {
-                if (User.IsInRole(Roles.Admin))
-                {
-                    return RedirectToAction("Index", "Admin");
-                }
-                if (User.IsInRole(Roles.Merchant))
-                {
-                    return RedirectToAction("MyShops", "Merchant");
-                }
-            }
+        public ActionResult Index(int? id, int? category, string search) {
             using (var db = new UwtContext())
             {
                 var shop = db.Shops.FirstOrDefault(s => s.Id == id);
@@ -27,6 +17,7 @@ namespace UWT.Web.Controllers {
                     return View(shops);
                 }
                 var model = Mapper.Map<ShopViewModel>(shop);
+                ViewBag.Products = db.Products.Filter(model.Id).Where(p => category == null || p.Categories.FirstOrDefault(c => c.Id == category) != null).ToList().Select(Mapper.Map<ProductViewModel>).ToList();
                 return View("Shop", model);
             }
         }

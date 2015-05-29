@@ -6,7 +6,7 @@
 }
 @section buttons
 {
-    <a href="@Url.Action("Categories", "Merchant", new {shop = ViewBag.ShopId})">Natrag</a>
+    <a href="@Url.Action("Categories", "Merchant", new {shop = ViewBag.ShopId})" class="btn btn-default">Natrag</a>
 }
 @using (Html.BeginForm("CreateCategory", "Merchant", FormMethod.Post, new { @class = "form-horizontal", role = "form", enctype = "multipart/form-data" })) {
     @Html.AntiForgeryToken()

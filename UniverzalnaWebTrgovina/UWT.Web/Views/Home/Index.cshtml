@@ -5,24 +5,18 @@
     ViewBag.Title = "All shops";
 }
 
-<div class="demo-header">
-    <div class="demo-header-content">
-        <div class="container">
-            <h1>Dobro došli u naš trgovački centar!</h1>
-            <hr class="colored">
-            <p>Imate izbor između @Model.Count() trgovina i @Model.GetProducts().Count() proizvoda!</p>
-            <ul class="list-inline cta-list">
-                <li>
-                    <a href="#previews" class="btn btn-outline-light page-scroll-demo">View Demos</a>
-                </li>
-                <li>
-                    <a href="docs/index.html" class="btn btn-outline-light page-scroll-demo">Documentation</a>
-                </li>
-            </ul>
+<header class="sb-page-header">
+    <div class="container">
+        <h1>Dobro došli u naš trgovački centar!</h1>
+        <p>Imate izbor između @Model.Count() trgovina i @Model.GetProducts().Count() proizvoda!</p>
+        <div id="carbonads-container">
+            <div class="carbonad">
+                <div id="azcarbon"></div>
+            </div>
         </div>
-    </div>
-</div>
 
+    </div>
+</header>
 
 <div class="container">
     @foreach (var shop in Model)

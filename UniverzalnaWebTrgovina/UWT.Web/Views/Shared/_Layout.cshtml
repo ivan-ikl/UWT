@@ -17,32 +17,7 @@
 <body @(ViewBag.AngularController != null ? Html.Raw("ng-controller=\""+ ViewBag.AngularController +"\"") : null)>
     <div class="container">
         <div class="navbar navbar-default" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a href="@Url.Action("Index", "Home")" class="navbar-brand">
-                        <span class="glyphicon glyphicon-shopping-cart" style="font-size: large"></span>
-                        <span>Moja prodaja</span>
-                        <span class="glyphicon glyphicon-shopping-cart" style="font-size:large"></span>                        
-                    </a>
-                </div>
-                <div class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav">
-                        @if (User.IsInRole(UWT.Models.Roles.Admin)) {
-                            <li>@Html.ActionLink("Korisnici", "Index", "Admin")</li>
-                            <li>@Html.ActionLink("Trgovine", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Predlošci trgovina", "PageLayouts", "Admin")</li>
-                        }
-                        @if (User.IsInRole(UWT.Models.Roles.Merchant)) {
-                            <li>@Html.ActionLink("Moje trgovine", "MyShops", "Merchant")</li>
-                            <li>@Html.ActionLink("Moji stilovi", "PageStyles", "Merchant")</li>
-                        }
-                    </ul>
-                    <ul class="navbar-collapse collapse">
-                        <ul class="nav navbar-nav"></ul>
-                        @Html.Partial("_LoginPartial")
-                    </ul>
-                </div>
-            </div>
+            @Html.Partial("_Navbar")
         </div>
         <div class="panel panel-default">
             @if (ViewBag.MainTitle != null) {

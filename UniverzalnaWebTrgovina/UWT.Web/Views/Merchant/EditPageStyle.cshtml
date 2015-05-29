@@ -64,22 +64,22 @@
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.Logo.Replace("~", ""), FieldName = "imglogo", Label = "Logotip trgovine" })
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = (Model.Logo??"").Replace("~", ""), FieldName = "imglogo", Label = "Logotip trgovine" })
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.BackgroundImage.Replace("~", ""), FieldName = "imgbackground", Label = "Pozadinska slika" })
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = (Model.BackgroundImage??"").Replace("~", ""), FieldName = "imgbackground", Label = "Pozadinska slika" })
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.NavImage.Replace("~", ""), FieldName = "imgnav", Label = "Slika izbornika" })
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = (Model.NavImage??"").Replace("~", ""), FieldName = "imgnav", Label = "Slika izbornika" })
             </div>
         </div>
         <div class="col-md-2">
             <div class="form-group">
-                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.FooterImage.Replace("~", ""), FieldName = "imgfooter", Label = "Slika podnožja" })
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = (Model.FooterImage??"").Replace("~", ""), FieldName = "imgfooter", Label = "Slika podnožja" })
             </div>
         </div>
     </div>

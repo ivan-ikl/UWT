@@ -1,0 +1,30 @@
+﻿<div class="container">
+    <div class="navbar-header">
+        <a href="@Url.Action("Index", "Home")" class="navbar-brand">
+            <span class="glyphicon glyphicon-shopping-cart" style="font-size: large"></span>
+            <span>Trgovački centar</span>
+            <span class="glyphicon glyphicon-shopping-cart" style="font-size:large"></span>
+        </a>
+    </div>
+    <div class="navbar-collapse collapse">
+        <ul class="nav navbar-nav">
+            @if (User.IsInRole(UWT.Models.Roles.Admin)) {
+                <li>@Html.ActionLink("Korisnici", "Index", "Admin")</li>
+                <li>@Html.ActionLink("Trgovine", "Index", "Home")</li>
+                <li>@Html.ActionLink("Predlošci trgovina", "PageLayouts", "Admin")</li>
+            }
+            @if (User.IsInRole(UWT.Models.Roles.Merchant)) {
+                <li>@Html.ActionLink("Moje trgovine", "MyShops", "Merchant")</li>
+                <li>@Html.ActionLink("Moji stilovi", "PageStyles", "Merchant")</li>
+            } else if (User.Identity.IsAuthenticated) {
+                <li>@Html.ActionLink("Postani trgovac", "MyShops", "Merchant")</li>
+            }
+        </ul>
+        <ul class="navbar-collapse collapse">
+            <ul class="nav navbar-nav"></ul>
+            @Html.Partial("_LoginPartial")
+        </ul>
+    </div>
+</div>
+
+
