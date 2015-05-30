@@ -35,5 +35,7 @@ namespace UWT.Web.Models {
 
         public string[] Categories { get; set; }
 
+        public bool InBasket { get; set; }
+
     }
 }

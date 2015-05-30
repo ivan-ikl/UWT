@@ -82,6 +82,7 @@
   <ItemGroup>
     <Compile Include="Extensions\Entities.cs" />
     <Compile Include="Extensions\Filtering.cs" />
+    <Compile Include="Extensions\UwtContext.cs" />
     <Compile Include="Interfaces\IImageContainer.cs" />
     <Compile Include="Interfaces\IPricing.cs" />
     <Compile Include="Interfaces\IUserOwned.cs" />

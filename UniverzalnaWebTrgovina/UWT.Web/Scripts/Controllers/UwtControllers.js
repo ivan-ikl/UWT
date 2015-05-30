@@ -30,3 +30,69 @@ function UsersController(users) {
         });
     });    
 }
+
+function ShopController(products, shopId, basketItemsCount, basketAddUrl, basketRemoveUrl) {
+    app.controller("ShopController", function($scope) {
+        $scope.products = products;
+        console.log("Shop controller configured");
+
+        $scope.basketItemsCount = basketItemsCount;
+        $scope.basketItemsEmpty = $scope.basketItemsCount === 0;
+
+        // Add handlers for basket operations
+        $scope.products.forEach(function(p) {
+            console.log(p);
+            p.UnitPrice = p.UnitPrice.toFixed(2) + " kn/kom";
+            p.Image = p.Image.replace("~", "");
+
+            p.addToBasket = function() {
+                $.get(basketAddUrl + "?product=" + p.Id + "&shop=" + shopId, function (data) {
+                    if (data) {
+                        $scope.$apply(function() {
+                            angular.extend(p, { "InBasket": true });
+                            angular.extend($scope, { "basketItemsCount": $scope.basketItemsCount + 1 });
+                            angular.extend($scope, { "basketItemsEmpty": false });
+                    });
+                        console.log("Product " + p.Title + " has been added to the basket");
+                    } else {
+                        console.log("Product " + p.Title + " hasn't been added to the basket");
+                    }
+                });
+            };
+
+            p.removeFromBasket = function() {
+                $.get(basketRemoveUrl + "?product=" + p.Id, function (data) {
+                    if (data) {
+                        $scope.$apply(function() {
+                             angular.extend(p, { "InBasket": false });
+                             angular.extend($scope, { "basketItemsCount": $scope.basketItemsCount - 1 });
+                             angular.extend($scope, { "basketItemsEmpty": $scope.basketItemsCount === 0 });
+                        });
+                        console.log("Product " + p.Title + " has been removed from the basket");
+                    } else {
+                        console.log("Product " + p.Title + "hasn't been removed from the basket");
+                    }
+                });
+            };
+
+        });
+    });
+}
+
+function BasketController(basket, shopId, basketAddUrl, basketRemoveUrl, basketAmountUrl) {
+    app.controller("BasketController", function ($scope) {
+        $scope.basket = basket;
+        console.log("Basket controller configured");
+
+        $scope.basketItemsCount = basket.BasketItems.length;
+        $scope.basketItemsEmpty = $scope.basketItemsCount === 0;
+
+        $scope.basket.BasketItems.forEach(function(item) {
+            console.log(item);
+
+            item.onAmountChanged = function() {
+                $.get(basketAmountUrl + "?product=" + item.Product.Id + "&newAmount=" + item.Amount);
+            };
+        });
+    });
+}

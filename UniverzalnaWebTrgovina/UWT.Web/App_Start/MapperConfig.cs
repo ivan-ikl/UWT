@@ -62,6 +62,10 @@ namespace UWT.Web
             Mapper.CreateMap<Image, string>().ConvertUsing(img => img.Source());
             Mapper.CreateMap<PageStyle, int>().ConvertUsing(s => s != null ? s.Id : 0);
             Mapper.CreateMap<PageLayout, int>().ConvertUsing(l => l != null ? l.Id : 0);
+            Mapper.CreateMap<BasketItem, BasketItemViewModel>();
+            Mapper.CreateMap<Basket, BasketViewModel>()
+                .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.Owner.Id))
+                .ForMember(dest => dest.Invoice, opt => opt.MapFrom(src => src.Invoice != null ? src.Invoice.Id : 0));
 
             // Models
 

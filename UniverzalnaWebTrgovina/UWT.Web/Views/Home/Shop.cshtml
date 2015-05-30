@@ -1,12 +1,15 @@
-﻿@using UWT.Web.Extensions
+﻿@using Microsoft.AspNet.Identity
+@using Newtonsoft.Json
+@using UWT.Web.Extensions
 @using UWT.Web.Models
-@model UWT.Web.Models.ShopViewModel
+@model ShopViewModel
 @{
     Layout = "~/Views/Shared/PageLayouts/" + Model.GetPageLayout().Layout;
     var style = Model.GetPageStyle();
     var categories = Model.GetCategories();
     var products = (IEnumerable<ProductViewModel>) ViewBag.Products;
     ViewBag.ShopId = Model.Id;
+    ViewBag.UserId = User.Identity.GetUserId();
 }
 <style>
     .navimage {
@@ -67,85 +70,103 @@
 
 @section pageBegin {
     <!DOCTYPE html>
-    <html>
+    <html ng-app="uwtApp">
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@ViewBag.Title - Univerzalna trgovina</title>
         @Styles.Render("~/Content/css")
-        <link href="~/Content/animations.min.css" rel="stylesheet" />
-        <link href="~/Content/uwtShops.css" rel="stylesheet" />
-        <link href="~/Content/GalleryItem.css" rel="stylesheet" />
+        <link href="~/Content/animations.min.css" rel="stylesheet"/>
+        <link href="~/Content/uwtShops.css" rel="stylesheet"/>
+        <link href="~/Content/GalleryItem.css" rel="stylesheet"/>
         @Scripts.Render("~/bundles/modernizr")
         <script src="~/Scripts/jquery-2.1.4.min.js"></script>
         <script src="~/Scripts/angular.min.js"></script>
-        <link href="~/Content/Vitality.css" rel="stylesheet" />
-        <link href="~/Content/startbootstrap.css" rel="stylesheet" />
+        <link href="~/Content/Vitality.css" rel="stylesheet"/>
+        <link href="~/Content/startbootstrap.css" rel="stylesheet"/>
         <script src="~/Scripts/Controllers/UwtControllers.js"></script>
+        <script>
+            var shopController = new ShopController(@Html.Raw(JsonConvert.SerializeObject(ViewBag.Products)), "@Model.Id", @ViewBag.BasketItemsCount, "@Url.Action("AddToBasket", "Basket")", "@Url.Action("RemoveFromBasket", "Basket")");
+        </script>
     </head>
-}
+    <body ng-controller="ShopController">
+    }
 
-@section navImage {
-    <div class="navimage"></div>
-}
-@section logo {
-    <a href="@Url.Action("Index", "Home", new {Model.Id})">
-        <div class="pull-left logo">
-            <img class="img-logo" src="@style.Logo.Replace("~", "")" alt=""/>
-        </div>
-        <h3 class="pull-left" style="margin-left: 10px">@Model.Name</h3>
-    </a>
-    <a class="pull-right btn btn-default vertical-center" href="@Url.Action("Index", "Home", new {Id = 0})">
-        Sve trgovine
-    </a>
-}
-@section search {
-    <div class="searchbar">
-        <input type="search" class="form-control col-md-12 vertical-center" name="searchtext" placeholder="Pretraži proizvode"/>
-    </div>
-}
-@section categories {
-    <div>
-        @foreach (var c in categories) {
-            @Html.Partial("CategoryListItem", c)
-        }
-    </div>
-}
-@section products {
-    <div class="product-container">
-        @foreach (var p in products) {
-            @Html.Partial("ProductViewItem", p)
-        }
-    </div>
-}
-@section footer {
-    <div class="footerimage"></div>
-}
-@section contact {
-    <div class="form-horizontal">
-        <h3>Kontakt</h3>
-        <div class="form-group">
-            <label class="col-md-4">Adresa:</label>
-            <label class="col-md-8">@Model.Address</label>
-        </div>
-        <div class="form-group">
-            <label class="col-md-4">Telefonski broj:</label>
-            <label class="col-md-8">@Model.Phone</label>
-        </div>
-        <div class="form-group">
-            <label class="col-md-4">Email:</label>
-            <label class="col-md-8">@Model.Email</label>
-        </div>
-    </div>
-}
-@section basket {
-    <div>
-        <a href="#" class="btn btn-default vertical-center col-md-12">
-            Vaša košarica je prazna
+    @section navImage {
+        <div class="navimage"></div>
+    }
+    @section logo {
+        <a href="@Url.Action("Index", "Home", new {Model.Id})">
+            <div class="pull-left logo">
+                <img class="img-logo" src="@style.Logo.Replace("~", "")" alt="" />
+            </div>
+            <h3 class="pull-left" style="margin-left: 10px">@Model.Name</h3>
         </a>
-    </div>
-}
+        <a class="pull-right btn btn-default vertical-center" href="@Url.Action("Index", "Home", new {Id = 0})">
+            Sve trgovine
+        </a>
+    }
+    @section search {
+        <div class="searchbar">
+            <input type="search" class="form-control col-md-12 vertical-center" name="searchtext" placeholder="Pretraži proizvode" />
+        </div>
+    }
+    @section categories {
+        <div>
+            @foreach (var c in categories) {
+                @Html.Partial("CategoryListItem", c)
+            }
+        </div>
+    }
+    @section products {
+        <div class="product-container">
+            <div class="galleryItem galleryItem-sm productItem" ng-repeat="product in products">
+                <a href="#">
+                    <div style="width: 100%; height: 120px">
+                        <img src="{{product.Image}}" class="img-thumbnail" alt="{{product.Title}}">
+                    </div>
+                </a>
+                <h3 ng-bind="product.Title"></h3>
+                <p ng-bind="product.Description"></p>
+                <p ng-bind="product.UnitPrice"></p>
+                @if (User.Identity.IsAuthenticated) {
+                    <button class="btn btn-sm" ng-click="product.addToBasket()" ng-hide="product.InBasket">Dodaj u košaricu</button>
+                    <button class="btn btn-sm" ng-click="product.removeFromBasket()" ng-show="product.InBasket">Ukloni iz košarice</button>
+                }
+            </div>
+        </div>
+    }
+    @section footer {
+        <div class="footerimage"></div>
+    }
+    @section contact {
+        <div class="form-horizontal">
+            <h3>Kontakt</h3>
+            <div class="form-group">
+                <label class="col-md-4">Adresa:</label>
+                <label class="col-md-8">@Model.Address</label>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4">Telefonski broj:</label>
+                <label class="col-md-8">@Model.Phone</label>
+            </div>
+            <div class="form-group">
+                <label class="col-md-4">Email:</label>
+                <label class="col-md-8">@Model.Email</label>
+            </div>
+        </div>
+    }
+    @section basket {
+        <div>
+            <a href="@Url.Action("Index","Basket", new{ shop = ViewBag.ShopId })" class="btn btn-default vertical-center col-md-12">
+                <span class="glyphicon glyphicon-shopping-cart"></span>
+                <span ng-show="basketItemsEmpty">Vaša košarica je prazna</span>
+                <span ng-hide="basketItemsEmpty">Proizvoda u košarici: <span ng-bind="basketItemsCount"></span></span>
+            </a>
+        </div>
+    }
+    @section pageEnd {
+    </body>
 
-@section pageEnd {
-    </html>
+</html>
 }

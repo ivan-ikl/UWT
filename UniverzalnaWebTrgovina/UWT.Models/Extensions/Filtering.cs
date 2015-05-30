@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
 
 namespace UWT.Models.Extensions {
     public static class Filtering 
@@ -32,6 +34,27 @@ namespace UWT.Models.Extensions {
         {
             return items.Where(i => i.Shop != null && i.Shop.Id == shopId);
         }
+
+        public static IQueryable<Basket> Filter(this IQueryable<Basket> items, string userId)
+        {
+            return items.Where(i => i.Owner != null && i.Owner.Id == userId);
+        }
+
+        public static IQueryable<Basket> Filter(this IQueryable<Basket> items, string userId, int shopId)
+        {
+            return items.Filter(userId).Filter(shopId);
+        }
+
+        public static IQueryable<Basket> Filter(this IQueryable<Basket> items, int shopId)
+        {                              
+            // Baskets without basketitems belong to all shops
+            return items.Where(i => !i.BasketItems.Any() || i.BasketItems.FirstOrDefault().Product.Shop.Id == shopId);
+        }
+
+        public static IQueryable<Basket> OpenBaskets(this IQueryable<Basket> items)
+        {
+            return items.Where(i => i.DateClosed > DateTime.UtcNow && i.Invoice == null);
+        } 
 
     }
 }

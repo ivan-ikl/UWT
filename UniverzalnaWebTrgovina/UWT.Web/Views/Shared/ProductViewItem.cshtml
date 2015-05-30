@@ -1,4 +1,8 @@
-﻿@model UWT.Web.Models.ProductViewModel
+﻿@using UWT.Web.Extensions
+@model UWT.Web.Models.ProductViewModel
+@{
+    var inBasket = Model.InBasket((string) ViewBag.UserId, (int) ViewBag.ShopId);
+}
 <div class="galleryItem galleryItem-sm productItem">
     <a href="#">
         <div style="width: 100%; height: 120px">
@@ -8,4 +12,8 @@
     <h3>@Model.Title</h3>
     <p>@Model.Description</p>
     <p>@Model.UnitPrice.ToString("#0.00") kn/kom</p>
+    @if (User.Identity.IsAuthenticated) {
+        <button class="btn btn-sm" style="@(inBasket ? "display: none" : "")" data-product="@Model.Id" data-id="AddToBasket">Dodaj u košaricu</button>
+        <button class="btn btn-sm" style="@(inBasket ? "" : "display: none")" data-product="@Model.Id" data-id="RemoveFromBasket">Ukloni iz košarice</button>
+    }
 </div>

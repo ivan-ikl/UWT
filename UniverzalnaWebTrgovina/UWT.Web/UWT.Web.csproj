@@ -164,6 +164,7 @@
   <ItemGroup>
     <Compile Include="App_Start\MapperConfig.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\BasketController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Extensions\ContextUpdaters.cs" />
@@ -171,9 +172,11 @@
     <Compile Include="Extensions\Enums.cs" />
     <Compile Include="Extensions\ShopViewModel.cs" />
     <Compile Include="Extensions\User.cs" />
+    <Compile Include="Extensions\ViewModels.cs" />
     <Compile Include="Helpers\FilesHelper.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
     <Compile Include="Interfaces\IThumbnail.cs" />
+    <Compile Include="Models\BasketViewModel.cs" />
     <Compile Include="Models\CategoryViewModel.cs" />
     <Compile Include="Helpers\MembershipControllerBase.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -1052,6 +1055,7 @@
     <Content Include="Views\Merchant\EditPageStyle.cshtml" />
     <Content Include="Views\Shared\ImageEditor.cshtml" />
     <Content Include="Views\Merchant\MyShops.cshtml" />
+    <None Include="Views\Basket\Index.cshtml" />
     <None Include="Views\Home\Shop.cshtml" />
     <None Include="Views\Merchant\CreateCategory.cshtml" />
     <None Include="Views\Merchant\CreateProduct.cshtml" />
