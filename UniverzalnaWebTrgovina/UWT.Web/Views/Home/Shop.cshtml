@@ -129,9 +129,10 @@
                 <h3 ng-bind="product.Title"></h3>
                 <p ng-bind="product.Description"></p>
                 <p ng-bind="product.UnitPrice"></p>
+                <p>Raspoloživo: <span ng-bind="product.Count"></span></p>
                 @if (User.Identity.IsAuthenticated) {
-                    <button class="btn btn-sm" ng-click="product.addToBasket()" ng-hide="product.InBasket">Dodaj u košaricu</button>
-                    <button class="btn btn-sm" ng-click="product.removeFromBasket()" ng-show="product.InBasket">Ukloni iz košarice</button>
+                    <button class="btn btn-sm" ng-click="product.addToBasket()" ng-hide="product.InBasket || product.Count == 0">Dodaj u košaricu</button>
+                    <button class="btn btn-sm" ng-click="product.removeFromBasket()" ng-show="product.InBasket && product.Count != 0">Ukloni iz košarice</button>
                 }
             </div>
         </div>
@@ -167,6 +168,5 @@
     }
     @section pageEnd {
     </body>
-
-</html>
-}
+    </html>
+    }

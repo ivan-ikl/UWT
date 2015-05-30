@@ -85,6 +85,7 @@ namespace UWT.Web.Controllers
             }            
         }
 
+        [HttpPost]
         public int BuyBasket(int shop)
         {
             var userId = User.Identity.GetUserId();

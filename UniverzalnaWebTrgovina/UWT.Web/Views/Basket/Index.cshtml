@@ -125,23 +125,23 @@
         </thead>
         <tbody>
             <tr ng-repeat="item in basket.BasketItems">
-                <td>
+                <td class="col-md-1">
                     <img class="categoryList-image" src="{{::item.Product.Image}}" alt="" />
                 </td>
-                <td>
+                <td class="col-md-3">
                     <span ng-bind="::item.Product.Title"></span>
                 </td>
                 <td class="text-right">
-                    <span ng-bind="::item.UnitPrice"></span>
+                    <span ng-bind="::item.UnitPrice.toFixed(2)"></span>
                     <span style="padding-right: 50px">kn</span>                
                 </td>
                 <td>
                     <input type="number" class="form-control" ng-model="item.Amount" ng-change="item.onAmountChanged()" max="{{item.Product.Count}}" min="1" />
                 </td>
-                <td class="text-right">
-                    <span ng-bind="item.totalPrice()"></span>
+                <th class="text-right">
+                    <span ng-bind="item.totalPrice().toFixed(2)"></span>
                     <span>kn</span>                
-                </td>
+                </th>
                 <td>
                     <div class="btn-group pull-right">
                         <button ng-click="item.removeFromBasket()" class="btn btn-sm">Ukloni</button>
@@ -155,10 +155,11 @@
                     Ukupna cijena:
                 </th>
                 <th class="text-right">
-                    <span ng-bind="basket.totalPrice()"></span>
+                    <span ng-bind="basket.totalPrice().toFixed(2)"></span>
+                    <span>kn</span>
                 </th>
                 <th>
-                    <button ng-click="basket.buyBasket()" class="btn btn-success col-md-12">Kupi</button>
+                    <button ng-click="basket.buyBasket()" class="btn btn-success col-md-12" ng-show="basket.BasketItems.length > 0">Kupi</button>
                 </th>
             </tr>
         </tfoot>
@@ -182,7 +183,7 @@
     </div>
 }
 @section basket {
-    <a href="@Url.Action("Index", "Home", new{ shop.Id })" class="btn btn-default col-md-12">Povratak na kupovinu</a>
+    <a href="@Url.Action("Index", "Home", new{ shop.Id })" class="btn btn-default vertical-center col-md-12">Povratak na kupovinu</a>
 }
 @section pageEnd {
 </body>

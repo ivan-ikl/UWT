@@ -14,5 +14,10 @@ namespace UWT.Web.Extensions {
                 return basket.BasketItems.FirstOrDefault(b => b.Product.Id == product.Id) != null;
             }
         }
+
+        public static double TotalPrice(this InvoiceViewModel invoice)
+        {
+            return invoice.Basket.BasketItems.Sum(i => i.Amount*i.UnitPrice);
+        }
     }
 }

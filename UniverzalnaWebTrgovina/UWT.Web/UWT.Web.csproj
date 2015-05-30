@@ -1059,6 +1059,7 @@
     <Content Include="Views\Merchant\MyShops.cshtml" />
     <None Include="Views\Basket\Index.cshtml" />
     <None Include="Views\Home\Shop.cshtml" />
+    <None Include="Views\Invoice\Index.cshtml" />
     <None Include="Views\Invoice\Invoice.cshtml" />
     <None Include="Views\Merchant\CreateCategory.cshtml" />
     <None Include="Views\Merchant\CreateProduct.cshtml" />

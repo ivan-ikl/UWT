@@ -115,11 +115,12 @@ function BasketController(basket, shopId, basketAddUrl, basketRemoveUrl, basketA
         };
 
         $scope.basket.buyBasket = function() {
-            $.post(basketBuyUrl + "?basket=" + $scope.basket.Id, function(data) {
-                if (data !== 0) {
-                    Location.href = invoiceRedirect + "/" + data;
+            $.post(basketBuyUrl + "?shop=" + shopId, function(data) {
+                // ReSharper disable once CoercedEqualsUsing
+                if (data != 0) {
+                    location.href = invoiceRedirect + "/" + data;
                 } else {
-                    Location.reload();
+                    location.reload();
                 }
             });
         }
