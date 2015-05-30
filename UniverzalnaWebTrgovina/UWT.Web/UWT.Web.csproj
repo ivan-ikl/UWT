@@ -168,6 +168,7 @@
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MerchantController.cs" />
+    <Compile Include="Extensions\BaseTypes.cs" />
     <Compile Include="Extensions\ContextUpdaters.cs" />
     <Compile Include="Extensions\Converters.cs" />
     <Compile Include="Extensions\Enums.cs" />
@@ -1067,12 +1068,14 @@
     <None Include="Views\Merchant\EditCategory.cshtml" />
     <None Include="Views\Merchant\EditProduct.cshtml" />
     <None Include="Views\Merchant\EditShop.cshtml" />
+    <None Include="Views\Merchant\Invoices.cshtml" />
     <None Include="Views\Merchant\Products.cshtml" />
     <Content Include="Views\Shared\ShopThumbnail.cshtml" />
     <Content Include="Views\Shared\_ShopsLayout.cshtml" />
     <Content Include="Views\Shared\_Navbar.cshtml" />
     <Content Include="Views\Shared\CategoryListItem.cshtml" />
     <Content Include="Views\Shared\ProductViewItem.cshtml" />
+    <Content Include="Views\Shared\InvoiceList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

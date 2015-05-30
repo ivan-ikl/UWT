@@ -1,0 +1,14 @@
+﻿@using UWT.Web.Models
+@model IEnumerable<InvoiceViewModel>
+@{
+    var shop = ((ShopViewModel) ViewBag.Shop);
+    ViewBag.Title = "title";
+    ViewBag.MainTitle = "Izdani računi";
+    ViewBag.Subtitle = shop.Name;
+}
+@section buttons
+{
+    <a href="@Url.Action("EditShop", "Merchant", new {shop.Id})">Natrag na trgovinu</a>
+}
+
+@Html.Partial("InvoiceList", Model, ViewData)

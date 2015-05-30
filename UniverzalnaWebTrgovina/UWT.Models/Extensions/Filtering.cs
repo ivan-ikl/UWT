@@ -71,5 +71,10 @@ namespace UWT.Models.Extensions {
             return items.Where(i => i.Basket.Owner.Id == userId);
         }
 
+        public static IQueryable<Invoice> Filter(this IQueryable<Invoice> items, DateTime start, DateTime end)
+        {
+            return items.Where(i => i.DateCreated >= start && i.DateCreated < end);
+        } 
+
     }
 }

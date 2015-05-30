@@ -153,6 +153,7 @@ namespace UWT.Web.Controllers
                 var pageLayouts = db.PageLayouts.ToList();
                 ViewBag.PageStyles = pageStyles.Select(i => new SelectListItem { Text = i.Name, Value = i.Id.ToString(), Selected = i.Id == model.PageStyle});
                 ViewBag.PageLayouts = pageLayouts.Select(i => new SelectListItem { Text = i.Name, Value = i.Id.ToString(), Selected = i.Id == model.PageLayout});
+                ViewBag.Invoices = db.Invoices.Filter(model.Id).Filter(DateTime.UtcNow.GetMonth(), DateTime.UtcNow).ToList().Select(Mapper.Map<InvoiceViewModel>).ToList();
                 return View(model);
             }
         }
@@ -184,6 +185,7 @@ namespace UWT.Web.Controllers
                 var pageLayouts = db.PageLayouts.ToList();
                 ViewBag.PageStyles = pageStyles.Select(i => new SelectListItem { Text = i.Name, Value = i.Id.ToString(), Selected = i.Id == model.PageStyle });
                 ViewBag.PageLayouts = pageLayouts.Select(i => new SelectListItem { Text = i.Name, Value = i.Id.ToString(), Selected = i.Id == model.PageLayout });
+                ViewBag.Invoices = db.Invoices.Filter(model.Id).Filter(DateTime.UtcNow.GetMonth(), DateTime.UtcNow).ToList().Select(Mapper.Map<InvoiceViewModel>).ToList();
             }
             return View(model);
         }
@@ -418,6 +420,22 @@ namespace UWT.Web.Controllers
                 ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
             }
             return View(model);
+        }
+
+        public ActionResult Invoices(int? shop)
+        {
+            var userId = User.Identity.GetUserId();
+            using (var db = new UwtContext())
+            {
+                var dbShop = db.Shops.FirstOrDefault(s => s.Id == shop && s.Owner.Id == userId);
+                if (dbShop == null) return HttpNotFound();
+
+                var invoices = db.Invoices.IncludeAll().Filter(dbShop.Id).ToList();
+                var model = invoices.Select(Mapper.Map<InvoiceViewModel>).ToList();
+                ViewBag.Shop = Mapper.Map<ShopViewModel>(dbShop);
+                return View(model);
+            }
+
         }
 
     }

@@ -1,0 +1,44 @@
+﻿@using UWT.Web.Extensions
+@model IEnumerable<UWT.Web.Models.InvoiceViewModel>
+
+<table class="table table-responsive table-condensed" style="margin-bottom: 150px; margin-top: 50px">
+    <thead>
+        <tr>
+            <th class="col-md-2">Datum kupovine</th>
+            <th class="col-md-8">Kupljeni proizvodi</th>
+            <th class="col-md-2 text-right">Ukupan iznos</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var invoice in Model) {
+            <tr>
+                <td>
+                    <a href="@Url.Action("Invoice", "Invoice", new {invoice.Id})">@invoice.DateCreated.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</a>
+                </td>
+                <td>
+                    @foreach (var item in invoice.Basket.BasketItems) {
+                        <span class="badge">
+                            <span>@item.Product.Title</span>
+                            <span>@item.Amount</span>
+                        </span>
+                    }
+                </td>
+                <th class="text-right">
+                    <span>@invoice.TotalPrice().ToString("#0.00")</span>
+                    <span>kn</span>
+                </th>
+            </tr>
+        }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="2" class="text-right">Ukupan iznos:</th>
+            <th class="text-right">
+                <span>@Model.Sum(i => i.TotalPrice()).ToString("#0.00")</span>
+                <span>kn</span>
+            </th>
+        </tr>
+    </tfoot>
+</table>
+
+
