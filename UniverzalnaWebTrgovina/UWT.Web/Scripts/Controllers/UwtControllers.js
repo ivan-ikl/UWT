@@ -79,20 +79,49 @@ function ShopController(products, shopId, basketItemsCount, basketAddUrl, basket
     });
 }
 
-function BasketController(basket, shopId, basketAddUrl, basketRemoveUrl, basketAmountUrl) {
+function BasketController(basket, shopId, basketAddUrl, basketRemoveUrl, basketAmountUrl, basketBuyUrl, invoiceRedirect) {
     app.controller("BasketController", function ($scope) {
         $scope.basket = basket;
         console.log("Basket controller configured");
 
-        $scope.basketItemsCount = basket.BasketItems.length;
-        $scope.basketItemsEmpty = $scope.basketItemsCount === 0;
-
         $scope.basket.BasketItems.forEach(function(item) {
             console.log(item);
+            item.totalPrice = function () { return item.UnitPrice * item.Amount; }
 
             item.onAmountChanged = function() {
                 $.get(basketAmountUrl + "?product=" + item.Product.Id + "&newAmount=" + item.Amount);
             };
+            item.removeFromBasket = function() {
+                $.get(basketRemoveUrl + "?product=" + item.Product.Id, function (data) {
+                    if (data) {
+                        $scope.$apply(function () {
+                            var index = $scope.basket.BasketItems.indexOf(item);
+                            $scope.basket.BasketItems.splice(index, 1);
+                        });
+                        console.log("Product " + item.Product.Title + " has been removed from the basket");
+                    } else {
+                        console.log("Product " + item.Product.Title + "hasn't been removed from the basket");
+                    }
+                });
+            };
         });
+
+        $scope.basket.totalPrice = function() {
+            var sum = 0;
+            $scope.basket.BasketItems.forEach(function(item) {
+                sum += item.UnitPrice * item.Amount;
+            });
+            return sum;
+        };
+
+        $scope.basket.buyBasket = function() {
+            $.post(basketBuyUrl + "?basket=" + $scope.basket.Id, function(data) {
+                if (data !== 0) {
+                    Location.href = invoiceRedirect + "/" + data;
+                } else {
+                    Location.reload();
+                }
+            });
+        }
     });
 }

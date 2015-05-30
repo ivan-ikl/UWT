@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
@@ -82,6 +83,22 @@ namespace UWT.Web.Controllers
                 }
                 return HttpNotFound();
             }            
+        }
+
+        public int BuyBasket(int shop)
+        {
+            var userId = User.Identity.GetUserId();
+            using (var db = new UwtContext()) {
+                var basket = db.GetCurrentBasket(userId, shop);
+                if (!basket.ReserveProducts(db))
+                {
+                    return 0;
+                }                
+                var invoice = new Invoice {Basket = basket, DateCreated = DateTime.UtcNow};
+                db.Invoices.Add(invoice);
+                db.SaveChanges();
+                return invoice.Id;
+            }                        
         }
     }
 }

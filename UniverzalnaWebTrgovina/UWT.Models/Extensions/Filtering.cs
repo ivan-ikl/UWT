@@ -54,7 +54,22 @@ namespace UWT.Models.Extensions {
         public static IQueryable<Basket> OpenBaskets(this IQueryable<Basket> items)
         {
             return items.Where(i => i.DateClosed > DateTime.UtcNow && i.Invoice == null);
-        } 
+        }
+
+        public static IQueryable<Invoice> Filter(this IQueryable<Invoice> items, string userId, int shopId)
+        {
+            return items.Filter(userId).Filter(shopId);
+        }
+
+        public static IQueryable<Invoice> Filter(this IQueryable<Invoice> items, int shopId)
+        {
+            return items.Where(i => i.Basket.BasketItems.FirstOrDefault().Product.Shop.Id == shopId);
+        }
+
+        public static IQueryable<Invoice> Filter(this IQueryable<Invoice> items, string userId) 
+        {
+            return items.Where(i => i.Basket.Owner.Id == userId);
+        }
 
     }
 }

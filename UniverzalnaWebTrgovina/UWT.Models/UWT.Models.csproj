@@ -80,6 +80,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Buying.cs" />
     <Compile Include="Extensions\Entities.cs" />
     <Compile Include="Extensions\Filtering.cs" />
     <Compile Include="Extensions\UwtContext.cs" />

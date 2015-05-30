@@ -66,6 +66,7 @@ namespace UWT.Web
             Mapper.CreateMap<Basket, BasketViewModel>()
                 .ForMember(dest => dest.OwnerId, opt => opt.MapFrom(src => src.Owner.Id))
                 .ForMember(dest => dest.Invoice, opt => opt.MapFrom(src => src.Invoice != null ? src.Invoice.Id : 0));
+            Mapper.CreateMap<Invoice, InvoiceViewModel>();
 
             // Models
 
