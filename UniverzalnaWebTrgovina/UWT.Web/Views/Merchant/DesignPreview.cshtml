@@ -1,0 +1,162 @@
+﻿@using Microsoft.AspNet.Identity
+@using UWT.Web.Models
+@model ShopViewModel
+@{
+    Layout = "~/Views/Shared/PageLayouts/" + ((PageLayoutViewModel)ViewBag.PageLayout).Layout;
+    var style = (PageStyleViewModel)ViewBag.PageStyle;
+    ViewBag.ShopId = Model.Id;
+    ViewBag.UserId = User.Identity.GetUserId();
+}
+<style>
+    .navimage {
+        background-color: @style.NavColor;
+        background-image: url(@style.BackgroundImage.Replace("~", ""));
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 180px;
+        margin-top: -50px;
+    }
+    .footerimage {
+        background-color: @style.NavColor;
+        background-image: url(@style.FooterImage.Replace("~", ""));
+        background-repeat: no-repeat;
+        background-size: cover;
+        height: 180px;
+    }
+    .searchbar, .logo, nav {
+        background-color: @style.NavColor;
+    }
+    .categoryList-image {
+        max-height: 100%;
+        max-width: 100%;
+    }
+    .img-logo {
+        height: 100%;
+        padding: 5px;
+    }
+    .logo {
+        height: 57px;
+    }
+    body {
+        background-color: @style.BackgroundColor;
+    }
+    h2, h3, body {
+        color: @style.ForegroundColor;
+    }
+    .vertical-center {
+        position: relative;
+        transform: translateY(50%);
+    }
+    a {
+        text-decoration: none;
+    }
+    .products {
+        min-height: 500px;
+    }
+    .product-container {
+        background-color: @style.SheetColor;
+    }
+    .productItem div {
+        height: 120px;
+    }
+    .sheet {
+        background-color: @style.SheetColor;
+    }
+</style>
+
+@section pageBegin {
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>@ViewBag.Title - Univerzalna trgovina</title>
+        @Styles.Render("~/Content/css")
+        <link href="~/Content/animations.min.css" rel="stylesheet" />
+        <link href="~/Content/uwtShops.css" rel="stylesheet" />
+        <link href="~/Content/GalleryItem.css" rel="stylesheet" />
+        @Scripts.Render("~/bundles/modernizr")
+        <script src="~/Scripts/jquery-2.1.4.min.js"></script>
+        <link href="~/Content/Vitality.css" rel="stylesheet" />
+        <link href="~/Content/startbootstrap.css" rel="stylesheet" />
+    </head>
+    <body>
+}
+
+@section navImage {
+    <div class="navimage"></div>
+}
+@section logo {
+    <a href="@Url.Action("Index", "Home", new {Model.Id})">
+        <div class="pull-left logo">
+            <img class="img-logo" src="@style.Logo.Replace("~", "")" alt="" />
+        </div>
+        <h3 class="pull-left" style="margin-left: 10px">@Model.Name</h3>
+    </a>
+}
+@section search {
+    <div class="searchbar">
+        <input type="search" class="form-control col-md-12 vertical-center" name="searchtext" placeholder="Pretraži proizvode" />
+    </div>
+}
+@section categories {
+    <div>
+        @for (var i = 0; i < 4; i++) {
+            @Html.Partial("CategoryListItem", new CategoryViewModel { Image  = "/Content/Images/product-icon.png", Name = "Neka kategorija", Shop = Model })
+        }
+    </div>
+}
+@section products {
+    <div class="product-container">
+        @for (var i = 0; i < 10; i++)
+        {
+            <div class="galleryItem galleryItem-sm productItem">
+                <a href="#">
+                    <div style="width: 100%; height: 110px">
+                        <img src="~/Content/Images/product-icon.png" class="img-thumbnail" alt=""/>
+                    </div>
+                </a>
+                <h3>Proizvod</h3>
+                <p>Neki proizvod</p>
+                <p>100 kn/kom</p>
+                <p>Raspoloživo: 10</p>
+            </div>
+        }
+    </div>
+}
+@section footer {
+    <div class="footerimage"></div>
+}
+@section contact {
+    <div class="form-horizontal">
+        <h3>Kontakt</h3>
+        <div class="form-group">
+            <label class="col-md-4">Adresa:</label>
+            <label class="col-md-8">@Model.Address</label>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4">Telefonski broj:</label>
+            <label class="col-md-8">@Model.Phone</label>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4">Email:</label>
+            <label class="col-md-8">@Model.Email</label>
+        </div>
+    </div>
+}
+@section basket {
+    <div>
+        <a href="#" class="btn btn-default vertical-center col-md-12">
+            <span class="glyphicon glyphicon-shopping-cart"></span>
+            <span ng-show="basketItemsEmpty">Vaša košarica je prazna</span>
+        </a>
+    </div>
+}
+@section pageEnd {
+</body>
+</html>
+}
+<script>
+    $(function() {$("a").attr("href", "#");});
+</script>
+

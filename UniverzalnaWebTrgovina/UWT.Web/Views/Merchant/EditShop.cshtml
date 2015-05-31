@@ -63,8 +63,50 @@
             </div>
         </div>
     </div>
-    <div class="col-md-6">
+    @*<div class="col-md-6">
         <h3>Računi izdani ovaj mjesec:</h3>
         @Html.Partial("InvoiceList", (IEnumerable<InvoiceViewModel>) ViewBag.Invoices, ViewData)
+    </div>*@
+    <style>
+        #wrap {
+            width: 630px;
+            height: 300px;
+            padding: 0;
+            overflow: hidden;
+        }
+        #frame {
+            -ms-zoom: 0.25;
+            -ms-transform-origin: 0 0;
+            -moz-transform: scale(0.25);
+            -moz-transform-origin: 0px 50px;
+            -o-transform: scale(0.25);
+            -o-transform-origin: 0px 50px;
+            -webkit-transform: scale(0.25);
+            -webkit-transform-origin: 0 0;
+        }
+        #frame {
+            width: 1400px;
+            height: 500px;
+            overflow: hidden;
+        }
+    </style>
+    <div class="col-md-6">
+        <div id="wrap" style="height: 100%">
+            <iframe id="frame" src="@Url.Action("DesignPreview", "Merchant", new {Model.Id, styleId = Model.PageStyle, layoutId = Model.PageLayout})" style="height: 1200px"></iframe>
+        </div>
     </div>
+}
+
+@section scripts {
+    <script>
+        $(function() {
+            $("#PageLayout,#PageStyle").click(function () {
+                var layout = $("#PageLayout").val();
+                var style = $("#PageStyle").val();
+                console.log("Style changed to (" + layout + ", " + style + ")");
+                var url = "@Url.Action("DesignPreview", "Merchant", new {Model.Id})?styleId=" + style + "&layoutId=" + layout;
+                if ($("#frame").attr("src") !== url) $("#frame").attr("src", url);
+            });
+        });
+    </script>
 }

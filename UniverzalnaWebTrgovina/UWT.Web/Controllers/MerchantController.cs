@@ -438,5 +438,23 @@ namespace UWT.Web.Controllers
 
         }
 
+        public ActionResult DesignPreview(int id, int? layoutId, int? styleId)
+        {
+            var userId = User.Identity.GetUserId();
+            using (var db = new UwtContext())
+            {
+                var dbShop = db.Shops.FirstOrDefault(s => s.Id == id && s.Owner.Id == userId);
+                if (dbShop == null) return HttpNotFound();
+
+                var layout = db.PageLayouts.FirstOrDefault(s => s.Id == layoutId) ?? dbShop.PageLayout;
+                var style = db.PageStyles.FirstOrDefault(s => s.Owner.Id == userId && s.Id == styleId) ?? dbShop.PageStyle;
+                if (layout == null || style == null) return HttpNotFound();
+
+                ViewBag.PageLayout = Mapper.Map<PageLayoutViewModel>(layout);
+                ViewBag.PageStyle = Mapper.Map<PageStyleViewModel>(style);
+                return View(Mapper.Map<ShopViewModel>(dbShop));
+            }
+        }
+
     }
 }

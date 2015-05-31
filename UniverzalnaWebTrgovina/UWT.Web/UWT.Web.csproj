@@ -209,6 +209,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\GalleryItem.css" />
     <Content Include="Content\Images\bg.png" />
+    <Content Include="Content\Images\product-icon.png" />
     <Content Include="Content\Images\User.png" />
     <Content Include="Content\startbootstrap.css" />
     <Content Include="Content\uwt.css" />
@@ -1065,6 +1066,7 @@
     <None Include="Views\Merchant\CreateCategory.cshtml" />
     <None Include="Views\Merchant\CreateProduct.cshtml" />
     <None Include="Views\Merchant\CreateShop.cshtml" />
+    <Content Include="Views\Merchant\DesignPreview.cshtml" />
     <None Include="Views\Merchant\EditCategory.cshtml" />
     <None Include="Views\Merchant\EditProduct.cshtml" />
     <None Include="Views\Merchant\EditShop.cshtml" />
