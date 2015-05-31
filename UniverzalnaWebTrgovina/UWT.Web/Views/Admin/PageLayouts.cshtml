@@ -35,7 +35,7 @@
                     @Html.DisplayFor(modelItem => item.Layout)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DateCreated)
+                    @item.DateCreated.ToLocalTime()
                 </td>
                 <td>
                     @Html.ActionLink("Uredi", "EditLayout", new { id = item.Id }, new { @class = "btn btn-sm btn-default pull-right" })
