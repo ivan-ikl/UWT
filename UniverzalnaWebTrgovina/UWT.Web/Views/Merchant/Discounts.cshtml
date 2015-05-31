@@ -69,17 +69,19 @@
                 <table class="col-md-12 table table-responsive table-hover">
                     <thead>
                         <tr>
-                            <th colspan="2" class="col-md-6">Proizvod</th>
-                            <th class="col-md-6">Popust</th>
+                            <th colspan="2" class="col-md-5">Proizvod</th>
+                            <th class="col-md-3">Trenutna cijena</th>
+                            <th class="col-md-4">Popust</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr ng-repeat="product in model.Products">
                             <td class="col-md-1">
-                                <img style="height: 24px" src="{{product.Image.replace('~', '')}}" alt="" />
+                                <img style="height: 24px" src="{{product.Image.replace('~','')}}" alt="" />
                             </td>
-                            <td class="col-md-5" ng-bind="product.Title"></td>
-                            <td class="col-md-6">
+                            <td class="col-md-4" ng-bind="product.Title"></td>
+                            <td class="col-md-3 text-right"><span ng-bind="product.UnitPrice.toFixed(2)"></span> <span>kn</span></td>
+                            <td class="col-md-4">
                                 <div class="input-group">
                                     <input ng-model="product.Discount" type="number" class="form-control text-right" min="0" max="100" />
                                     <span class="input-group-addon">%</span>

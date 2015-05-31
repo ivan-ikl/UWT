@@ -30,6 +30,8 @@ namespace UWT.Web.Models {
 
         public double UnitPrice { get; set; }
 
+        public double DiscountedFrom { get; set; }
+
     }
 
 }

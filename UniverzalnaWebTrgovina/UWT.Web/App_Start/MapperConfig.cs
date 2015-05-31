@@ -2,6 +2,7 @@
 using System.Linq;
 using AutoMapper;
 using UWT.Models;
+using UWT.Models.Extensions;
 using UWT.Web.Extensions;
 using UWT.Web.Models;
 
@@ -82,7 +83,8 @@ namespace UWT.Web
             Mapper.CreateMap<Category, CategoryViewModel>();
 
             Mapper.CreateMap<Product, ProductViewModel>()
-                .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories.Select(c => c.Id.ToString()).ToArray()));
+                .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories.Select(c => c.Id.ToString()).ToArray()))
+                .ForMember(dest => dest.DiscountedPrice, opt => opt.MapFrom(src => src.DiscountedPrice()));
 
             Mapper.CreateMap<PageStyle, PageStyleViewModel>();
 

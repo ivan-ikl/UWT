@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using UWT.Web.Interfaces;
 
 namespace UWT.Web.Models {
@@ -36,6 +35,13 @@ namespace UWT.Web.Models {
         public string[] Categories { get; set; }
 
         public bool InBasket { get; set; }
+
+        public double DiscountedPrice { get; set; }
+
+        /// <summary>
+        /// Must be set manually
+        /// </summary>
+        public int NumberSold { get; set; }
 
     }
 }

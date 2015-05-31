@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using UWT.Models;
 using UWT.Models.Extensions;
 
@@ -12,6 +13,18 @@ namespace UWT.Web.Extensions {
 
             var shopId = basketItem.Product.Shop.Id;
             return db.Shops.IncludeAll().FirstOrDefault(s => s.Id == shopId);
+        }
+
+        public static int ProductsSold(this IQueryable<Invoice> invoices, int productId)
+        {
+            try
+            {
+                return invoices.Select(i => i.Basket.BasketItems.FirstOrDefault(b => b.Product.Id == productId)).Where(b => b != null).Sum(b => b.Amount);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
         }
 
     }

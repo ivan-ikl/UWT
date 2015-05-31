@@ -81,6 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\Buying.cs" />
+    <Compile Include="Extensions\Discounts.cs" />
     <Compile Include="Extensions\Entities.cs" />
     <Compile Include="Extensions\Filtering.cs" />
     <Compile Include="Extensions\Invoices.cs" />
@@ -100,6 +101,10 @@
     <Compile Include="Migrations\201505311245548_discounts.cs" />
     <Compile Include="Migrations\201505311245548_discounts.Designer.cs">
       <DependentUpon>201505311245548_discounts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201505311631191_discounts2.cs" />
+    <Compile Include="Migrations\201505311631191_discounts2.Designer.cs">
+      <DependentUpon>201505311631191_discounts2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PageLayout.cs" />
@@ -131,6 +136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505311245548_discounts.resx">
       <DependentUpon>201505311245548_discounts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505311631191_discounts2.resx">
+      <DependentUpon>201505311631191_discounts2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

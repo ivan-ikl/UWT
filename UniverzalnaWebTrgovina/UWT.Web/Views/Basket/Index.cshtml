@@ -132,6 +132,7 @@
                     <span ng-bind="::item.Product.Title"></span>
                 </td>
                 <td class="text-right">
+                    <del ng-bind="::item.DiscountedFrom.toFixed(2)" ng-show="::(item.UnitPrice <= item.DiscountedFrom)" style="color: green"></del>
                     <span ng-bind="::item.UnitPrice.toFixed(2)"></span>
                     <span style="padding-right: 50px">kn</span>                
                 </td>

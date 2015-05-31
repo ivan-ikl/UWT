@@ -16,7 +16,7 @@
     float: left;        
     width: 16%;
     margin:  2% 2% 20px 2%; 
-    min-height: 280px;
+    min-height: 320px;
 }
 
 /* Media queries */
@@ -47,7 +47,7 @@ only screen and (max-device-width : 320px){
 /* sm */
 
 .galleryItem-sm {
-    min-height: 180px;
+    min-height: 270px;
     font-size: 9px;
 }
  

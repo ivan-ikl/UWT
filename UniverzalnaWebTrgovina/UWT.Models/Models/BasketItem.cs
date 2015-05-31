@@ -19,6 +19,8 @@ namespace UWT.Models {
 
         [Required]
         public double UnitPrice { get; set; }
+
+        public double DiscountedFrom { get; set; }
     
     }
 

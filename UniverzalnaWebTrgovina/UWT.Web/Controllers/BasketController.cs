@@ -26,7 +26,8 @@ namespace UWT.Web.Controllers
                 {
                     Amount = 1,
                     Product = dbProduct,
-                    UnitPrice = dbProduct.UnitPrice,
+                    UnitPrice = dbProduct.DiscountedPrice(),
+                    DiscountedFrom = dbProduct.UnitPrice,
                     Basket = basket
                 });
                 db.SaveChanges();

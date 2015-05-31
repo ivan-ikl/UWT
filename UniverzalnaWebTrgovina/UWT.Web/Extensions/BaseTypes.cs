@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace UWT.Web.Extensions {
     public static class BaseTypes {
@@ -9,6 +6,11 @@ namespace UWT.Web.Extensions {
         public static DateTime GetMonth(this DateTime dateTime)
         {
             return new DateTime(dateTime.Year, dateTime.Month, 1);
+        }
+
+        public static double Round(this double number, int places)
+        {
+            return Math.Round(number, places);
         }
 
     }

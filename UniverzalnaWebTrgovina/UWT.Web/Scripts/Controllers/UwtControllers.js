@@ -42,7 +42,6 @@ function ShopController(products, shopId, basketItemsCount, basketAddUrl, basket
         // Add handlers for basket operations
         $scope.products.forEach(function(p) {
             console.log(p);
-            p.UnitPrice = p.UnitPrice.toFixed(2) + " kn/kom";
             p.Image = p.Image.replace("~", "");
 
             p.addToBasket = function() {
@@ -86,7 +85,7 @@ function BasketController(basket, shopId, basketAddUrl, basketRemoveUrl, basketA
 
         $scope.basket.BasketItems.forEach(function(item) {
             console.log(item);
-            item.totalPrice = function () { return item.UnitPrice * item.Amount; }
+            item.totalPrice = function () { return item.UnitPrice.toFixed(2) * item.Amount; }
 
             item.onAmountChanged = function() {
                 $.get(basketAmountUrl + "?product=" + item.Product.Id + "&newAmount=" + item.Amount);
@@ -109,7 +108,7 @@ function BasketController(basket, shopId, basketAddUrl, basketRemoveUrl, basketA
         $scope.basket.totalPrice = function() {
             var sum = 0;
             $scope.basket.BasketItems.forEach(function(item) {
-                sum += item.UnitPrice * item.Amount;
+                sum += item.totalPrice();
             });
             return sum;
         };

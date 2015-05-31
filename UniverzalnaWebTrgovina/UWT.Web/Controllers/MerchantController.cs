@@ -379,6 +379,7 @@ namespace UWT.Web.Controllers
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
                 var model = Mapper.Map<ProductViewModel>(product);
+                model.NumberSold = db.Invoices.ProductsSold(product.Id);
                 ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
                 return View(model);
             }
