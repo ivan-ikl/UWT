@@ -192,6 +192,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DiscountModels.cs" />
     <Compile Include="Models\ImageEditorModel.cs" />
     <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -1067,6 +1068,7 @@
     <None Include="Views\Merchant\CreateProduct.cshtml" />
     <None Include="Views\Merchant\CreateShop.cshtml" />
     <Content Include="Views\Merchant\DesignPreview.cshtml" />
+    <None Include="Views\Merchant\Discounts.cshtml" />
     <None Include="Views\Merchant\EditCategory.cshtml" />
     <None Include="Views\Merchant\EditProduct.cshtml" />
     <None Include="Views\Merchant\EditShop.cshtml" />

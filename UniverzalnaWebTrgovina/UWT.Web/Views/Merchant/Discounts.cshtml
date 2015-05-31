@@ -1,0 +1,106 @@
+﻿@using Newtonsoft.Json
+@using UWT.Web.Models
+@model ShopDiscountModel
+@{
+    ViewBag.Title = "title";
+    ViewBag.MainTitle = "Uredi popuste";
+    ViewBag.Subtitle = Model.Name;
+    ViewBag.AngularController = "DiscountController";
+}
+@section controllers {
+    <script>
+        var discountController = new DiscountController(@Html.Raw(JsonConvert.SerializeObject(Model)), "@Url.Action("Discounts")");
+    </script>
+}
+@section buttons
+{
+    <a href="@Url.Action("EditShop", "Merchant", new {Model.Id})" class="btn btn-default">Natrag</a>
+    <a href="@Url.Action("Categories", "Merchant", new {shop = Model.Id})" class="btn btn-default">Kategorije proizvoda</a>
+    <a href="@Url.Action("Products", "Merchant", new { shop = Model.Id })" class="btn btn-default">Proizvodi</a>
+}
+
+<p>Prilikom obračuna popusta na pojedini proizvod, uzima se najveći od popusta koji se na njega odnose</p>
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="col-md-6">Globalni popust:</label>
+                <div class="col-md-6">
+                    <div class="input-group">
+                        <input ng-model="model.Discount" type="number" class="form-control text-right" min="0" max="100"/>
+                        <span class="input-group-addon">%</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-12">
+                    <label>Popusti po kategorijama:</label>
+                    <table class="col-md-12 table table-responsive table-hover">
+                        <thead>
+                            <tr>
+                                <th colspan="2" class="col-md-6">Kategorija</th>
+                                <th class="col-md-6">Popust</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="category in model.Categories">
+                                <td class="col-md-1">
+                                    <img style="height: 24px" src="{{category.Image.replace('~', '')}}" alt="" />
+                                </td>
+                                <td class="col-md-4" ng-bind="category.Name"></td>
+                                <td class="col-md-6">
+                                    <div class="input-group">
+                                        <input ng-model="category.Discount" type="number" class="form-control text-right" min="0" max="100" />
+                                        <span class="input-group-addon">%</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="form-group">
+            <div class="col-md-12">
+                <label>Popusti po proizvodima:</label>
+                <table class="col-md-12 table table-responsive table-hover">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="col-md-6">Proizvod</th>
+                            <th class="col-md-6">Popust</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="product in model.Products">
+                            <td class="col-md-1">
+                                <img style="height: 24px" src="{{product.Image.replace('~', '')}}" alt="" />
+                            </td>
+                            <td class="col-md-5" ng-bind="product.Title"></td>
+                            <td class="col-md-6">
+                                <div class="input-group">
+                                    <input ng-model="product.Discount" type="number" class="form-control text-right" min="0" max="100" />
+                                    <span class="input-group-addon">%</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="pull-right">
+            <button class="btn btn-primary" ng-click="saveChanges()">Spremi promjene</button>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+    </script>
+}

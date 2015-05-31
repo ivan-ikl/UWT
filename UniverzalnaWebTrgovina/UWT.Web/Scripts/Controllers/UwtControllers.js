@@ -126,3 +126,20 @@ function BasketController(basket, shopId, basketAddUrl, basketRemoveUrl, basketA
         }
     });
 }
+
+function DiscountController(model, discountUrl) {
+    app.controller("DiscountController", function($scope) {
+        $scope.model = model;
+        console.log("Discount controller configured");
+
+        $scope.saveChanges = function () {
+            $.post(discountUrl, $scope.model, function(data) {
+                if (data) {
+                    console.log("Changes successfully saved");
+                } else {
+                    console.log("Error saving changes");
+                }
+            });
+        };
+    });
+}

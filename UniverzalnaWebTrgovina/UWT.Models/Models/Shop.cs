@@ -26,6 +26,8 @@ namespace UWT.Models {
         [Required]
         public virtual DateTime DateCreated { get; set; }
 
+        public double Discount { get; set; }
+
         [Required]
         public virtual PageStyle PageStyle { get; set; }
 

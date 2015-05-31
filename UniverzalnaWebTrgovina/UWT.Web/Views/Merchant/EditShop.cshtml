@@ -10,6 +10,7 @@
 @section buttons
 {
     <a href="@Url.Action("MyShops")" class="btn btn-default">Natrag</a>
+    <a href="@Url.Action("Discounts", "Merchant", new {Model.Id})" class="btn btn-default">Uredi popuste</a>
     <a href="@Url.Action("Categories", "Merchant", new {shop = Model.Id})" class="btn btn-default">Kategorije proizvoda</a>
     <a href="@Url.Action("Products", "Merchant", new { shop = Model.Id })" class="btn btn-default">Proizvodi</a>
 }
@@ -78,9 +79,9 @@
             -ms-zoom: 0.25;
             -ms-transform-origin: 0 0;
             -moz-transform: scale(0.25);
-            -moz-transform-origin: 0px 50px;
+            -moz-transform-origin: 0 50px;
             -o-transform: scale(0.25);
-            -o-transform-origin: 0px 50px;
+            -o-transform-origin: 0 50px;
             -webkit-transform: scale(0.25);
             -webkit-transform-origin: 0 0;
         }

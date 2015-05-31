@@ -456,5 +456,29 @@ namespace UWT.Web.Controllers
             }
         }
 
+        public ActionResult Discounts(int id)
+        {
+            var userId = User.Identity.GetUserId();
+            using (var db = new UwtContext())
+            {
+                var shop = db.Shops.Filter(userId).FirstOrDefault(s => s.Id == id);
+                if (shop == null) return HttpNotFound();
+
+                var model = Mapper.Map<ShopDiscountModel>(shop);
+                return View(model);
+            }
+        }
+
+        [HttpPost]
+        public bool Discounts(ShopDiscountModel model)
+        {
+            var userId = User.Identity.GetUserId();
+            using (var db = new UwtContext()) {
+                var result = db.UpdateDiscounts(model, userId);
+                db.SaveChanges();
+                return result;
+            }
+        }
+
     }
 }

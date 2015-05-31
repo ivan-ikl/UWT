@@ -97,6 +97,10 @@
     <Compile Include="Migrations\201505281700320_BackgroundMandatory.Designer.cs">
       <DependentUpon>201505281700320_BackgroundMandatory.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201505311245548_discounts.cs" />
+    <Compile Include="Migrations\201505311245548_discounts.Designer.cs">
+      <DependentUpon>201505311245548_discounts.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PageLayout.cs" />
     <Compile Include="Models\Product.cs" />
@@ -124,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505281700320_BackgroundMandatory.resx">
       <DependentUpon>201505281700320_BackgroundMandatory.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201505311245548_discounts.resx">
+      <DependentUpon>201505311245548_discounts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

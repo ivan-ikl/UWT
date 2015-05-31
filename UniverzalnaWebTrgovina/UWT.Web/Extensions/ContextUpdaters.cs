@@ -1,8 +1,11 @@
 ﻿using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Linq;
 using System.Web;
 using UWT.Models;
+using UWT.Models.Extensions;
 using UWT.Web.Helpers;
 using UWT.Web.Models;
+using WebGrease.Css.Extensions;
 
 namespace UWT.Web.Extensions {
     public static class ContextUpdaters {
@@ -33,6 +36,25 @@ namespace UWT.Web.Extensions {
             shop.Phone = model.Phone;
             if (style != null) shop.PageStyle = style;
             if (layout != null) shop.PageLayout = layout;
+        }
+
+        public static bool UpdateDiscounts(this UwtContext db, ShopDiscountModel model, string userId)
+        {
+            var shop = db.Shops.Filter(userId).IncludeAll().FirstOrDefault(s => s.Id == model.Id);
+            if (shop == null) return false;
+
+            shop.Discount = (double) model.Discount/100;
+
+            model.Categories.ForEach(modelCategory => {
+                var category = db.Categories.Filter(userId, shop.Id).IncludeAll().FirstOrDefault(c => c.Id == modelCategory.Id);
+                if (category != null) category.Discount = (double) modelCategory.Discount/100;
+            });
+
+            model.Products.ForEach(modelProduct => {
+                var product = db.Products.Filter(userId, shop.Id).IncludeAll().FirstOrDefault(c => c.Id == modelProduct.Id);
+                if (product != null) product.Discount = (double) modelProduct.Discount/100;
+            });
+            return true;
         }
 
     }

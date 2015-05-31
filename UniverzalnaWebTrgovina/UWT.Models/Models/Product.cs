@@ -34,6 +34,8 @@ namespace UWT.Models {
         [Required]
         public virtual Image Image { get; set; }
 
+        public double Discount { get; set; }
+
         public virtual List<BasketItem> Orders { get; set; }
 
         public virtual List<Category> Categories { get; set; }

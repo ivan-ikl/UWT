@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using AutoMapper;
 using UWT.Models;
@@ -46,7 +45,8 @@ namespace UWT.Web
             Mapper.CreateMap<PageStyleViewModel, PageStyle>();
             
             Mapper.CreateMap<ShopViewModel, Shop>()
-                .ForMember(dest => dest.Owner, opt => opt.Ignore());
+                .ForMember(dest => dest.Owner, opt => opt.Ignore())
+                .ForMember(dest => dest.Discount, opt => opt.Ignore());
 
             Mapper.CreateMap<ProductViewModel, Product>()
                 .ForMember(dest => dest.Shop, opt => opt.Ignore())
@@ -78,16 +78,26 @@ namespace UWT.Web
                 .ForMember(dest => dest.Blocked, opt => opt.MapFrom(src => src.IsBlocked()));
 
             Mapper.CreateMap<PageLayout, PageLayoutViewModel>();
-            
-            Mapper.CreateMap<Category, CategoryViewModel>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => (int)src.Id));
+
+            Mapper.CreateMap<Category, CategoryViewModel>();
 
             Mapper.CreateMap<Product, ProductViewModel>()
                 .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories.Select(c => c.Id.ToString()).ToArray()));
 
             Mapper.CreateMap<PageStyle, PageStyleViewModel>();
-            
+
             Mapper.CreateMap<Shop, ShopViewModel>();
+
+            // Discount model
+            Mapper.CreateMap<Product, ProductDiscountModel>()
+                .ForMember(dest => dest.Categories, opt => opt.Ignore())
+                .ForMember(dest => dest.Discount, opt => opt.MapFrom(src => (int)(src.Discount * 100)));
+            
+            Mapper.CreateMap<Category, CategoryDiscountModel>()
+                .ForMember(dest => dest.Discount, opt => opt.MapFrom(src => (int)(src.Discount * 100)));
+
+            Mapper.CreateMap<Shop, ShopDiscountModel>()
+                .ForMember(dest => dest.Discount, opt => opt.MapFrom(src => (int)(src.Discount * 100)));
         }
     }
 }

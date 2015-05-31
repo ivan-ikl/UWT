@@ -31,6 +31,5 @@ namespace UWT.Web.Models {
         [Display(Name = "Raspored stranice")]
         [Required(ErrorMessage = "Polje je obavezno")]
         public int PageLayout { get; set; }
-
     }
 }

@@ -12,6 +12,8 @@ namespace UWT.Models {
         [Required]
         public string Name { get; set; }
 
+        public double Discount { get; set; }
+
         [Required]
         public virtual Image Image { get; set; }
 
