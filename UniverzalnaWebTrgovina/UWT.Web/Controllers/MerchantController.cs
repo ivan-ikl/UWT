@@ -402,7 +402,10 @@ namespace UWT.Web.Controllers
                     product.Description = model.Description;
                     product.Tags = model.Tags;
                     product.UnitPrice = model.UnitPrice;
-                    product.Categories = model.Categories.Select(int.Parse).Select(cid => db.Categories.IncludeAll().Filter(userId, myShop.Id).FirstOrDefault(c => c.Id == cid)).ToList();
+                    if (model.Categories != null)
+                    {
+                        product.Categories = model.Categories.Select(int.Parse).Select(cid => db.Categories.IncludeAll().Filter(userId, myShop.Id).FirstOrDefault(c => c.Id == cid)).ToList();
+                    }
                     if (image != null && image.ContentLength > 0) {
                         product.Image = image.AddUploadedImage(Server, db.Users.FirstOrDefault(u => u.Id == userId));
                     }
@@ -423,20 +426,50 @@ namespace UWT.Web.Controllers
             return View(model);
         }
 
-        public ActionResult Invoices(int? shop)
+        public ActionResult Invoices(int? shop, int? month, int? year)
         {
             var userId = User.Identity.GetUserId();
+            month = month ?? DateTime.Now.Month;
+            year = year ?? DateTime.Now.Year;
+            if (month == 0)
+            {
+                month = 12;
+                year--;
+            } else if (month == 13)
+            {
+                month = 1;
+                year++;
+            }
             using (var db = new UwtContext())
             {
                 var dbShop = db.Shops.FirstOrDefault(s => s.Id == shop && s.Owner.Id == userId);
                 if (dbShop == null) return HttpNotFound();
 
-                var invoices = db.Invoices.IncludeAll().Filter(dbShop.Id).ToList();
+                var invoices = db.Invoices.Where(i => i.DateCreated.Year == year && i.DateCreated.Month == month).IncludeAll().Filter(dbShop.Id).OrderByDescending(i => i.DateCreated).ToList();
                 var model = invoices.Select(Mapper.Map<InvoiceViewModel>).ToList();
+
+                ViewBag.Month = month;
+                ViewBag.Year = year;
+                ViewBag.Years = db.Invoices.Select(i => i.DateCreated).ToList().Select(d => d.Year).Distinct().ToList();
+                ViewBag.Months = new[] {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12};
+
                 ViewBag.Shop = Mapper.Map<ShopViewModel>(dbShop);
                 return View(model);
             }
+        }
 
+        public ActionResult Invoice(int id)
+        {
+            var userId = User.Identity.GetUserId();
+            using (var db = new UwtContext())
+            {
+                var invoice = db.Invoices.FilterByShopOwner(userId).IncludeAll().FirstOrDefault(i => i.Id == id);
+                if (invoice == null) return HttpNotFound();
+
+                ViewBag.ShopId = invoice.GetShop(db).Id;
+                var model = Mapper.Map<InvoiceViewModel>(invoice);
+                return View(model);
+            }            
         }
 
         public ActionResult DesignPreview(int id, int? layoutId, int? styleId)

@@ -1,0 +1,59 @@
+﻿@using Microsoft.AspNet.Identity
+@using UWT.Web.Extensions
+@using UWT.Web.Models
+@model InvoiceViewModel
+@{
+    ViewBag.Title = "Invoice";
+    ViewBag.MainTitle = "Pregled računa";
+    ViewBag.Subtitle = "Račun " + Model.DateCreated.ToString("dd.MM.yyyy - HH:mm");
+}
+@section buttons {
+    <a href="@Url.Action("Invoices", "Merchant", new {shop = ViewBag.ShopId})" class="btn btn-default">Natrag na popis</a>
+}
+<style>
+    .categoryList-image {
+        max-height: 30px;
+        max-width: 40px;
+    }
+</style>
+<table class="table table-responsive table-condensed" style="margin-bottom: 150px; margin-top: 50px">
+    <thead>
+        <tr>
+            <th colspan="2" class="col-md-5">Proizvod</th>
+            <th class="col-md-2 text-center">Jedinična cijena</th>
+            <th class="col-md-2">Količina (kom.)</th>
+            <th class="col-md-3 text-right">Ukupna cijena</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Basket.BasketItems)
+    {
+        <tr>
+            <td class="col-md-1"><img class="categoryList-image" src="@item.Product.Image.Replace("~","")" alt=""/></td>
+            <td class="col-md-4">@item.Product.Title</td>
+            <td class="text-right">
+                @if (item.UnitPrice < item.DiscountedFrom)
+                {
+                    <del style="color: green">@item.DiscountedFrom.ToString("#0.00")</del>
+                }
+                <span>@item.UnitPrice.ToString("#0.00")</span>
+                <span style="padding-right: 50px">kn</span>
+            </td>
+            <td>@item.Amount</td>
+            <th class="text-right">
+                <span>@item.TotalPrice().ToString("#0.00")</span>
+                <span>kn</span>
+            </th>
+        </tr>
+    }
+    </tbody>
+    <tfoot>
+        <tr>
+            <th colspan="4" class="text-right">Ukupna cijena:</th>
+            <th class="text-right">
+                <span>@Model.Basket.BasketItems.Sum(i => i.TotalPrice()).ToString("#0.00")</span>
+                <span>kn</span>
+            </th>
+        </tr>
+    </tfoot>
+</table>

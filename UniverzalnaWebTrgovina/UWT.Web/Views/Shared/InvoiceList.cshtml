@@ -1,5 +1,8 @@
 ﻿@using UWT.Web.Extensions
 @model IEnumerable<UWT.Web.Models.InvoiceViewModel>
+@{
+    string controller = (ViewBag.Merchant == true) ? "Merchant" : "Invoice";
+}
 
 <table class="table table-responsive table-condensed" style="margin-bottom: 150px; margin-top: 50px">
     <thead>
@@ -13,7 +16,7 @@
         @foreach (var invoice in Model) {
             <tr>
                 <td>
-                    <a href="@Url.Action("Invoice", "Invoice", new {invoice.Id})">@invoice.DateCreated.ToLocalTime().ToString("dd.MM.yyyy HH:mm")</a>
+                    <a href="@Url.Action("Invoice", controller, new {invoice.Id})">@invoice.DateCreated.ToLocalTime().ToString("dd.MM.yyyy - HH:mm")</a>
                 </td>
                 <td>
                     @foreach (var item in invoice.Basket.BasketItems) {

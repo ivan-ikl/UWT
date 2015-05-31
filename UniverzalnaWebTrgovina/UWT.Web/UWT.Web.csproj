@@ -1072,6 +1072,7 @@
     <None Include="Views\Merchant\EditCategory.cshtml" />
     <None Include="Views\Merchant\EditProduct.cshtml" />
     <None Include="Views\Merchant\EditShop.cshtml" />
+    <Content Include="Views\Merchant\Invoice.cshtml" />
     <None Include="Views\Merchant\Invoices.cshtml" />
     <None Include="Views\Merchant\Products.cshtml" />
     <Content Include="Views\Shared\ShopThumbnail.cshtml" />

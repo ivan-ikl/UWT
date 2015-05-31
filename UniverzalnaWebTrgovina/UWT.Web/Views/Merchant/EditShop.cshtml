@@ -10,6 +10,7 @@
 @section buttons
 {
     <a href="@Url.Action("MyShops")" class="btn btn-default">Natrag</a>
+    <a href="@Url.Action("Invoices", "Merchant", new {shop = Model.Id})" class="btn btn-default">Pregled računa</a>
     <a href="@Url.Action("Discounts", "Merchant", new {Model.Id})" class="btn btn-default">Uredi popuste</a>
     <a href="@Url.Action("Categories", "Merchant", new {shop = Model.Id})" class="btn btn-default">Kategorije proizvoda</a>
     <a href="@Url.Action("Products", "Merchant", new { shop = Model.Id })" class="btn btn-default">Proizvodi</a>

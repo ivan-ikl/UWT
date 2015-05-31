@@ -5,10 +5,32 @@
     ViewBag.Title = "title";
     ViewBag.MainTitle = "Izdani računi";
     ViewBag.Subtitle = shop.Name;
+    ViewBag.Merchant = true;
 }
 @section buttons
 {
-    <a href="@Url.Action("EditShop", "Merchant", new {shop.Id})">Natrag na trgovinu</a>
+    <a href="@Url.Action("EditShop", "Merchant", new {shop.Id})" class="btn btn-default">Natrag na trgovinu</a>
+    <a href="@Url.Action("Invoices", "Merchant", new {shop = shop.Id, month = ViewBag.Month - 1, year = ViewBag.Year})" class="btn btn-default">Prethodni mjesec</a>
+    <a href="@Url.Action("Invoices", "Merchant", new {shop = shop.Id, month = ViewBag.Month + 1, year = ViewBag.Year})" class="btn btn-default">Idući mjesec</a>
 }
 
+@using (Html.BeginForm("Invoices", "Merchant", FormMethod.Get))
+{
+    <div class="form-horizontal">
+        @Html.Hidden("shop", shop.Id)
+
+        <div class="form-group">
+            <label class="form-label col-md-3 vertical-center">Mjesečni pregled računa za</label>
+            <div class="col-md-2">
+                @Html.DropDownList("month", new SelectList(ViewBag.Months, ViewBag.Month), new { @class = "form-control" })
+            </div>
+            <div class="col-md-2">
+                @Html.DropDownList("year", new SelectList(ViewBag.Years, ViewBag.Year), new { @class = "form-control" })
+            </div>
+            <div class="col-md-1">
+                <input type="submit" class="btn btn-default" value="Pregledaj"/>
+            </div>
+        </div>
+    </div>
+}
 @Html.Partial("InvoiceList", Model, ViewData)
