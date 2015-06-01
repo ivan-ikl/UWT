@@ -13,10 +13,11 @@ namespace UWT.Web
         public static void RegisterMappings()
         {
             MapViewModelsToModels();
-            MapModelsToViewModels(); 
+            MapModelsToViewModels();
+            MapSerializationModels();
         }
 
-        static void MapViewModelsToModels()
+        private static void MapViewModelsToModels()
         {
             // Helpers
             Mapper.CreateMap<UserViewModel, User>().ConvertUsing(user => null);
@@ -42,9 +43,9 @@ namespace UWT.Web
 
             Mapper.CreateMap<PageLayoutViewModel, PageLayout>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore());
-            
+
             Mapper.CreateMap<PageStyleViewModel, PageStyle>();
-            
+
             Mapper.CreateMap<ShopViewModel, Shop>()
                 .ForMember(dest => dest.Owner, opt => opt.Ignore())
                 .ForMember(dest => dest.Discount, opt => opt.Ignore());
@@ -54,7 +55,7 @@ namespace UWT.Web
                 .ForMember(dest => dest.Categories, opt => opt.Ignore());
         }
 
-        static void MapModelsToViewModels()
+        private static void MapModelsToViewModels()
         {
             // Helpers
             Mapper.CreateMap<List<Product>, int>().ConvertUsing(list => list.Count);
@@ -83,7 +84,8 @@ namespace UWT.Web
             Mapper.CreateMap<Category, CategoryViewModel>();
 
             Mapper.CreateMap<Product, ProductViewModel>()
-                .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.Categories.Select(c => c.Id.ToString()).ToArray()))
+                .ForMember(dest => dest.Categories,
+                    opt => opt.MapFrom(src => src.Categories.Select(c => c.Id.ToString()).ToArray()))
                 .ForMember(dest => dest.DiscountedPrice, opt => opt.MapFrom(src => src.DiscountedPrice()));
 
             Mapper.CreateMap<PageStyle, PageStyleViewModel>();
@@ -93,13 +95,21 @@ namespace UWT.Web
             // Discount model
             Mapper.CreateMap<Product, ProductDiscountModel>()
                 .ForMember(dest => dest.Categories, opt => opt.Ignore())
-                .ForMember(dest => dest.Discount, opt => opt.MapFrom(src => (int)(src.Discount * 100)));
-            
+                .ForMember(dest => dest.Discount, opt => opt.MapFrom(src => (int) (src.Discount*100)));
+
             Mapper.CreateMap<Category, CategoryDiscountModel>()
-                .ForMember(dest => dest.Discount, opt => opt.MapFrom(src => (int)(src.Discount * 100)));
+                .ForMember(dest => dest.Discount, opt => opt.MapFrom(src => (int) (src.Discount*100)));
 
             Mapper.CreateMap<Shop, ShopDiscountModel>()
-                .ForMember(dest => dest.Discount, opt => opt.MapFrom(src => (int)(src.Discount * 100)));
+                .ForMember(dest => dest.Discount, opt => opt.MapFrom(src => (int) (src.Discount*100)));
+        }
+
+        public static void MapSerializationModels()
+        {
+            Mapper.CreateMap<Product, Portable.Models.Product>()
+                .ForMember(dest => dest.DiscountedPrice, opt => opt.MapFrom(src => src.DiscountedPrice()));
+            Mapper.CreateMap<Category, Portable.Models.Category>();
+            Mapper.CreateMap<Shop, Portable.Models.Shop>();
         }
     }
 }
