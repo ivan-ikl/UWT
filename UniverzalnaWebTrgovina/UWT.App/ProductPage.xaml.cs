@@ -1,5 +1,4 @@
-﻿using Windows.Phone.UI.Input;
-using Windows.UI.Xaml.Controls;
+﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkID=390556
@@ -11,12 +10,6 @@ namespace UWT.App {
     public sealed partial class ProductPage : Page {
         public ProductPage() {
             this.InitializeComponent();
-            HardwareButtons.BackPressed += HardwareButtons_BackPressed;
-        }
-
-        void HardwareButtons_BackPressed(object sender, BackPressedEventArgs e) {
-            if (Frame.CanGoBack) Frame.GoBack();
-            e.Handled = true;
         }
 
         /// <summary>

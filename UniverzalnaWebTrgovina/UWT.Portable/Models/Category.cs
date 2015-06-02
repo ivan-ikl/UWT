@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace UWT.Portable.Models {
     [DataContract]
@@ -14,5 +15,10 @@ namespace UWT.Portable.Models {
 
         [DataMember]
         public string Image { get; set; }
+
+        public string ImageFilename {
+            get { return "Assets/" + Image; }
+        }
+
     }
 }

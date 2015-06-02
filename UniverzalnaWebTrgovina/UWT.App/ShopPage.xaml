@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid DataContext="{Binding}">
+    <Grid DataContext="{Binding}" Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="80"/>
@@ -20,7 +20,10 @@
             <ListView ItemsSource="{Binding Categories}" SelectionChanged="Selector_OnSelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Margin="10" FontSize="24" Text="{Binding Name}"/>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding ImageFilename}" Height="64" Margin="10" Width="64" Stretch="Uniform"></Image>
+                            <TextBlock Margin="10" FontSize="24" Text="{Binding Name}" VerticalAlignment="Center"/>
+                        </StackPanel>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>

@@ -107,9 +107,12 @@ namespace UWT.Web
         public static void MapSerializationModels()
         {
             Mapper.CreateMap<Product, Portable.Models.Product>()
-                .ForMember(dest => dest.DiscountedPrice, opt => opt.MapFrom(src => src.DiscountedPrice()));
-            Mapper.CreateMap<Category, Portable.Models.Category>();
-            Mapper.CreateMap<Shop, Portable.Models.Shop>();
+                .ForMember(dest => dest.DiscountedPrice, opt => opt.MapFrom(src => src.DiscountedPrice()))
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image.Path));
+            Mapper.CreateMap<Category, Portable.Models.Category>()
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image.Path));
+            Mapper.CreateMap<Shop, Portable.Models.Shop>()
+                .ForMember(dest => dest.Logo, opt => opt.MapFrom(src => src.PageStyle.Logo.Path));
         }
     }
 }

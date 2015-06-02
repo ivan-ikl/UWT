@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 
 namespace UWT.Portable.Models {
 
@@ -28,6 +29,10 @@ namespace UWT.Portable.Models {
 
         [DataMember]
         public int NumberSold { get; set; }
+
+        public string ImageFilename {
+            get { return "Assets/" + Image; }
+        }
 
     }
 }
