@@ -1,11 +1,14 @@
-﻿@using UWT.Web.Models
+﻿@using UWT.Web.Extensions
+@using UWT.Web.Models
 @model IEnumerable<InvoiceViewModel>
+@* ReSharper disable once SuggestVarOrType_Elsewhere *@
 @{
     var shop = ((ShopViewModel) ViewBag.Shop);
     ViewBag.Title = "title";
     ViewBag.MainTitle = "Izdani računi";
     ViewBag.Subtitle = shop.Name;
     ViewBag.Merchant = true;
+    var revenue = ((IEnumerable<int>)Enumerable.Range(1, DateTime.DaysInMonth(ViewBag.Year, ViewBag.Month))).Select(i => new[] { (double)i, Model.Where(m => m.DateCreated.ToLocalTime().Day == i).Sum(m => m.TotalPrice()) }).ToArray();
 }
 @section buttons
 {
@@ -34,3 +37,8 @@
     </div>
 }
 @Html.Partial("InvoiceList", Model, ViewData)
+
+<h3>Dinamika prodaje</h3>
+<div>
+    @Html.Partial("SimpleGraph", revenue, ViewData)
+</div>

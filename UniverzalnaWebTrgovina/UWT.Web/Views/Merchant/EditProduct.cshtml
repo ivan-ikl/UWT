@@ -15,30 +15,30 @@
     @Html.Hidden("shop", (int)ViewBag.ShopId)
     @Html.HiddenFor(m => Model.Id)
     <div class="col-md-6">
-        @Html.ValidationSummary("", new { @class = "text-danger" })
+        @Html.ValidationSummary("", new {@class = "text-danger"})
         <div class="form-group">
-            @Html.LabelFor(m => m.Title, new { @class = "col-md-5 control-label" })
+            @Html.LabelFor(m => m.Title, new {@class = "col-md-5 control-label"})
             <div class="col-md-6">
-                @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(m => m.Title, new {htmlAttributes = new {@class = "form-control"}})
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Description, new { @class = "col-md-5 control-label" })
+            @Html.LabelFor(m => m.Description, new {@class = "col-md-5 control-label"})
             <div class="col-md-6">
-                @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(m => m.Description, new {htmlAttributes = new {@class = "form-control"}})
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.Count, new { @class = "col-md-5 control-label" })
+            @Html.LabelFor(m => m.Count, new {@class = "col-md-5 control-label"})
             <div class="col-md-6">
-                @Html.EditorFor(m => m.Count, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(m => m.Count, new {htmlAttributes = new {@class = "form-control"}})
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(m => m.UnitPrice, new { @class = "col-md-5 control-label" })
+            @Html.LabelFor(m => m.UnitPrice, new {@class = "col-md-5 control-label"})
             <div class="col-md-6">
                 <div class="input-group">
-                    @Html.EditorFor(m => m.UnitPrice, new { htmlAttributes = new { @class = "form-control text-right", @type = "number" } })
+                    @Html.EditorFor(m => m.UnitPrice, new {htmlAttributes = new {@class = "form-control text-right", @type = "number"}})
                     <span class="input-group-addon">kn</span>
                 </div>
             </div>
@@ -50,31 +50,32 @@
             </div>
         </div>
         <div class="form-group">
-            @Html.Label("Kategorije:", new { @class = "col-md-5 control-label" })
+            @Html.Label("Kategorije:", new {@class = "col-md-5 control-label"})
             <div class="col-md-6">
-                <input id="categoryDisplay" name="categoryDisplay" class="form-control" value="" readonly="readonly" />
+                <input id="categoryDisplay" name="categoryDisplay" class="form-control" value="" readonly="readonly"/>
             </div>
         </div>
         <div class="form-group">
             <div class="col-md-offset-5 col-md-6">
-                @Html.ListBoxFor(m => Model.Categories, (MultiSelectList)ViewBag.Categories, new { @class = "form-control" })
+                @Html.ListBoxFor(m => Model.Categories, (MultiSelectList) ViewBag.Categories, new {@class = "form-control"})
             </div>
         </div>
         <div class="form-group">
             <label class="col-md-5 control-label">Prodano:</label>
             <div class="col-md-6">
                 <div class="input-group text-center">
-                    <input readonly name="NumberSold" class="form-control text-right" value="@Model.NumberSold" />
+                    <input readonly name="NumberSold" class="form-control text-right" value="@Model.NumberSold"/>
                     <span class="input-group-addon">kom</span>
                 </div>
             </div>
         </div>
-        @if (Model.TotalDiscount() > 0) {
+        @if (Model.TotalDiscount() > 0)
+        {
             <div class="form-group">
                 <label class="col-md-5 control-label">Ukupni popust:</label>
                 <div class="col-md-6">
                     <div class="input-group text-center">
-                        <input readonly name="NumberSold" class="form-control text-right" value="@(Model.TotalDiscount()*100)" />
+                        <input readonly name="NumberSold" class="form-control text-right" value="@(Model.TotalDiscount()*100)"/>
                         <span class="input-group-addon">%</span>
                     </div>
                 </div>
@@ -89,18 +90,19 @@
     </div>
     <div class="col-md-6">
         <div class="form-group">
-            @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.Image.Replace("~", ""), FieldName = "image", Label = "Slika proizvoda:" }, ViewData)
+            @Html.Partial("ImageEditor", new ImageEditorModel {DefaultImage = Model.Image.Replace("~", ""), FieldName = "image", Label = "Slika proizvoda:"}, ViewData)
         </div>
     </div>
 }
 @section scripts {
     <script>
-        $(function () {
+        $(function() {
             function showCategories() {
-                var selection = $('#Categories :selected').map(function (i, c) { return $(c).html(); });
+                var selection = $('#Categories :selected').map(function(i, c) { return $(c).html(); });
                 $("#categoryDisplay").val(Array.prototype.join.call(selection, ", "));
             }
-            $("#Categories").click(function () { showCategories(); });
+
+            $("#Categories").click(function() { showCategories(); });
             showCategories();
         });
     </script>
