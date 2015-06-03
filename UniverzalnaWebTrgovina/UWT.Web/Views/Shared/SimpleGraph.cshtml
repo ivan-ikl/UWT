@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 @using Newtonsoft.Json
 @model double[][]
-<!-- Graph HTML -->
+
 <div id="graph-wrapper">
     <div class="graph-info">
         <a href="#" id="lines" class="active"><span></span></a>
@@ -11,19 +11,14 @@
         <div id="graph-lines"></div>
     </div>
 </div>
-<!-- end Graph HTML -->
+
 <script>
     $(function() {
         var graphData = [@Html.Raw(JsonConvert.SerializeObject(Model))];
         $.plot($('#graph-lines'), graphData, {
             series: {
-                points: {
-                    show: true,
-                    radius: 5
-                },
-                lines: {
-                    show: true
-                },
+                points: { show: true, radius: 5 },
+                lines: { show: true },
                 shadowSize: 0
             },
             grid: {
@@ -44,10 +39,7 @@
         });
  
         function showTooltip(x, y, contents) {
-            $('<div id="tooltip">' + contents + '</div>').css({
-                top: y - 16,
-                left: x + 20
-            }).appendTo('body').fadeIn();
+            $('<div id="tooltip">' + contents + '</div>').css({ top: y - 16, left: x + 20 }).appendTo('body').fadeIn();
         }
  
         var previousPoint = null;
@@ -59,7 +51,7 @@
                     $('#tooltip').remove();
                     var x = item.datapoint[0],
                         y = item.datapoint[1];
-                    showTooltip(item.pageX, item.pageY, y.toFixed(2) + ' kn uprihođeno ' + x.toFixed(1) + '.@ViewBag.Month.@ViewBag.Year');
+                    showTooltip(item.pageX, item.pageY, x.toFixed(0) + " - " + y.toFixed(2));
                 }
             } else {
                 $('#tooltip').remove();

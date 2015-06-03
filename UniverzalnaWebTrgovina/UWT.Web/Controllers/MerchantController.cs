@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -381,6 +382,8 @@ namespace UWT.Web.Controllers
                 var model = Mapper.Map<ProductViewModel>(product);
                 model.NumberSold = db.Invoices.ProductsSold(product.Id);
                 ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
+                var sales = db.BasketItems.Where(b => b.Product.Id == id && b.Basket.Invoice != null && DbFunctions.DiffDays(DateTime.UtcNow, b.Basket.Invoice.DateCreated) <= 30).ToList().Select(b => new [] {30 + (b.Basket.Invoice.DateCreated.ToLocalTime().Date - DateTime.UtcNow.Date).TotalDays, b.Amount}).ToList();
+                ViewBag.Sales = Enumerable.Range(1, 30).Select(e => new[]{e, sales.Where(s => s[0] == e).Sum(s => s[1])}).ToArray();
                 return View(model);
             }
         }
@@ -422,6 +425,8 @@ namespace UWT.Web.Controllers
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
                 ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
+                var sales = db.BasketItems.Where(b => b.Product.Id == model.Id && b.Basket.Invoice != null && DbFunctions.DiffDays(DateTime.UtcNow, b.Basket.Invoice.DateCreated) <= 30).ToList().Select(b => new[] { 30 + (b.Basket.Invoice.DateCreated.ToLocalTime().Date - DateTime.UtcNow.Date).TotalDays, b.Amount }).ToList();
+                ViewBag.Sales = Enumerable.Range(1, 30).Select(e => new[] { e, sales.Where(s => s[0] == e).Sum(s => s[1]) }).ToArray();
             }
             return View(model);
         }

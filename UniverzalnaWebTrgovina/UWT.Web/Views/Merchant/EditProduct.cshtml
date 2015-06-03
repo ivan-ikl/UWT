@@ -5,6 +5,7 @@
     ViewBag.Title = "title";
     ViewBag.MainTitle = "Uredi proizvod";
     ViewBag.Subtitle = "Proizvod: " + Model.Title;
+    double[][] sales = ViewBag.Sales;
 }
 @section buttons
 {
@@ -14,83 +15,90 @@
     @Html.AntiForgeryToken()
     @Html.Hidden("shop", (int)ViewBag.ShopId)
     @Html.HiddenFor(m => Model.Id)
-    <div class="col-md-6">
-        @Html.ValidationSummary("", new {@class = "text-danger"})
-        <div class="form-group">
-            @Html.LabelFor(m => m.Title, new {@class = "col-md-5 control-label"})
-            <div class="col-md-6">
-                @Html.EditorFor(m => m.Title, new {htmlAttributes = new {@class = "form-control"}})
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Description, new {@class = "col-md-5 control-label"})
-            <div class="col-md-6">
-                @Html.EditorFor(m => m.Description, new {htmlAttributes = new {@class = "form-control"}})
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Count, new {@class = "col-md-5 control-label"})
-            <div class="col-md-6">
-                @Html.EditorFor(m => m.Count, new {htmlAttributes = new {@class = "form-control"}})
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.UnitPrice, new {@class = "col-md-5 control-label"})
-            <div class="col-md-6">
-                <div class="input-group">
-                    @Html.EditorFor(m => m.UnitPrice, new {htmlAttributes = new {@class = "form-control text-right", @type = "number"}})
-                    <span class="input-group-addon">kn</span>
-                </div>
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Tags, new {@class = "col-md-5 control-label"})
-            <div class="col-md-6">
-                @Html.EditorFor(m => m.Tags, new {htmlAttributes = new {@class = "form-control"}})
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.Label("Kategorije:", new {@class = "col-md-5 control-label"})
-            <div class="col-md-6">
-                <input id="categoryDisplay" name="categoryDisplay" class="form-control" value="" readonly="readonly"/>
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-5 col-md-6">
-                @Html.ListBoxFor(m => Model.Categories, (MultiSelectList) ViewBag.Categories, new {@class = "form-control"})
-            </div>
-        </div>
-        <div class="form-group">
-            <label class="col-md-5 control-label">Prodano:</label>
-            <div class="col-md-6">
-                <div class="input-group text-center">
-                    <input readonly name="NumberSold" class="form-control text-right" value="@Model.NumberSold"/>
-                    <span class="input-group-addon">kom</span>
-                </div>
-            </div>
-        </div>
-        @if (Model.TotalDiscount() > 0)
-        {
+    <div class="row">
+        <div class="col-md-6">
+            @Html.ValidationSummary("", new { @class = "text-danger" })
             <div class="form-group">
-                <label class="col-md-5 control-label">Ukupni popust:</label>
+                @Html.LabelFor(m => m.Title, new { @class = "col-md-5 control-label" })
                 <div class="col-md-6">
-                    <div class="input-group text-center">
-                        <input readonly name="NumberSold" class="form-control text-right" value="@(Model.TotalDiscount()*100)"/>
-                        <span class="input-group-addon">%</span>
+                    @Html.EditorFor(m => m.Title, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, new { @class = "col-md-5 control-label" })
+                <div class="col-md-6">
+                    @Html.EditorFor(m => m.Description, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Count, new { @class = "col-md-5 control-label" })
+                <div class="col-md-6">
+                    @Html.EditorFor(m => m.Count, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.UnitPrice, new { @class = "col-md-5 control-label" })
+                <div class="col-md-6">
+                    <div class="input-group">
+                        @Html.EditorFor(m => m.UnitPrice, new { htmlAttributes = new { @class = "form-control text-right", @type = "number" } })
+                        <span class="input-group-addon">kn</span>
                     </div>
                 </div>
             </div>
-        }
-        <div class="form-group">
-            <div class="col-md-offset-5 col-md-6 btn-group">
-                <input type="submit" class="btn btn-primary" value="Spremi promjene"/>
-                <a href="@Url.Action("Products", "Merchant", new {shop = ViewBag.ShopId})" class="btn btn-default">Odustani</a>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Tags, new { @class = "col-md-5 control-label" })
+                <div class="col-md-6">
+                    @Html.EditorFor(m => m.Tags, new { htmlAttributes = new { @class = "form-control" } })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.Label("Kategorije:", new { @class = "col-md-5 control-label" })
+                <div class="col-md-6">
+                    <input id="categoryDisplay" name="categoryDisplay" class="form-control" value="" readonly="readonly" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-5 col-md-6">
+                    @Html.ListBoxFor(m => Model.Categories, (MultiSelectList)ViewBag.Categories, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-5 control-label">Prodano:</label>
+                <div class="col-md-6">
+                    <div class="input-group text-center">
+                        <input readonly name="NumberSold" class="form-control text-right" value="@Model.NumberSold" />
+                        <span class="input-group-addon">kom</span>
+                    </div>
+                </div>
+            </div>
+            @if (Model.TotalDiscount() > 0) {
+                <div class="form-group">
+                    <label class="col-md-5 control-label">Ukupni popust:</label>
+                    <div class="col-md-6">
+                        <div class="input-group text-center">
+                            <input readonly name="NumberSold" class="form-control text-right" value="@(Model.TotalDiscount()*100)" />
+                            <span class="input-group-addon">%</span>
+                        </div>
+                    </div>
+                </div>
+            }
+            <div class="form-group">
+                <div class="col-md-offset-5 col-md-6 btn-group">
+                    <input type="submit" class="btn btn-primary" value="Spremi promjene" />
+                    <a href="@Url.Action("Products", "Merchant", new {shop = ViewBag.ShopId})" class="btn btn-default">Odustani</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                @Html.Partial("ImageEditor", new ImageEditorModel { DefaultImage = Model.Image.Replace("~", ""), FieldName = "image", Label = "Slika proizvoda:" }, ViewData)
             </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <div class="form-group">
-            @Html.Partial("ImageEditor", new ImageEditorModel {DefaultImage = Model.Image.Replace("~", ""), FieldName = "image", Label = "Slika proizvoda:"}, ViewData)
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Broj dnevno prodanih primjeraka kroz posljednjih 30 dana</h3>
+            @Html.Partial("SimpleGraph", sales, ViewData)
         </div>
     </div>
 }
