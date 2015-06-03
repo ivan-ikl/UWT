@@ -16,6 +16,7 @@
             @if (User.IsInRole(UWT.Models.Roles.Merchant)) {
                 <li>@Html.ActionLink("Moje trgovine", "MyShops", "Merchant")</li>
                 <li>@Html.ActionLink("Moji stilovi", "PageStyles", "Merchant")</li>
+                <li>@Html.ActionLink("Zahtjevi", "Index", "Message")</li>
             } else if (User.Identity.IsAuthenticated) {
                 <li>@Html.ActionLink("Postani trgovac", "MyShops", "Merchant")</li>
             }

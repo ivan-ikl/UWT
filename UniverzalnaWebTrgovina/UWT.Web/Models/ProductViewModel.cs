@@ -43,5 +43,7 @@ namespace UWT.Web.Models {
         /// </summary>
         public int NumberSold { get; set; }
 
+        public bool MessageSent { get; set; }
+
     }
 }

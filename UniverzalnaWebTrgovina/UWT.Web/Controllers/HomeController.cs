@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
@@ -11,7 +12,8 @@ namespace UWT.Web.Controllers {
 
     public class HomeController : Controller {
 
-        public ActionResult Index(int? id, int? category, string search) {
+        public ActionResult Index(int? id, int? category, string search)
+        {
             using (var db = new UwtContext())
             {
                 var shop = db.Shops.FirstOrDefault(s => s.Id == id);
@@ -26,6 +28,7 @@ namespace UWT.Web.Controllers {
                     var userId = User.Identity.GetUserId();
                     products.ForEach(p => p.InBasket = p.InBasket(userId, shop.Id));
                     ViewBag.BasketItemsCount = db.GetCurrentBasket(userId, shop.Id).BasketItems.Count;
+                    products.ForEach(p => p.MessageSent = db.Messages.Any(m => m.Sender.Id == userId && m.Product.Id == p.Id && m.DateRecieved > DateTime.UtcNow));
                 }
                 ViewBag.Products = products;
                 return View("Shop", model);

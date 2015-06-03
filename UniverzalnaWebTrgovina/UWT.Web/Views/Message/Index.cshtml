@@ -1,0 +1,22 @@
+﻿@model IEnumerable<UWT.Models.Message>
+
+
+<p>Kada se brojčano stanje proizvoda poveća, zahtjevi će automatski biti odbačeni</p>
+<table class="table">
+    <tr>
+        <th>Proizvod</th>
+        <th>Poslano</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            <a href="@Url.Action("EditProduct", "Merchant", new { shop = item.Product.Shop.Id, item.Product.Id})" class="btn btn-sm btn-default">@item.Product.Title</a>
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateSent)
+        </td>
+    </tr>
+}
+
+</table>

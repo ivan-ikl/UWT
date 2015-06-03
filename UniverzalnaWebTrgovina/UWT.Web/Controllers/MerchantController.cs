@@ -384,6 +384,7 @@ namespace UWT.Web.Controllers
                 ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
                 var sales = db.BasketItems.Where(b => b.Product.Id == id && b.Basket.Invoice != null && DbFunctions.DiffDays(DateTime.UtcNow, b.Basket.Invoice.DateCreated) <= 30).ToList().Select(b => new [] {30 + (b.Basket.Invoice.DateCreated.ToLocalTime().Date - DateTime.UtcNow.Date).TotalDays, b.Amount}).ToList();
                 ViewBag.Sales = Enumerable.Range(1, 30).Select(e => new[]{e, sales.Where(s => s[0] == e).Sum(s => s[1])}).ToArray();
+                ViewBag.Messages = db.Messages.Count(m => m.Reciever.Id == userId && m.Product.Id == model.Id && m.DateRecieved > DateTime.UtcNow);
                 return View(model);
             }
         }
@@ -399,7 +400,6 @@ namespace UWT.Web.Controllers
 
                     var product = db.Products.IncludeAll().Filter(userId, myShop.Id).FirstOrDefault(c => c.Id == model.Id);
                     if (product == null) return HttpNotFound();
-                    
                     product.Title = model.Title;
                     product.Count = model.Count;
                     product.Description = model.Description;
@@ -414,6 +414,14 @@ namespace UWT.Web.Controllers
                     }
                     model.Image = product.Image.Source();
                     db.SaveChanges();
+                    
+                    if (product.Count > 0) 
+                    {
+                        // Mark messages as read
+                        var messages = db.Messages.IncludeAll().Where(m => m.Reciever.Id == userId && m.Product.Id == model.Id && m.DateRecieved > DateTime.UtcNow).ToList();
+                        messages.ForEach(m => m.DateRecieved = DateTime.UtcNow);
+                        db.SaveChanges();
+                    }
                     ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
                 }
             }
@@ -427,6 +435,7 @@ namespace UWT.Web.Controllers
                 ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
                 var sales = db.BasketItems.Where(b => b.Product.Id == model.Id && b.Basket.Invoice != null && DbFunctions.DiffDays(DateTime.UtcNow, b.Basket.Invoice.DateCreated) <= 30).ToList().Select(b => new[] { 30 + (b.Basket.Invoice.DateCreated.ToLocalTime().Date - DateTime.UtcNow.Date).TotalDays, b.Amount }).ToList();
                 ViewBag.Sales = Enumerable.Range(1, 30).Select(e => new[] { e, sales.Where(s => s[0] == e).Sum(s => s[1]) }).ToArray();
+                ViewBag.Messages = db.Messages.Count(m => m.Reciever.Id == userId && m.Product.Id == model.Id && m.DateRecieved > DateTime.UtcNow);
             }
             return View(model);
         }

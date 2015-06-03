@@ -182,6 +182,7 @@
     <Compile Include="Controllers\InvoiceController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MerchantController.cs" />
+    <Compile Include="Controllers\MessageController.cs" />
     <Compile Include="Extensions\BaseTypes.cs" />
     <Compile Include="Extensions\ContextUpdaters.cs" />
     <Compile Include="Extensions\Converters.cs" />
@@ -1131,6 +1132,7 @@
     <Content Include="Views\Shared\ProductViewItem.cshtml" />
     <Content Include="Views\Shared\InvoiceList.cshtml" />
     <Content Include="Views\Shared\SimpleGraph.cshtml" />
+    <Content Include="Views\Message\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

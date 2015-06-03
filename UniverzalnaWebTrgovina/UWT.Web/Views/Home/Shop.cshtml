@@ -86,7 +86,7 @@
         <link href="~/Content/startbootstrap.css" rel="stylesheet"/>
         <script src="~/Scripts/Controllers/UwtControllers.js"></script>
         <script>
-            var shopController = new ShopController(@Html.Raw(JsonConvert.SerializeObject(ViewBag.Products)), "@Model.Id", @ViewBag.BasketItemsCount, "@Url.Action("AddToBasket", "Basket")", "@Url.Action("RemoveFromBasket", "Basket")");
+            var shopController = new ShopController(@Html.Raw(JsonConvert.SerializeObject(ViewBag.Products)), "@Model.Id", @ViewBag.BasketItemsCount, "@Url.Action("AddToBasket", "Basket")", "@Url.Action("RemoveFromBasket", "Basket")", "@Url.Action("SendMessage", "Message")");
         </script>
     </head>
     <body ng-controller="ShopController">
@@ -135,8 +135,9 @@
                 </p>
                 <p>Raspoloživo: <span ng-bind="product.Count"></span></p>
                 @if (User.Identity.IsAuthenticated) {
-                    <button class="btn btn-sm" ng-click="product.addToBasket()" ng-hide="product.InBasket || product.Count == 0">Dodaj u košaricu</button>
-                    <button class="btn btn-sm" ng-click="product.removeFromBasket()" ng-show="product.InBasket && product.Count != 0">Ukloni iz košarice</button>
+                    <button class="btn btn-sm col-sm-12" ng-click="product.addToBasket()" ng-hide="product.InBasket || product.Count == 0">Dodaj u košaricu</button>
+                    <button class="btn btn-sm col-sm-12" ng-click="product.removeFromBasket()" ng-show="product.InBasket && product.Count != 0">Ukloni iz košarice</button>
+                    <button class="btn btn-sm col-sm-12" ng-click="product.sendMessage()" ng-show="product.Count == 0 && !product.MessageSent">Pošalji upit</button>
                 }
             </div>
         </div>

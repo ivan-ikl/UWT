@@ -31,7 +31,7 @@ function UsersController(users) {
     });    
 }
 
-function ShopController(products, shopId, basketItemsCount, basketAddUrl, basketRemoveUrl) {
+function ShopController(products, shopId, basketItemsCount, basketAddUrl, basketRemoveUrl, messageSendUrl) {
     app.controller("ShopController", function($scope) {
         $scope.products = products;
         console.log("Shop controller configured");
@@ -72,6 +72,18 @@ function ShopController(products, shopId, basketItemsCount, basketAddUrl, basket
                         console.log("Product " + p.Title + "hasn't been removed from the basket");
                     }
                 });
+            };
+
+            p.sendMessage = function() {
+                $.get(messageSendUrl + "?product=" + p.Id, function (data) {
+                    if (data) {
+                        $scope.$apply(function () { angular.extend(p, { "MessageSent": true }); });
+                        console.log("Product " + p.Title + " has been requested");
+                    } else {
+                        console.log("Product " + p.Title + "hasn't been requested");
+                    }
+                });
+
             };
 
         });
