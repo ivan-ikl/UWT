@@ -42,6 +42,11 @@ namespace UWT.Models.Extensions {
         public static IQueryable<Invoice> IncludeAll(this IQueryable<Invoice> invoices)
         {
             return invoices.Include(i => i.Basket.BasketItems.Select(b => b.Product.Image));
-        } 
+        }
+
+        public static IQueryable<Message> IncludeAll(this IQueryable<Message> messages)
+        {
+            return messages.Include(m => m.Product).Include(m => m.Sender).Include(m => m.Reciever);
+        }
     }
 }

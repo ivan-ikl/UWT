@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using UWT.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace UWT.Web.Models {
     public class BasketViewModel 
@@ -17,6 +17,12 @@ namespace UWT.Web.Models {
         public List<BasketItemViewModel> BasketItems { get; set; }
 
         public int Invoice { get; set; }
+
+        [Required(ErrorMessage = "Polje je obavezno!")]
+        public string DeliveryPerson { get; set; }
+
+        [Required(ErrorMessage = "Polje je obavezno!")]
+        public string DeliveryAddress { get; set; }
     
     }
 

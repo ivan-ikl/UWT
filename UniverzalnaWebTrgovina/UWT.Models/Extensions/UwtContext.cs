@@ -18,6 +18,8 @@ namespace UWT.Models.Extensions {
                     DateClosed = DateTime.MaxValue,
                     Owner = user,
                     BasketItems = new List<BasketItem>(),
+                    DeliveryPerson = user.Name + " " + user.Surname,
+                    DeliveryAddress = user.Address,
                     Invoice = null
                 };
                 db.Baskets.Add(basket);

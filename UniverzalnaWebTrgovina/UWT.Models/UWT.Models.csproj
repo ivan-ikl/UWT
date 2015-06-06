@@ -106,6 +106,14 @@
     <Compile Include="Migrations\201505311631191_discounts2.Designer.cs">
       <DependentUpon>201505311631191_discounts2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506040956234_BasketAddress.cs" />
+    <Compile Include="Migrations\201506040956234_BasketAddress.Designer.cs">
+      <DependentUpon>201506040956234_BasketAddress.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506061753168_BasketUserProduct.cs" />
+    <Compile Include="Migrations\201506061753168_BasketUserProduct.Designer.cs">
+      <DependentUpon>201506061753168_BasketUserProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\PageLayout.cs" />
     <Compile Include="Models\Product.cs" />
@@ -139,6 +147,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505311631191_discounts2.resx">
       <DependentUpon>201505311631191_discounts2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506040956234_BasketAddress.resx">
+      <DependentUpon>201506040956234_BasketAddress.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506061753168_BasketUserProduct.resx">
+      <DependentUpon>201506061753168_BasketUserProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

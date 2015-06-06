@@ -16,7 +16,6 @@ namespace UWT.Models {
         [Required]
         public string Description { get; set; }
 
-        [Required]
         public string Tags { get; set; }
 
         [Required]

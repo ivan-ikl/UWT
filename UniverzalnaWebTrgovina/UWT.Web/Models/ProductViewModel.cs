@@ -14,7 +14,6 @@ namespace UWT.Web.Models {
         [Display(Name = "Opis")]
         public string Description { get; set; }
 
-        [Required]
         [Display(Name = "Tagovi")]
         public string Tags { get; set; }
 

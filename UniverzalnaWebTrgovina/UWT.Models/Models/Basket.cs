@@ -29,6 +29,10 @@ namespace UWT.Models {
         /// An invoice gets generated when the user confirms his order
         /// </summary>
         public virtual Invoice Invoice { get; set; }
+
+        public string DeliveryPerson { get; set; }
+
+        public string DeliveryAddress { get; set; }
     
     }
 

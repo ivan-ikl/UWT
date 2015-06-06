@@ -13,5 +13,7 @@
 
         public string ProfileImage { get; set; }
 
+        public string Address { get; set; }
+
     }
 }

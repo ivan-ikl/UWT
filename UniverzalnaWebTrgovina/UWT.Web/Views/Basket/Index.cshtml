@@ -113,58 +113,83 @@
 <h3>Moja košarica</h3>
     <table class="table table-responsive table-condensed">
         <thead>
-            <tr>
-                <th colspan="2" class="col-md-4">
-                    Proizvod
-                </th>
-                <th class="col-md-2 text-center">Jedinična cijena</th>
-                <th class="col-md-2">Količina (kom.)</th>
-                <th class="col-md-2 text-right">Ukupna cijena</th>
-                <th class="col-md-2"></th>
-            </tr>
+        <tr>
+            <th colspan="2" class="col-md-4">
+                Proizvod
+            </th>
+            <th class="col-md-2 text-center">Jedinična cijena</th>
+            <th class="col-md-2">Količina (kom.)</th>
+            <th class="col-md-2 text-right">Ukupna cijena</th>
+            <th class="col-md-2"></th>
+        </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="item in basket.BasketItems">
-                <td class="col-md-1">
-                    <img class="categoryList-image" src="{{::item.Product.Image}}" alt="" />
-                </td>
-                <td class="col-md-3">
-                    <span ng-bind="::item.Product.Title"></span>
-                </td>
-                <td class="text-right">
-                    <del ng-bind="::item.DiscountedFrom.toFixed(2)" ng-show="::(item.UnitPrice <= item.DiscountedFrom)" style="color: green"></del>
-                    <span ng-bind="::item.UnitPrice.toFixed(2)"></span>
-                    <span style="padding-right: 50px">kn</span>                
-                </td>
-                <td>
-                    <input type="number" class="form-control" ng-model="item.Amount" ng-change="item.onAmountChanged()" max="{{item.Product.Count}}" min="1" />
-                </td>
-                <th class="text-right">
-                    <span ng-bind="item.totalPrice().toFixed(2)"></span>
-                    <span>kn</span>                
-                </th>
-                <td>
-                    <div class="btn-group pull-right">
-                        <button ng-click="item.removeFromBasket()" class="btn btn-sm">Ukloni</button>
-                    </div>
-                </td>
-            </tr>
+        <tr ng-repeat="item in basket.BasketItems">
+            <td class="col-md-1">
+                <img class="categoryList-image" src="{{::item.Product.Image}}" alt=""/>
+            </td>
+            <td class="col-md-3">
+                <span ng-bind="::item.Product.Title"></span>
+            </td>
+            <td class="text-right">
+                <del ng-bind="::item.DiscountedFrom.toFixed(2)" ng-show="::(item.UnitPrice <= item.DiscountedFrom)" style="color: green"></del>
+                <span ng-bind="::item.UnitPrice.toFixed(2)"></span>
+                <span style="padding-right: 50px">kn</span>                
+            </td>
+            <td>
+                <input type="number" class="form-control" ng-model="item.Amount" ng-change="item.onAmountChanged()" max="{{item.Product.Count}}" min="1"/>
+            </td>
+            <th class="text-right">
+                <span ng-bind="item.totalPrice().toFixed(2)"></span>
+                <span>kn</span>                
+            </th>
+            <td>
+                <div class="btn-group pull-right">
+                    <button ng-click="item.removeFromBasket()" class="btn btn-sm">Ukloni</button>
+                </div>
+            </td>
+        </tr>
         </tbody>
         <tfoot>
-            <tr>
-                <th colspan="4" class="text-right">
-                    Ukupna cijena:
-                </th>
-                <th class="text-right">
-                    <span ng-bind="basket.totalPrice().toFixed(2)"></span>
-                    <span>kn</span>
-                </th>
-                <th>
-                    <button ng-click="basket.buyBasket()" class="btn btn-success col-md-12" ng-show="basket.BasketItems.length > 0">Kupi</button>
-                </th>
-            </tr>
+        <tr>
+            <th colspan="4" class="text-right">
+                Ukupna cijena:
+            </th>
+            <th class="text-right">
+                <span ng-bind="basket.totalPrice().toFixed(2)"></span>
+                <span>kn</span>
+            </th>
+            <th>
+                <button ng-click="basket.buyBasket()" class="btn btn-success col-md-12" ng-show="basket.BasketItems.length > 0">Kupi</button>
+            </th>
+        </tr>
         </tfoot>
     </table>
+    @using (Html.BeginForm())
+    {
+        <h3>Podaci za dostavu</h3>
+        <div class="form-horizontal col-md-12">
+            @Html.Hidden("Shop", shop.Id)
+            <div class="form-group">
+                @* TODO: Validacija, preko Angulara *@
+                <label class="col-md-5 form-label">Ime i prezime:</label>
+                <div class="col-md-6 input-group">
+                    @Html.EditorFor(m => m.DeliveryPerson, new { htmlAttributes = new {@class = "form-control"}})
+                    @Html.ValidationMessageFor(m => m.DeliveryPerson)
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-5 form-label">Adresa:</label>
+                <div class="col-md-6 input-group">
+                    @Html.EditorFor(m => m.DeliveryAddress, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(m => m.DeliveryAddress)
+                </div>
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Promijeni podatke za dostavu">
+            </div>
+        </div>
+    }
 }
 @section contact {
     <div class="form-horizontal">

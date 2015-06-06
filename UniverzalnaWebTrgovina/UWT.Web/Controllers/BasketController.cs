@@ -87,6 +87,22 @@ namespace UWT.Web.Controllers
         }
 
         [HttpPost]
+        public ActionResult Index(int shop, string deliveryaddress, string deliveryperson)
+        {
+            var userId = User.Identity.GetUserId();
+            using (var db = new UwtContext()) {
+                var basket = db.GetCurrentBasket(userId, shop);
+                if (basket != null)
+                {
+                    basket.DeliveryAddress = deliveryaddress;
+                    basket.DeliveryPerson = deliveryperson;
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index", new {shop = shop});
+            }                        
+        }
+
+        [HttpPost]
         public int BuyBasket(int shop)
         {
             var userId = User.Identity.GetUserId();
