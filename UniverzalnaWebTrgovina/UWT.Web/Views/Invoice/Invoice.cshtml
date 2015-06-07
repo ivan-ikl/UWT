@@ -62,18 +62,18 @@
     <!DOCTYPE html>
     <html ng-app="uwtApp">
     <head>
-        <meta charset="utf-8" />
+        <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>@ViewBag.Title - Univerzalna trgovina</title>
         @Styles.Render("~/Content/css")
-        <link href="~/Content/animations.min.css" rel="stylesheet" />
-        <link href="~/Content/uwtShops.css" rel="stylesheet" />
-        <link href="~/Content/GalleryItem.css" rel="stylesheet" />
+        <link href="~/Content/animations.min.css" rel="stylesheet"/>
+        <link href="~/Content/uwtShops.css" rel="stylesheet"/>
+        <link href="~/Content/GalleryItem.css" rel="stylesheet"/>
         @Scripts.Render("~/bundles/modernizr")
         <script src="~/Scripts/jquery-2.1.4.min.js"></script>
         <script src="~/Scripts/angular.min.js"></script>
-        <link href="~/Content/Vitality.css" rel="stylesheet" />
-        <link href="~/Content/startbootstrap.css" rel="stylesheet" />
+        <link href="~/Content/Vitality.css" rel="stylesheet"/>
+        <link href="~/Content/startbootstrap.css" rel="stylesheet"/>
     </head>
     <body ng-controller="BasketController">
 }
@@ -84,7 +84,7 @@
 @section logo {
     <a href="@Url.Action("Index", "Home", new {Model.Id})">
         <div class="pull-left logo">
-            <img class="img-logo" src="@style.Logo.Replace("~", "")" alt="" />
+            <img class="img-logo" src="@style.Logo.Replace("~", "")" alt=""/>
         </div>
         <h3 class="pull-left" style="margin-left: 10px">@shop.Name</h3>
     </a>
@@ -98,7 +98,7 @@
 }
 @section basketContent {
     <h3>Račun - @Model.DateCreated.ToLocalTime().ToString()</h3>
-    <table class="table table-responsive table-condensed" style="margin-bottom: 150px; margin-top: 50px">
+    <table class="table table-responsive table-condensed" style="margin-bottom: 20px; margin-top: 50px">
         <thead>
         <tr>
             <th colspan="2" class="col-md-5">Proizvod</th>
@@ -139,28 +139,47 @@
         </tr>
         </tfoot>
     </table>
-@section contact {
-    <div class="form-horizontal">
-        <h3>Kontakt</h3>
-        <div class="form-group">
-            <label class="col-md-4">Adresa:</label>
-            <label class="col-md-8">@shop.Address</label>
-        </div>
-        <div class="form-group">
-            <label class="col-md-4">Telefonski broj:</label>
-            <label class="col-md-8">@shop.Phone</label>
-        </div>
-        <div class="form-group">
-            <label class="col-md-4">Email:</label>
-            <label class="col-md-8">@shop.Email</label>
+    <div class="col-md-12">
+        <h3>Podaci za dostavu:</h3>
+        <br />
+        <div class="form-horizontal">
+            <div class="form-group">
+                <label class="form-label col-md-2">Kupac:</label>
+                <div class="col-md-4">
+                    <span class="form-control">@Model.Basket.DeliveryPerson</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label col-md-2">Adresa za dostavu:</label>
+                <div class="col-md-4">
+                    <span class="form-control">@Model.Basket.DeliveryAddress</span>
+                </div>
+            </div>
         </div>
     </div>
 }
+@section contact {
+<div class="form-horizontal">
+    <h3>Kontakt</h3>
+    <div class="form-group">
+        <label class="col-md-4">Adresa:</label>
+        <label class="col-md-8">@shop.Address</label>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4">Telefonski broj:</label>
+        <label class="col-md-8">@shop.Phone</label>
+    </div>
+    <div class="form-group">
+        <label class="col-md-4">Email:</label>
+        <label class="col-md-8">@shop.Email</label>
+    </div>
+</div>
+}
 @section search {
-    <a href="@Url.Action("Index", "Invoice", new {shop.Id})" class="btn btn-default vertical-center col-md-12">Raniji računi</a>
+<a href="@Url.Action("Index", "Invoice", new {shop.Id})" class="btn btn-default vertical-center col-md-12">Raniji računi</a>
 }
 @section basket {
-    <a href="@Url.Action("Index", "Home", new {shop.Id})" class="btn btn-default vertical-center col-md-12">Povratak na kupovinu</a>
+<a href="@Url.Action("Index", "Home", new {shop.Id})" class="btn btn-default vertical-center col-md-12">Povratak na kupovinu</a>
 }
 @section pageEnd {
 </body>

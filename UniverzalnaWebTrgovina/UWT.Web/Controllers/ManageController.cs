@@ -48,6 +48,7 @@ namespace UWT.Web.Controllers
                     var user = db.Users.Find(userId);
                     user.Name = model.Name;
                     user.Surname = model.Surname;
+                    user.Address = model.Address;
                     user.PhoneNumber = model.PhoneNumber;
                     if (image != null)
                     {

@@ -86,6 +86,8 @@ namespace UWT.Web.Models
         [Display(Name = "Ime")]
         public string Name {get; set;}
 
+        [Required]
+        [Display(Name = "Adresa (za dostavu)")]
         public string Address { get; set; }
 
         [Required]

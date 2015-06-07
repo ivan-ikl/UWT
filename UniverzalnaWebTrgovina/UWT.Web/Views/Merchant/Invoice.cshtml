@@ -16,20 +16,20 @@
         max-width: 40px;
     }
 </style>
-<table class="table table-responsive table-condensed" style="margin-bottom: 150px; margin-top: 50px">
+<table class="table table-responsive table-condensed" style="margin-bottom: 50px; margin-top: 20px">
     <thead>
-        <tr>
-            <th colspan="2" class="col-md-5">Proizvod</th>
-            <th class="col-md-2 text-center">Jedinična cijena</th>
-            <th class="col-md-2">Količina (kom.)</th>
-            <th class="col-md-3 text-right">Ukupna cijena</th>
-        </tr>
+    <tr>
+        <th colspan="2" class="col-md-5">Proizvod</th>
+        <th class="col-md-2 text-center">Jedinična cijena</th>
+        <th class="col-md-2">Količina (kom.)</th>
+        <th class="col-md-3 text-right">Ukupna cijena</th>
+    </tr>
     </thead>
     <tbody>
     @foreach (var item in Model.Basket.BasketItems)
     {
         <tr>
-            <td class="col-md-1"><img class="categoryList-image" src="@item.Product.Image.Replace("~","")" alt=""/></td>
+            <td class="col-md-1"><img class="categoryList-image" src="@item.Product.Image.Replace("~", "")" alt=""/></td>
             <td class="col-md-4">@item.Product.Title</td>
             <td class="text-right">
                 @if (item.UnitPrice < item.DiscountedFrom)
@@ -48,12 +48,30 @@
     }
     </tbody>
     <tfoot>
-        <tr>
-            <th colspan="4" class="text-right">Ukupna cijena:</th>
-            <th class="text-right">
-                <span>@Model.Basket.BasketItems.Sum(i => i.TotalPrice()).ToString("#0.00")</span>
-                <span>kn</span>
-            </th>
-        </tr>
+    <tr>
+        <th colspan="4" class="text-right">Ukupna cijena:</th>
+        <th class="text-right">
+            <span>@Model.Basket.BasketItems.Sum(i => i.TotalPrice()).ToString("#0.00")</span>
+            <span>kn</span>
+        </th>
+    </tr>
     </tfoot>
 </table>
+<div class="col-md-12">
+    <h3>Podaci za dostavu:</h3>
+    <br/>
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="form-label col-md-2">Kupac:</label>
+            <div class="col-md-4">
+                <span class="form-control">@Model.Basket.DeliveryPerson</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label col-md-2">Adresa za dostavu:</label>
+            <div class="col-md-4">
+                <span class="form-control">@Model.Basket.DeliveryAddress</span>
+            </div>
+        </div>
+    </div>
+</div>

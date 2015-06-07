@@ -10,12 +10,16 @@ namespace UWT.Web.Models
         public string UserName { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
+        [Display(Name = "Ime")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
+        [Display(Name = "Prezime")]
         public string Surname { get; set; }
-        //public IList<UserLoginInfo> Logins { get; set; }
-        
+
+        [Display(Name = "Adresa (za dostavu)")]
+        public string Address { get; set; }
+
         public string ProfileImage { get; set; }
 
         [Required(ErrorMessage = "Polje je obavezno")]
