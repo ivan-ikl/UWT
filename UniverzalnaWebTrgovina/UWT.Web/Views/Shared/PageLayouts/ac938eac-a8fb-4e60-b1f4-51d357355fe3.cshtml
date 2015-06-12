@@ -1,0 +1,48 @@
+﻿@RenderSection("pageBegin", false)
+
+<nav class="navbar navbar-fixed-top" role="navigation">
+    @Html.Partial("_Navbar")
+</nav>
+
+<nav>
+    @RenderSection("navImage", false)
+</nav>
+
+<nav class="navbar navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="col-md-6">
+            @RenderSection("logo", false)
+        </div>
+        <div class="col-md-3">
+            @RenderSection("search", false)
+        </div>
+        <div class="col-md-3">
+            @RenderSection("basket", false)
+        </div>
+    </div>
+</nav>
+<div class="container sheet">
+    <div class="col-md-12">
+        @RenderSection("basketContent", false)
+    </div>
+    <div class="col-md-8 products">
+        @RenderSection("products", false)
+    </div>
+    <div class="col-md-4">
+        @RenderSection("categories", false)
+    </div>
+</div>
+@RenderBody()
+
+@Scripts.Render("~/bundles/bootstrap")
+
+<div>
+    @RenderSection("footer", false)
+</div>
+
+<div class="container sheet">
+    @RenderSection("contact", false)
+</div>
+
+@RenderSection("scripts", false)
+@RenderSection("pageEnd", false)

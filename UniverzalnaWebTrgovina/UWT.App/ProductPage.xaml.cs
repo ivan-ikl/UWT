@@ -1,5 +1,7 @@
 ﻿using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using AutoMapper;
+using UWT.App.Models;
 
 namespace UWT.App {
 
@@ -9,7 +11,7 @@ namespace UWT.App {
         }
     
         protected override void OnNavigatedTo(NavigationEventArgs e) {
-            DataContext = e.Parameter;
+            DataContext = Mapper.Map<ProductViewModel>(e.Parameter);
         }
     }
 }

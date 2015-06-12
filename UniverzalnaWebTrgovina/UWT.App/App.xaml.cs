@@ -6,6 +6,9 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using AutoMapper;
+using UWT.App.Models;
+using UWT.Portable.Models;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=391641
 
@@ -26,6 +29,7 @@ namespace UWT.App
         {
             InitializeComponent();
             Suspending += OnSuspending;
+            Mapper.CreateMap<Product, ProductViewModel>();
         }
 
         /// <summary>
@@ -82,7 +86,7 @@ namespace UWT.App
                 // When the navigation stack isn't restored navigate to the first page,
                 // configuring the new page by passing required information as a navigation
                 // parameter
-                if (!rootFrame.Navigate(typeof(MainPage), e.Arguments))
+                if (!rootFrame.Navigate(typeof(LoginPage), e.Arguments))
                 {
                     throw new Exception("Failed to create initial page");
                 }

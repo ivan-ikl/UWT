@@ -367,7 +367,7 @@ namespace UWT.Web.Controllers
             return View(model);
         }
 
-        public ActionResult EditProduct(int shop, int id) {
+        public ActionResult ditProduct(int shop, int id) {
             var userId = User.Identity.GetUserId();
             using (var db = new UwtContext())
             {              
@@ -382,9 +382,8 @@ namespace UWT.Web.Controllers
                 var model = Mapper.Map<ProductViewModel>(product);
                 model.NumberSold = db.Invoices.ProductsSold(product.Id);
                 ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
-                var sales = db.BasketItems.Where(b => b.Product.Id == id && b.Basket.Invoice != null && DbFunctions.DiffDays(DateTime.UtcNow, b.Basket.Invoice.DateCreated) <= 30).ToList().Select(b => new [] {30 + (b.Basket.Invoice.DateCreated.ToLocalTime().Date - DateTime.UtcNow.Date).TotalDays, b.Amount}).ToList();
-                ViewBag.Sales = Enumerable.Range(1, 30).Select(e => new[]{e, sales.Where(s => s[0] == e).Sum(s => s[1])}).ToArray();
-                ViewBag.Messages = db.Messages.Count(m => m.Reciever.Id == userId && m.Product.Id == model.Id && m.DateRecieved > DateTime.UtcNow);
+                ViewBag.Sales = db.GetDailySales(model.Id, 30);
+                ViewBag.Messages = db.Messages.Filter(userId, model.Id).ActiveMessages().Count();
                 return View(model);
             }
         }
@@ -418,7 +417,7 @@ namespace UWT.Web.Controllers
                     if (product.Count > 0) 
                     {
                         // Mark messages as read
-                        var messages = db.Messages.IncludeAll().Where(m => m.Reciever.Id == userId && m.Product.Id == model.Id && m.DateRecieved > DateTime.UtcNow).ToList();
+                        var messages = db.Messages.IncludeAll().Filter(userId, model.Id).ActiveMessages().ToList();
                         messages.ForEach(m => m.DateRecieved = DateTime.UtcNow);
                         db.SaveChanges();
                     }
@@ -433,9 +432,8 @@ namespace UWT.Web.Controllers
                 ViewBag.ShopName = myShop.Name;
                 ViewBag.ShopId = myShop.Id;
                 ViewBag.Categories = new MultiSelectList(db.Categories.Filter(userId, myShop.Id).ToList().Select(c => new SelectListItem { Text = c.Name, Value = c.Id.ToString() }).ToArray(), "Value", "Text", model.Categories);
-                var sales = db.BasketItems.Where(b => b.Product.Id == model.Id && b.Basket.Invoice != null && DbFunctions.DiffDays(DateTime.UtcNow, b.Basket.Invoice.DateCreated) <= 30).ToList().Select(b => new[] { 30 + (b.Basket.Invoice.DateCreated.ToLocalTime().Date - DateTime.UtcNow.Date).TotalDays, b.Amount }).ToList();
-                ViewBag.Sales = Enumerable.Range(1, 30).Select(e => new[] { e, sales.Where(s => s[0] == e).Sum(s => s[1]) }).ToArray();
-                ViewBag.Messages = db.Messages.Count(m => m.Reciever.Id == userId && m.Product.Id == model.Id && m.DateRecieved > DateTime.UtcNow);
+                ViewBag.Sales = db.GetDailySales(model.Id, 30);
+                ViewBag.Messages = db.Messages.Filter(userId, model.Id).ActiveMessages().Count();
             }
             return View(model);
         }

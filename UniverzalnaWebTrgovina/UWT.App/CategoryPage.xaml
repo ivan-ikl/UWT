@@ -27,5 +27,6 @@
                 </ListView.ItemTemplate>
             </ListView>
         </ScrollViewer>
+        <TextBox Text="{Binding Ime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
     </Grid>
 </Page>

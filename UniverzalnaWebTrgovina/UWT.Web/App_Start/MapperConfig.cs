@@ -108,7 +108,9 @@ namespace UWT.Web
         {
             Mapper.CreateMap<Product, Portable.Models.Product>()
                 .ForMember(dest => dest.DiscountedPrice, opt => opt.MapFrom(src => src.DiscountedPrice()))
-                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image.Path));
+                .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image.Path))
+                .ForMember(dest => dest.DailySails, opt => opt.Ignore())
+                .ForMember(dest => dest.Messages, opt => opt.Ignore());
             Mapper.CreateMap<Category, Portable.Models.Category>()
                 .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.Image.Path));
             Mapper.CreateMap<Shop, Portable.Models.Shop>()

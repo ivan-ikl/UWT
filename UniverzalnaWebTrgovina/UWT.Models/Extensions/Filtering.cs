@@ -81,5 +81,15 @@ namespace UWT.Models.Extensions {
             return items.Where(i => i.Basket.BasketItems.FirstOrDefault().Product.Shop.Owner.Id == userId);            
         }
 
+        public static IQueryable<Message> Filter(this IQueryable<Message> messages, string userId, int productId)
+        {
+            return messages.Where(m => m.Reciever.Id == userId && m.Product.Id == productId && m.DateRecieved > DateTime.UtcNow);
+        }
+
+        public static IQueryable<Message> ActiveMessages(this IQueryable<Message> messages)
+        {
+            return messages.Where(m => m.DateRecieved > DateTime.UtcNow);
+        } 
+
     }
 }

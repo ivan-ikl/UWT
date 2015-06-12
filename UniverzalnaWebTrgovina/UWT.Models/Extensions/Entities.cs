@@ -31,7 +31,7 @@ namespace UWT.Models.Extensions {
 
         public static IQueryable<Product> IncludeAll(this IQueryable<Product> products)
         {
-            return products.Include(p => p.Shop).Include(p => p.Categories).Include(p => p.Image).Include(p => p.Orders);
+            return products.Include(p => p.Shop).Include(p => p.Categories).Include(p => p.Image).Include(p => p.Orders).Include(p => p.Messages);
         }
 
         public static IQueryable<Basket> IncludeAll(this IQueryable<Basket> baskets)

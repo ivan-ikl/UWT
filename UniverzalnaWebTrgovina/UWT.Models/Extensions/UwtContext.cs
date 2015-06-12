@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace UWT.Models.Extensions {
@@ -26,6 +27,12 @@ namespace UWT.Models.Extensions {
             }
             return basket;
         }
+
+        public static int[][] GetDailySales(this UwtContext db, int productId, int days)
+        {
+            var sales = db.BasketItems.Where(b => b.Product.Id == productId && b.Basket.Invoice != null && DbFunctions.DiffDays(DateTime.UtcNow, b.Basket.Invoice.DateCreated) <= days).ToList().Select(b => new[] { days + (int)(b.Basket.Invoice.DateCreated.ToLocalTime().Date - DateTime.UtcNow.Date).TotalDays, b.Amount }).ToList();
+            return Enumerable.Range(1, days).Select(e => new[] { e, sales.Where(s => s[0] == e).Sum(s => s[1]) }).ToArray();
+        } 
 
     }
 }

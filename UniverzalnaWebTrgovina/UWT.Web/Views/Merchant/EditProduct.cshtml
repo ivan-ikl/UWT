@@ -1,12 +1,13 @@
 ﻿@using System.ServiceModel.Channels
 @using UWT.Web.Extensions
 @using UWT.Web.Models
+@using WebGrease.Css.Extensions
 @model ProductViewModel
 @{
     ViewBag.Title = "title";
     ViewBag.MainTitle = "Uredi proizvod";
     ViewBag.Subtitle = "Proizvod: " + Model.Title;
-    double[][] sales = ViewBag.Sales;
+    double[][] sales = ((int[][])ViewBag.Sales).Select(array => array.Select(i => (double)i).ToArray()).ToArray();
 }
 @section buttons
 {
